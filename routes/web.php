@@ -38,3 +38,11 @@ Route::get('/register', function () {
 Route::get('book_detail', function () {
     return view('pages.book_detail');
 })->name('book_detail');
+
+Route::get('/checkout', function () {
+    return view('pages.check_out');
+})->name('checkout');
+
+Route::get('/checkout/payment', function () {
+    return view('pages.payment');
+})->name('payment');
