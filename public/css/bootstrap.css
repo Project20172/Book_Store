@@ -2544,7 +2544,7 @@ output {
 }
 .form-control {
   display: block;
-  width: 100%;
+  width: 50%;
   height: 34px;
   padding: 6px 12px;
   font-size: 14px;
@@ -2717,6 +2717,7 @@ select[multiple].input-sm {
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
+  width: 50%;
 }
 select.form-group-sm .form-control {
   height: 30px;
