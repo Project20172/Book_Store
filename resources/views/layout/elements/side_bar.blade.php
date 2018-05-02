@@ -15,11 +15,9 @@
 			<div id="sportswear" class="panel-collapse collapse">
 				<div class="panel-body">
 					<ul>
-						<li><a href="#">Tin học </a></li>
-						<li><a href="#">Ngoại ngữ </a></li>
-						<li><a href="#">Y học </a></li>
-						<li><a href="#">Cơ khí</a></li>
-						<li><a href="#">Khoa học </a></li>
+						@foreach ($listCategory as $category)
+							<li><a href="{{ route('loaisanpham',$category->category_id) }}">{{ $category->category_name }} </a></li>
+						@endforeach
 					</ul>
 				</div>
 			</div>
@@ -36,16 +34,9 @@
 			<div id="mens" class="panel-collapse collapse">
 				<div class="panel-body">
 					<ul>
-						<li><a href="#">Fendi</a></li>
-						<li><a href="#">Guess</a></li>
-						<li><a href="#">Valentino</a></li>
-						<li><a href="#">Dior</a></li>
-						<li><a href="#">Versace</a></li>
-						<li><a href="#">Armani</a></li>
-						<li><a href="#">Prada</a></li>
-						<li><a href="#">Dolce and Gabbana</a></li>
-						<li><a href="#">Chanel</a></li>
-						<li><a href="#">Gucci</a></li>
+						@foreach ($listAuthor as $author)
+							<li><a href="#">{{ $author->name }}</a></li>
+						@endforeach
 					</ul>
 				</div>
 			</div>
