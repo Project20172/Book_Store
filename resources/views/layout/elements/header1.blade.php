@@ -1,28 +1,29 @@
-<div class="header">
-	<div class="container">
-		<div class="header-grid">
-			<div class="header-grid-left animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
-				<ul>
-					<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:nh.giang261197@gmail.com">nh.giang261197@gmail.com</a></li>
-					<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>01658215007</li>
-					<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="{{ route('login') }}">Đăng nhập</a></li>
-					<li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a href="{{ route('register') }}">Đăng ký</a></li>
-				</ul>
+
+	<div class="header">
+		<div class="container">
+			<div class="header-grid">
+				<div class="header-grid-left animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+					<ul>
+						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:nh.giang261197@gmail.com">nh.giang261197@gmail.com</a></li>
+						<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>01658215007</li>
+						<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="{{ route('login') }}">Đăng nhập</a></li>
+						<li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a href="{{ route('register') }}">Đăng ký</a></li>
+					</ul>
+				</div>
+				<div class="header-grid-right animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
+					<ul class="social-icons">
+						<li><a href="#" class="facebook"></a></li>
+						<li><a href="#" class="twitter"></a></li>
+						<li><a href="#" class="g"></a></li>
+						<li><a href="#" class="instagram"></a></li>
+					</ul>
+				</div>
+				<div class="clearfix"> </div>
 			</div>
-			<div class="header-grid-right animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
-				<ul class="social-icons">
-					<li><a href="#" class="facebook"></a></li>
-					<li><a href="#" class="twitter"></a></li>
-					<li><a href="#" class="g"></a></li>
-					<li><a href="#" class="instagram"></a></li>
-				</ul>
-			</div>
-			<div class="clearfix"> </div>
-		</div>
-		<div class="logo-nav">
-			<div class="logo-nav-left animated wow zoomIn animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;">
-				<h1><a href="{{ route('home') }}">Best Store <span class="fix">Mua sách ở mọi nơi</span></a></h1>
-			</div>
+			<div class="logo-nav">
+				<div class="logo-nav-left animated wow zoomIn animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;">
+					<h1><a href="{{ route('home') }}">Best Store <span class="fix">Mua sách ở mọi nơi</span></a></h1>
+				</div>
 				{{-- <div class="logo-nav-left1">
 					<nav class="navbar navbar-default">
 						<!-- Brand and toggle get grouped for better mobile display -->
@@ -133,23 +134,19 @@
 						</div>
 					</div>
 					<!-- search-scripts -->
-					<script src="js/classie.js"></script>
-					<script src="js/uisearch.js"></script>
-					<script>
+					<script src="{{ asset('js/classie.js') }}"></script>
+					<script src="{{ asset('js/uisearch.js') }}"></script>
+					{{-- <script>
 						new UISearch( document.getElementById( 'sb-search' ) );
-					</script>
+					</script> --}}
 					<!-- //search-scripts -->
 				</div>
 				<div class="header-right">
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
 							<h3> <div class="total">
-								@if(Session::has('cart'))
-								<span class="simpleCart_total">${{Session::get('cart')->totalPrice }}</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">{{ Session::get('cart')->totalQty }}</span> items)</div>
-								@else
 								<span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)</div>
-								@endif
-								<img src="images/bag.png" alt="">
+								<img src="{{ asset('images/bag.png') }}" alt="">
 							</h3>
 						</a>
 						<div class="clearfix"> </div>
