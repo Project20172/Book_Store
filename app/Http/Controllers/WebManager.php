@@ -112,4 +112,39 @@ class WebManager extends Controller
        
        return redirect('/admin/add-author')->with('thongbao','Thêm tác giả thành công');
     }
+
+    public function getEditAuthor($id)
+    {
+    	$author=Author::where('author_id',$id)->first();
+    	return view('pages.admin.editAuthor',['author'=>$author]);
+    }
+
+    public function postEditAuthor(Request $req)
+    {
+    	$author=Author::find($req->author_id);
+    	$author->name=$req->author_name;
+    	if($req->author_describe!=null){
+    		$author->author_describe=$req->author_describe;
+    	}
+    	else{
+    		$author->author_describe="";
+    	}
+
+    	if($req->hasFile('author_image')){
+          $file = $req->author_image;
+          $this->validate($req,
+          	[
+          		'author_image'=>'image|mimes:jpeg,png,jpg,gif,svg'
+          	],
+          	[
+          		'author_image.image'=>'File bạn vừa chọn không phải ảnh',
+          		'author_image.mimes'=>'Chỉ hỗ trợ ảnh đuôi:jpeg,png,jpg,gif,svg',
+          	]);
+          $filename=time().'-'.$file->getClientOriginalName();
+      	  $file->move('images',$filename);  
+      	  $author->author_image='images/'.$filename; 
+       }
+       $author->save();
+       return redirect('/admin/edit-author/'.$req->author_id)->with('thongbao','Sửa tác giả thành công');
+    }
 }
