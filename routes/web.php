@@ -11,3 +11,13 @@
 |
 */
 
+
+Route::get('/cart', [
+	'as'=>'cart',
+	'uses'=>'ViewPages@getCart'
+]);
+
+Route::get('add-to-cart/{id}', [
+	'as' => 'book.addToCart',
+	'uses' => 'ViewPages@getAddToCart'
+]);
