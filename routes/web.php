@@ -34,3 +34,17 @@ Route::get('add-to-cart/{id}', [
 ]);
 
 Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
+
+Route::get('/admin/list-category','WebManager@getListCategory')->name('getListCategory');
+
+Route::get('/admin/add-category','WebManager@getAddCategory')->name('getAddCategory');
+
+Route::get('admin/list-author','WebManager@getListAuthor')->name('getListAuthor');
+
+Route::get('admin/add-author','WebManager@getAddAuthor')->name('getAddAuthor');
+
+Route::get('/admin/list-book','WebManager@getListBook')->name('getListBook');
+
+Route::get('/admin/add-book','WebManager@getAddBook')->name('getAddBook');
+
+Route::get('/admin/edit-category/{id}','WebManager@getEditCategory')->name('getEditCategory');
