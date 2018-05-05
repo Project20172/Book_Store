@@ -69,4 +69,10 @@ class WebManager extends Controller
       $category->delete();
       return redirect('/admin/list-category')->with('thongbao','Xoá thành công');
     }
+
+    public function getListAuthor()
+    {
+    	$list = Author::all();
+    	return view('pages.admin.listAuthor',['listAuthor'=>$list]);
+    }
 }
