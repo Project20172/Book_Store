@@ -62,4 +62,11 @@ class WebManager extends Controller
     	$category->save();
     	return redirect('admin/edit-category/'.$id)->with('thongbao','Sửa thành công');
     }
+
+    public function getRemoveCategory($id)
+    {
+      $category=category::find($id);
+      $category->delete();
+      return redirect('/admin/list-category')->with('thongbao','Xoá thành công');
+    }
 }

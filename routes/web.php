@@ -52,3 +52,5 @@ Route::get('/admin/edit-category/{id}','WebManager@getEditCategory')->name('getE
 Route::post('/admin/add-category','WebManager@postAddCategory')->name('postAddCategory');
 
 Route::post('/admin/edit-category','WebManager@postEditCategory')->name('postEditCategory');
+
+Route::get('/admin/remove-category/{id}','WebManager@getRemoveCategory')->name('getRemoveCategory');
