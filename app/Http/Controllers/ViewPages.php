@@ -12,6 +12,7 @@ class ViewPages extends Controller
     {
     	return view('pages.home');
     }
+    
     public function getAddToCart(Request $request, $book_id){
 
         $book = Book::find($book_id);
@@ -32,5 +33,5 @@ class ViewPages extends Controller
         }
         $cart = null;
         return view('pages.carts', ['cart'=>$cart]);
-
+	}
 }
