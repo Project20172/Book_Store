@@ -10,6 +10,17 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/home', [
+	'as'=>'home'
+]);
+
+Route::get('login', function () {
+    return view('pages.login');
+})->name('login');
+
+Route::get('/register', function () {
+    return view('pages.register');
+})->name('register');
 
 
 Route::get('/cart', [
@@ -21,3 +32,4 @@ Route::get('add-to-cart/{id}', [
 	'as' => 'book.addToCart',
 	'uses' => 'ViewPages@getAddToCart'
 ]);
+
