@@ -33,3 +33,4 @@ Route::get('add-to-cart/{id}', [
 	'uses' => 'ViewPages@getAddToCart'
 ]);
 
+Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
