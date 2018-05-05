@@ -13,7 +13,7 @@
 
 Route::get('/', function () {
     return view('pages.home');
-});
+})->name('home');
 
 Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
 
@@ -47,9 +47,11 @@ Route::get('/result-search', function () {
 
 Route::get('loai-san-pham/{id}','ViewPages@getLoaiSanPham')->name('loaisanpham');
 
-Route::get('/cart', function () {
-    return view('pages.carts');
-})->name('cart');
+Route::get('/cart', [
+	'as'=>'cart',
+	'uses'=>'ViewPages@getCart'
+]);
+
 
 Route::get('/home', 'ViewPages@homepage')->name('home');
 
@@ -64,3 +66,8 @@ Route::get('/register', function () {
 Route::get('book_detail', function () {
     return view('pages.book_detail');
 })->name('book_detail');
+
+Route::get('add-to-cart/{id}', [
+	'as' => 'book.addToCart',
+	'uses' => 'ViewPages@getAddToCart'
+]);
