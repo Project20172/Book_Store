@@ -255,4 +255,96 @@ class WebManager extends Controller
 
       return redirect('/admin/add-book')->with('thongbao','Thêm sách thành công');
     }
+
+    public function getEditBook($id)
+    {
+      $book=Book::find($id);
+      $listAuthor=Author::all();
+      $listCategory=category::all();
+      return view('pages.admin.editBook',['book'=>$book,'listAuthor'=>$listAuthor,'listCategory'=>$listCategory]);
+    }
+
+    public function postEditBook(Request $req)
+    {
+      $this->validate($req,
+        [
+          'book_name'=>'required',
+          'publish_year'=>'min:0',
+          'price'=>'min:0',
+          'quantity'=>'min:0'
+        ]
+        ,
+        [
+          'book_name.required'=>'Bạn chưa nhập tên sách',
+          'publish_year.min'=>'Năm xuất bản không thể âm',
+          'price.min'=>'Giá sách không thể âm',
+          'quantity.min'=>'Số lượng không thể âm'
+        ]);
+      $book=Book::find($req->book_id);
+      $book->category_id=$req->category;
+      $book->author_id=$req->author;
+      $book->book_name=$req->book_name;
+      if($req->ISBN==null){
+        $book->ISBN="";
+      }
+      else{
+        $book->ISBN=$req->ISBN;
+      }
+      if($req->language==null){
+        $book->language="";
+      }
+      else{
+        $book->language=$req->language;
+      }
+      if($book->publish_year==null){
+        $book->publish_year=0;
+      }
+      else{
+        $book->publish_year=$req->publish_year;
+      }
+      if($req->publisher==null){
+        $book->publisher="";
+      }
+      else{
+        $book->publisher=$req->publisher;
+      }
+      if($req->abstract==null){
+        $book->abstract="";
+      }else{
+        $book->abstract=$req->abstract;
+      }
+      if($req->price==null){
+        $book->price=0;
+      }else{
+        $book->price=$req->price;
+      }
+      if($req->rating==null){
+        $book->rating=0;
+      }else{
+        $book->rating=$req->rating;
+      }
+      if($req->quantity==null){
+        $book->quantity=0;
+      }else{
+        $book->quantity=$req->quantity;
+      }
+      
+      if($req->hasFile('picture')){
+          $file = $req->picture;
+          $this->validate($req,
+            [
+              'picture'=>'image|mimes:jpeg,png,jpg,gif,svg'
+            ],
+            [
+              'picture.image'=>'File bạn vừa chọn không phải ảnh',
+              'picture.mimes'=>'Chỉ hỗ trợ ảnh đuôi:jpeg,png,jpg,gif,svg',
+            ]);
+          $filename=time().'-'.$file->getClientOriginalName();
+          $file->move('images',$filename);  
+          $book->picture='images/'.$filename; 
+       }
+      $book->save();
+
+      return redirect('/admin/edit-book/'.$book->book_id)->with('thongbao','Sửa sách thành công');
+    }
 }
