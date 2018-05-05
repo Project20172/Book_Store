@@ -147,4 +147,11 @@ class WebManager extends Controller
        $author->save();
        return redirect('/admin/edit-author/'.$req->author_id)->with('thongbao','Sửa tác giả thành công');
     }
+
+    public function getRemoveAuthor($id)
+    {
+      $author=Author::find($id);
+      $author->delete();
+      return redirect('/admin/list-author')->with('thongbao','Xoá thành công');
+    }
 }

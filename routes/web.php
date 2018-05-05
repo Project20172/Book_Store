@@ -60,3 +60,5 @@ Route::post('admin/add-author','WebManager@postAddAuthor')->name('postAddAuthor'
 Route::get('admin/edit-author/{id}','WebManager@getEditAuthor')->name('getEditAuthor');
 
 Route::post('admin/edit-author','WebManager@postEditAuthor')->name('postEditAuthor');
+
+Route::get('/admin/remove-author/{id}','WebManager@getRemoveAuthor')->name('getRemoveAuthor');
