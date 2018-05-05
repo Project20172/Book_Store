@@ -22,3 +22,15 @@ Route::get('login', function () {
 Route::get('/register', function () {
     return view('pages.register');
 })->name('register');
+
+
+Route::get('/cart', [
+	'as'=>'cart',
+	'uses'=>'ViewPages@getCart'
+]);
+
+Route::get('add-to-cart/{id}', [
+	'as' => 'book.addToCart',
+	'uses' => 'ViewPages@getAddToCart'
+]);
+
