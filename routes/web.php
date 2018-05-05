@@ -50,3 +50,5 @@ Route::get('/admin/add-book','WebManager@getAddBook')->name('getAddBook');
 Route::get('/admin/edit-category/{id}','WebManager@getEditCategory')->name('getEditCategory');
 
 Route::post('/admin/add-category','WebManager@postAddCategory')->name('postAddCategory');
+
+Route::post('/admin/edit-category','WebManager@postEditCategory')->name('postEditCategory');

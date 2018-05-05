@@ -40,4 +40,26 @@ class WebManager extends Controller
     	$cate->save();
     	return redirect('admin/add-category')->with('thongbao','Thêm thành công');
     }
+
+    public function getEditCategory($id)
+    {
+    	$category=category::where('category_id',$id)->get();
+    	return view('pages.admin.editCategory',['category'=>$category]);
+    }
+    public function postEditCategory(Request $req)
+    {
+    	$id=$req->id;
+    	$category=category::where('category_id',$id)->first();
+    	$this->validate($req, 
+    	[
+    		'txtCateName' => 'required|unique:category,category_name'
+    	], 
+    	[
+    		'txtCateName.requried'=>'Bạn chưa nhập thể loại',
+    		'txtCateName.unique'=>'Thể loại đã tồn tại'
+    	]);
+    	$category->category_name=$req->txtCateName;
+    	$category->save();
+    	return redirect('admin/edit-category/'.$id)->with('thongbao','Sửa thành công');
+    }
 }
