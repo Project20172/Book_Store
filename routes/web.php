@@ -68,3 +68,5 @@ Route::post('/admin/add-book','WebManager@postAddBook')->name('postAddBook');
 Route::get('/admin/edit-book/{id}','WebManager@getEditBook')->name('getEditBook');
 
 Route::post('/admin/edit-book','WebManager@postEditBook')->name('postEditBook');
+
+Route::get('/admin/remove-book/{id}','WebManager@getRemoveBook')->name('getRemoveBook');

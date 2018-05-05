@@ -347,4 +347,11 @@ class WebManager extends Controller
 
       return redirect('/admin/edit-book/'.$book->book_id)->with('thongbao','Sửa sách thành công');
     }
+
+    public function getRemoveBook($id)
+    {
+      $book=Book::find($id);
+      $book->delete();
+      return redirect('/admin/list-book')->with('thongbao','Xoá thành công');
+    }
 }
