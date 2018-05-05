@@ -11,7 +11,8 @@
 |
 */
 Route::get('/home', [
-	'as'=>'home'
+	'as'=>'home',
+	'uses'=>'ViewPages@homepage'
 ]);
 
 Route::get('login', function () {
