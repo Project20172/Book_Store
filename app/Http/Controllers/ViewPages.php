@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Session;
+use App\category;
+use App\Book;
 
 class ViewPages extends Controller
 {
@@ -13,10 +15,7 @@ class ViewPages extends Controller
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($book, $book->book_id);
-
         $request->session()->put('cart', $cart);
-        // dd($request->session()->get('cart'));
-
         return redirect()->route('home');
     }
 
@@ -27,5 +26,15 @@ class ViewPages extends Controller
         }
         $cart = null;
         return view('pages.carts', ['cart'=>$cart]);
+    }
+
+    public function homepage()
+    {
+        $listBook=Book::where('category_id',1)->skip(0)->take(3)->get();
+        $listVanHoc=Book::where('category_id',1)->skip(0)->take(4)->get();
+        $listGiaoDuc=Book::where('category_id',2)->skip(0)->take(4)->get();
+        $listThieuNhi=Book::where('category_id',5)->skip(0)->take(4)->get();
+        $listTeen=Book::where('category_id',6)->skip(0)->take(4)->get();
+    	return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
     }
 }
