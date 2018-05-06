@@ -1,12 +1,9 @@
-@extends('layout.master')
-@section('container')
-<div class="container">
 	<h4>
 	    2. Địa chỉ giao hàng
 	</h4>
     <div class="panel panel-default">
         <div class="panel-body">
-            <form class="form-horizontal" action="/action_page.php">
+            <form class="form-horizontal" action="">
                 <div class="form-group">
                   <label class="control-label col-sm-4" for="full_name">Họ tên</label>
                   <div class="col-sm-8">
@@ -52,14 +49,19 @@
                 
                 <div class="form-group">        
                   <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" class="btn btn-default" style="width: 120px; height: 40px">Hủy bỏ</button>
-                    <button type="reset" class="btn btn-primary" style="width: 120px; height: 40px;">Tiếp tục</button>
+                    <button type="button" class="btn btn-default" style="width: 120px; height: 40px">Hủy bỏ</button>
+                    <button type="button" class="btn btn-primary" id="getContentPayMent" style="width: 120px; height: 40px;">Tiếp tục</button>
                   </div>
                 </div>
             </form>
 
         </div>
     </div>
-    
-</div>          
-@endsection 
+
+<script >
+  $(document).ready(function (){
+    $('#getContentPayMent').on('click',function (){
+      $('#contentbuybook').load('{{ route('getContentPayment') }}');
+    });
+  });
+</script>

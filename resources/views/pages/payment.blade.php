@@ -1,6 +1,4 @@
-@extends('layout.master')
-@section('container')
-<div class="container">
+
 	<h4>
 	    3. Chọn phương thức thanh toán
 	</h4>
@@ -58,9 +56,9 @@
                 
           <div class="form-group">        
             <div class="col-sm-8">
-              <button type="submit" class="btn btn-primary" style="width: 200px; height: 40px;">Quay lại
+              <button type="button" class="btn btn-primary" id="getContentChekout" style="width: 200px; height: 40px;">Quay lại
               </button>
-              <button type="submit" class="btn btn-primary" style="width: 200px; height: 40px;">Đặt hàng
+              <button type="button" class="btn btn-primary" style="width: 200px; height: 40px;">Đặt hàng
               </button>
                    
             </div>
@@ -126,6 +124,12 @@
       </div>
     </div>
   </div>
+
+  <script >
+    $(document).ready(function (){
+      $("#getContentChekout").on("click",function (){
+        $("#contentbuybook").load("{{ route('getContentCheckOut') }}");
+      })
+    })
+  </script>
     
-</div>          
-@endsection 

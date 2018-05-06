@@ -38,12 +38,17 @@ class ViewPages extends Controller
     	return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
     }
 
-    public function getCheckOut()
+    public function getContentCheckOut()
     {
         return view('pages.check_out');
     }
 
-    public function getPayment()
+    public function getBuyBook()
+    {
+        return view('pages.buyBook');
+    }
+
+    public function getContentPayment()
     {
         return view('pages.payment');
     }

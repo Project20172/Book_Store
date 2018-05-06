@@ -90,6 +90,8 @@ Route::get('admin/prevtabvanhoc/{id}','WebManager@getPrevTabVanHoc')->name('getP
 
 Route::get('admin/prev3book/{id}','WebManager@getPrev3Book')->name('getPrev3Book');
 
-Route::get('checkout','ViewPages@getCheckOut')->name('getCheckOut');
+Route::get('checkout','ViewPages@getContentCheckOut')->name('getContentCheckOut');
 
-Route::get('payment','ViewPages@getPayment')->name('getPayment');
+Route::get('payment','ViewPages@getContentPayment')->name('getContentPayment');
+
+Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
