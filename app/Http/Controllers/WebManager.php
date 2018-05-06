@@ -6,14 +6,24 @@ use Illuminate\Http\Request;
 use App\category;
 use App\Author;
 use App\Book;
+use Illuminate\Support\Facades\DB;
 
 class WebManager extends Controller
 {
 
     public function getBookDetail($id)
     {
-      $book=Book::find($id);
-      return view('pages.book_detail',['book'=>$book]);
+    //  $book=Book::find($id);
+      $books = DB::table('book')
+            ->join('author','book.author_id', '=' ,'author.author_id')
+            ->where('book_id',$id)
+            ->get();
+      $reviews = DB::table('book_review')
+            ->where('book_review.book_id',$id)
+            ->join('customer','book_review.user_id', '=', 'customer.user_id')
+            ->select('customer.first_name','customer.last_name','book_review.*')
+            ->get()->toArray();
+      return view('pages.book_detail',['books'=>$books], 'reviews' => $reviews);
 
     public function getAdmin()
   	{
