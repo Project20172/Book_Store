@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-Route::get('/home', [
-	'as'=>'home'
-]);
+Route::get('/home', 'ViewPages@homepage')->name('home');
 
 Route::get('login', function () {
     return view('pages.login');
@@ -32,6 +30,7 @@ Route::get('add-to-cart/{id}', [
 	'as' => 'book.addToCart',
 	'uses' => 'ViewPages@getAddToCart'
 ]);
+
 
 Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
 
@@ -70,3 +69,17 @@ Route::get('/admin/edit-book/{id}','WebManager@getEditBook')->name('getEditBook'
 Route::post('/admin/edit-book','WebManager@postEditBook')->name('postEditBook');
 
 Route::get('/admin/remove-book/{id}','WebManager@getRemoveBook')->name('getRemoveBook');
+
+Route::get('loai-san-pham/{id}','ViewPages@getLoaiSanPham')->name('loaisanpham');
+
+Route::get('/book_detail/{id}','WebManager@getBookDetail')->name('getBookDetail');
+
+Route::get('admin/next3book/{id}','WebManager@getNext3Book')->name('getNext3Book');
+
+Route::get('admin/nexttabvanhoc/{id}','WebManager@getNextTabVanHoc')->name('getNextTabVanHoc');
+
+Route::get('admin/prevtabvanhoc/{id}','WebManager@getPrevTabVanHoc')->name('getPrevTabVanHoc');
+
+Route::get('admin/prev3book/{id}','WebManager@getPrev3Book')->name('getPrev3Book');
+
+
