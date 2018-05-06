@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+
 Route::get('/home', 'ViewPages@homepage')->name('home');
+
 
 Route::get('login', function () {
     return view('pages.login');
@@ -30,6 +33,11 @@ Route::get('add-to-cart/{id}', [
 	'as' => 'book.addToCart',
 	'uses' => 'ViewPages@getAddToCart'
 ]);
+
+
+Route::get('/book_detail/{id}','WebManager@getBookDetail')->name('getBookDetail');
+
+Route::get('/home', 'ViewPages@homepage')->name('home');
 
 
 Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
@@ -81,5 +89,6 @@ Route::get('admin/nexttabvanhoc/{id}','WebManager@getNextTabVanHoc')->name('getN
 Route::get('admin/prevtabvanhoc/{id}','WebManager@getPrevTabVanHoc')->name('getPrevTabVanHoc');
 
 Route::get('admin/prev3book/{id}','WebManager@getPrev3Book')->name('getPrev3Book');
+
 
 

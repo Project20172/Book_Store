@@ -9,6 +9,12 @@ use App\Book;
 
 class WebManager extends Controller
 {
+
+    public function getBookDetail($id)
+    {
+      $book=Book::find($id);
+      return view('pages.book_detail',['book'=>$book]);
+
     public function getAdmin()
   	{
   		return view('pages.admin.frame');
@@ -378,5 +384,6 @@ class WebManager extends Controller
       $book_id=$book_id-4;
       $listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
       return $listBook;
+
     }
 }
