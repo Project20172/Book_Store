@@ -12,8 +12,11 @@
 */
 
 
+
 Route::get('/home', 'ViewPages@homepage')->name('home');
 
+
+Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
 
 Route::get('login', function () {
     return view('pages.login');
@@ -33,6 +36,7 @@ Route::get('add-to-cart/{id}', [
 	'as' => 'book.addToCart',
 	'uses' => 'ViewPages@getAddToCart'
 ]);
+
 
 
 Route::get('/book_detail/{id}','WebManager@getBookDetail')->name('getBookDetail');
@@ -78,9 +82,11 @@ Route::post('/admin/edit-book','WebManager@postEditBook')->name('postEditBook');
 
 Route::get('/admin/remove-book/{id}','WebManager@getRemoveBook')->name('getRemoveBook');
 
+
 Route::get('loai-san-pham/{id}','ViewPages@getLoaiSanPham')->name('loaisanpham');
 
 Route::get('/book_detail/{id}','WebManager@getBookDetail')->name('getBookDetail');
+
 
 Route::get('admin/next3book/{id}','WebManager@getNext3Book')->name('getNext3Book');
 
@@ -92,6 +98,8 @@ Route::get('admin/prev3book/{id}','WebManager@getPrev3Book')->name('getPrev3Book
 
 Route::get('checkout','ViewPages@getContentCheckOut')->name('getContentCheckOut');
 
+
 Route::get('payment','ViewPages@getContentPayment')->name('getContentPayment');
 
 Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
+

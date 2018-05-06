@@ -184,7 +184,7 @@ ul.multi-column-dropdown h6 {
     margin: 0;
     height: 50px;
     float: none;
-    overflow: hidden;
+    /* overflow: hidden; */
     -webkit-transition: width 0.3s;
     -moz-transition: width 0.3s;
     transition: width 0.3s;
@@ -1109,6 +1109,16 @@ html, body{
     background: #fff;
     font-family: 'Open Sans', sans-serif;
 }
+
+div#result {
+    position:  relative;
+    z-index:  1000;
+    top: 50px;
+    /* left:  11px; */
+    background: whitesmoke;
+    padding-left:  15px;
+    width: 91.2%;
+}
 p{
     margin:0;
 }
@@ -1122,6 +1132,14 @@ ul,label{
 }
 body a:hover{
     text-decoration:none;
+}
+
+a.giang {
+    color: green;
+}
+
+a.giang:hover {
+    color:  blue;
 }
 
 .banner-bottom,.new-collections,.checkout,.collections-bottom,.timer,.register,.products,.typo,.mail,.single,.login,.single-related-products{

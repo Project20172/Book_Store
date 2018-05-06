@@ -1,3 +1,4 @@
+
 <div class="header">
 	<div class="container">
 		<div class="header-grid">
@@ -125,31 +126,63 @@
 				<div class="logo-nav-right">
 					<div class="search-box">
 						<div id="sb-search" class="sb-search sb-search-open">
-							<form >
-								<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search">
-								<input class="sb-search-submit" type="submit" value="">
-								<span class="sb-icon-search"> </span>
-							</form>
+							<div class="searchdiv">
+								<form >
+									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search">
+									<div id="result">
+										
+									</div>
+									<input class="sb-search-submit" type="submit" value="">
+									<span class="sb-icon-search"> </span>
+								</form>
+							</div>
 						</div>
 					</div>
 					<!-- search-scripts -->
+
 					<script src="js/classie.js"></script>
 					<script src="js/uisearch.js"></script>
+					<script >
+						$(document).ready(function (){ 
+							$('#search').on('keyup',function (){
+								console.log($('#search').val());
+
+								$.ajax({
+									url:"{{ url('search') }}"+"/"+$('#search').val(),
+									method: 'get',
+
+									success: function(result){
+										// console.log(result);
+										// for(var i=0;i<result.length;i++){ 
+										// 	console.log(result[i]['book_name']);
+										// }
+										var str='';
+										if(result.length>0){
+											str+='<ul>';
+											for(var i=0;i<result.length;i++){
+												str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+											}
+											str+='</ul>';
+										}
+
+										document.getElementById("result").innerHTML=str;
+									}
+								});
+							});
+						});
+					</script>
 					<!-- <script>
 						new UISearch( document.getElementById( 'sb-search' ) );
 					</script> -->
+
 					<!-- //search-scripts -->
 				</div>
 				<div class="header-right">
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
 							<h3> <div class="total">
-								@if(Session::has('cart'))
-								<span class="simpleCart_total">${{Session::get('cart')->totalPrice }}</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">{{ Session::get('cart')->totalQty }}</span> items)</div>
-								@else
 								<span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)</div>
-								@endif
-								<img src="images/bag.png" alt="">
+								<img src="{{ asset('images/bag.png') }}" alt="">
 							</h3>
 						</a>
 						<div class="clearfix"> </div>

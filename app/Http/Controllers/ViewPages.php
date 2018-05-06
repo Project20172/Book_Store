@@ -9,6 +9,9 @@ use App\Book;
 
 class ViewPages extends Controller
 {
+
+
+    
     public function getAddToCart(Request $request, $book_id){
 
         $book = Book::find($book_id);
@@ -26,7 +29,9 @@ class ViewPages extends Controller
         }
         $cart = null;
         return view('pages.carts', ['cart'=>$cart]);
-    }
+
+	}
+
 
     public function homepage()
     {
@@ -37,6 +42,7 @@ class ViewPages extends Controller
         $listTeen=Book::where('category_id',6)->skip(0)->take(4)->get();
     	return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
     }
+
 
     public function getContentCheckOut()
     {
@@ -52,4 +58,16 @@ class ViewPages extends Controller
     {
         return view('pages.payment');
     }
+
+
+    public function getLoaiSanPham($id)
+    {
+        $category=category::find($id);
+        $listBook1=$category->getAllBook()->paginate(12);
+        $listBook2=category::find($id)->getAllBook()->paginate(12);
+    	$listBook=Book::where('category_id',$id)->paginate(12);
+    	return view('pages.loai_san_pham',['listBook'=>$listBook]);
+    }
+
+
 }

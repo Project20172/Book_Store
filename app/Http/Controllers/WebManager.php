@@ -13,7 +13,6 @@ class WebManager extends Controller
 
     public function getBookDetail($id)
     {
-    //  $book=Book::find($id);
       $books = DB::table('book')
             ->join('author','book.author_id', '=' ,'author.author_id')
             ->where('book_id',$id)
@@ -23,17 +22,14 @@ class WebManager extends Controller
             ->join('customer','book_review.user_id', '=', 'customer.user_id')
             ->select('customer.first_name','customer.last_name','book_review.*')
             ->get()->toArray();
-      // echo '<pre>';
-      // // var_dump($books[0]->book_name);
-      // echo $books[0]->book_name;
-      // foreach ($books as $book) {
-      //   echo $book->book_name;
-      // }
-      // // echo $book[0]["book_name"];
-      // echo '--------------------------';
-      // var_dump($reviews);
       return view('pages.book_detail',['books'=>$books, 'reviews' => $reviews]);
     }
+    public function getSearchBook($id)
+    {
+      $listBook=Book::where('book_name','LIKE','%'.$id.'%')->get();
+      return $listBook;
+    }
+
     public function getAdmin()
   	{
   		return view('pages.admin.frame');
