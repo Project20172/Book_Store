@@ -24,6 +24,22 @@ class WebManager extends Controller
             ->get()->toArray();
       return view('pages.book_detail',['books'=>$books, 'reviews' => $reviews]);
     }
+
+    public function getCategoryAndCount()
+    {
+      $list = DB::table('book')
+            ->join('category','category.category_id','=','book.category_id')
+            ->selectraw('category.category_name, COUNT(*) AS "Sum"')
+            ->groupBy('category.category_name')
+            ->get();
+            echo '<pre>';
+            var_dump($list);
+
+      foreach ($list as $value) {
+        echo $value->Sum;
+      }
+    }
+
     public function getSearchBook($id)
     {
       $listBook=Book::where('book_name','LIKE','%'.$id.'%')->get();

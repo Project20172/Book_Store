@@ -83,13 +83,9 @@
 		<h2>Số lượng</h2>
 		<div class="brands-name">
 			<ul class="nav nav-pills nav-stacked">
-				<li><a href="#"> <span class="pull-right">(50)</span>Tin học</a></li>
-				<li><a href="#"> <span class="pull-right">(56)</span>Văn học</a></li>
-				<li><a href="#"> <span class="pull-right">(27)</span>Ngoại ngữ</a></li>
-				<li><a href="#"> <span class="pull-right">(32)</span>Y học</a></li>
-				<li><a href="#"> <span class="pull-right">(5)</span>Điện tử</a></li>
-				<li><a href="#"> <span class="pull-right">(9)</span>Cơ khí</a></li>
-				<li><a href="#"> <span class="pull-right">(4)</span>Khoa học</a></li>
+				@foreach ($listCategoryAndQuantity as $element)
+					<li><a href="#"> <span class="pull-right">({{ $element->Sum }})</span>{{ $element->category_name }}</a></li>
+				@endforeach
 			</ul>
 		</div>
 	</div><!--/brands_products-->

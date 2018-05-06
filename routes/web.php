@@ -11,7 +11,7 @@
 |
 */
 
-
+Route::get('getCategoryAndCount', 'WebManager@getCategoryAndCount')->name('getCategoryAndCount');
 
 Route::get('/home', 'ViewPages@homepage')->name('home');
 
