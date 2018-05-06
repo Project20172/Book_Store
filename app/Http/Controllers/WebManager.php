@@ -15,6 +15,22 @@ class WebManager extends Controller
       $book=Book::find($id);
       return view('pages.book_detail',['book'=>$book]);
 }
+
+    public function getSearchBook($id)
+    {
+      $listBook=Book::where('book_name','LIKE','%'.$id.'%')->get();
+      // echo '<prev>';
+      // var_dump($listBook);
+      // $str='<ul>';
+      // foreach ($listBook as $book) {
+      //   $str.='<li><a href="/bookdet">'.$book->book_name.'</li>';
+
+      //   // var_dump($book->book_name);
+      // }
+      // $str.='</ul>';
+      return $listBook;
+    }
+
     public function getAdmin()
   	{
   		return view('pages.admin.frame');
