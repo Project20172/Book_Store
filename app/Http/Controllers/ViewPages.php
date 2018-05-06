@@ -44,6 +44,22 @@ class ViewPages extends Controller
     }
 
 
+    public function getContentCheckOut()
+    {
+        return view('pages.check_out');
+    }
+
+    public function getBuyBook()
+    {
+        return view('pages.buyBook');
+    }
+
+    public function getContentPayment()
+    {
+        return view('pages.payment');
+    }
+
+
     public function getLoaiSanPham($id)
     {
         $category=category::find($id);
@@ -52,5 +68,6 @@ class ViewPages extends Controller
     	$listBook=Book::where('category_id',$id)->paginate(12);
     	return view('pages.loai_san_pham',['listBook'=>$listBook]);
     }
+
 
 }

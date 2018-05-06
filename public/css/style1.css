@@ -6,7 +6,7 @@
     -o-transition:.5s ease-in-out;
 }
 .header-grid{
-    padding:1em 0;
+    padding:2em 0;
     border-bottom:1px solid #DEDEDE;
 }
 .logo-nav{
@@ -883,7 +883,7 @@ h4.quick {
     color: #000;
     font-size:1.2em;
     text-transform: uppercase;
-    font-family: 'Ubuntu-Regular';
+    font-family: 'Arial';
     margin-top: 1em;
 }
 p.quick_desc {
@@ -1067,7 +1067,7 @@ ul.product-qty {
     padding-left: 0px;
 }
 .facts p {
-    color: #B3B3B3;
+    color: red;
     font-size: 0.9em;
     line-height: 2em;
     padding: 0 0 1em;
@@ -1510,7 +1510,7 @@ td.invert-image a img {
     width: 40px;
     height:40px;
     padding: 8px 0px;
-    color: #A9A9A9;
+    color: #0e0e0e;
     line-height: 24px;
     border: 1px solid #E5E5E5;
     background-color: #E5E5E5;
@@ -1579,3 +1579,12 @@ td.invert-image a img {
     top: 0.1em;
 }
 /*-- //checkout --*/
+/*payment*/
+.form-control.payment-card-info{
+    width: 50%;
+    color: black;
+
+}
+.fa .fa-star .checked {
+    color: orange;
+}
