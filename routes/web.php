@@ -16,7 +16,7 @@
 Route::get('/home', 'ViewPages@homepage')->name('home');
 
 
-
+Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
 
 Route::get('login', function () {
     return view('pages.login');
