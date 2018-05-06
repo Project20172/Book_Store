@@ -14,7 +14,7 @@ class WebManager extends Controller
     {
       $book=Book::find($id);
       return view('pages.book_detail',['book'=>$book]);
-
+}
     public function getAdmin()
   	{
   		return view('pages.admin.frame');
