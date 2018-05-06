@@ -57,7 +57,9 @@
           </div>
                 
           <div class="form-group">        
-            <div class="col-sm-3">
+            <div class="col-sm-8">
+              <button type="submit" class="btn btn-primary" style="width: 200px; height: 40px;">Quay lại
+              </button>
               <button type="submit" class="btn btn-primary" style="width: 200px; height: 40px;">Đặt hàng
               </button>
                    
