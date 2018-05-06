@@ -12,7 +12,10 @@
 */
 
 
+
+
 Route::get('/home', 'ViewPages@homepage')->name('home');
+
 
 
 Route::get('login', function () {

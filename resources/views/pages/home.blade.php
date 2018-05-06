@@ -1,5 +1,7 @@
 @extends('layout.frame')
 @section('content')
+
+
 <br>
 <br>
 <div class="recommended_items bk">
@@ -498,4 +500,5 @@
 
 	});
 </script>
+
 @endsection
