@@ -9,13 +9,18 @@ use App\Book;
 
 class ViewPages extends Controller
 {
+
+	public function homepage()
+    {
+    	return view('pages.home');
+    }
+    
     public function getAddToCart(Request $request, $book_id){
 
         $book = Book::find($book_id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
         $cart->add($book, $book->book_id);
-
         $request->session()->put('cart', $cart);
         return redirect()->route('home');
     }
@@ -27,7 +32,20 @@ class ViewPages extends Controller
         }
         $cart = null;
         return view('pages.carts', ['cart'=>$cart]);
+
+	}
+
+
+    public function homepage()
+    {
+        $listBook=Book::where('category_id',1)->skip(0)->take(3)->get();
+        $listVanHoc=Book::where('category_id',1)->skip(0)->take(4)->get();
+        $listGiaoDuc=Book::where('category_id',2)->skip(0)->take(4)->get();
+        $listThieuNhi=Book::where('category_id',5)->skip(0)->take(4)->get();
+        $listTeen=Book::where('category_id',6)->skip(0)->take(4)->get();
+    	return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
     }
+
 
     public function getLoaiSanPham($id)
     {
@@ -37,4 +55,5 @@ class ViewPages extends Controller
     	$listBook=Book::where('category_id',$id)->paginate(12);
     	return view('pages.loai_san_pham',['listBook'=>$listBook]);
     }
+
 }
