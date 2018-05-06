@@ -44,27 +44,6 @@
 
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<h4 class="panel-title">
-					<a data-toggle="collapse" data-parent="#accordian" href="#womens">
-						<span class="badge pull-right"><i class="fa fa-plus"></i></span>
-						Nhà xuất bản
-					</a>
-				</h4>
-			</div>
-			<div id="womens" class="panel-collapse collapse">
-				<div class="panel-body">
-					<ul>
-						<li><a href="#">Fendi</a></li>
-						<li><a href="#">Guess</a></li>
-						<li><a href="#">Valentino</a></li>
-						<li><a href="#">Dior</a></li>
-						<li><a href="#">Versace</a></li>
-					</ul>
-				</div>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
 				<h4 class="panel-title"><a href="#">Sách mới</a></h4>
 			</div>
 		</div>
