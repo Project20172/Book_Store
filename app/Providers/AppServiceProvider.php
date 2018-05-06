@@ -29,8 +29,8 @@ class AppServiceProvider extends ServiceProvider
 
             $listCategoryAndQuantity = DB::table('book')
             ->join('category','category.category_id','=','book.category_id')
-            ->selectraw('category.category_name, COUNT(*) AS "Sum"')
-            ->groupBy('category.category_name')
+            ->selectraw('category.category_id,category.category_name, COUNT(*) AS "Sum"')
+            ->groupBy('category.category_id','category.category_name')
             ->get();
             $view->with('listCategoryAndQuantity',$listCategoryAndQuantity);
         });

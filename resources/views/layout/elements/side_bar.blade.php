@@ -84,7 +84,7 @@
 		<div class="brands-name">
 			<ul class="nav nav-pills nav-stacked">
 				@foreach ($listCategoryAndQuantity as $element)
-					<li><a href="#"> <span class="pull-right">({{ $element->Sum }})</span>{{ $element->category_name }}</a></li>
+					<li><a href="{{ route('loaisanpham',$element->category_id) }}"> <span class="pull-right">({{ $element->Sum }})</span>{{ $element->category_name }}</a></li>
 				@endforeach
 			</ul>
 		</div>
