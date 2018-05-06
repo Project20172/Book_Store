@@ -16,7 +16,7 @@
 				<div class="panel-body">
 					<ul>
 						@foreach ($listCategory as $category)
-							<li><a href="{{ route('loaisanpham',$category->category_id) }}">{{ $category->category_name }} </a></li>
+							<li><a class="ahover" href="{{ route('loaisanpham',$category->category_id) }}">{{ $category->category_name }} </a></li>
 						@endforeach
 					</ul>
 				</div>
@@ -35,7 +35,7 @@
 				<div class="panel-body">
 					<ul>
 						@foreach ($listAuthor as $author)
-							<li><a href="{{ route('getBookByAuthor',$author->author_id) }}">{{ $author->name }}</a></li>
+							<li><a class="ahover" href="{{ route('getBookByAuthor',$author->author_id) }}">{{ $author->name }}</a></li>
 						@endforeach
 					</ul>
 				</div>
