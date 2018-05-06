@@ -25,19 +25,11 @@ class WebManager extends Controller
       return view('pages.book_detail',['books'=>$books, 'reviews' => $reviews]);
     }
 
-    public function getCategoryAndCount()
+    public function getBookByAuthor($id)
     {
-      $list = DB::table('book')
-            ->join('category','category.category_id','=','book.category_id')
-            ->selectraw('category.category_name, COUNT(*) AS "Sum"')
-            ->groupBy('category.category_name')
-            ->get();
-            echo '<pre>';
-            var_dump($list);
-
-      foreach ($list as $value) {
-        echo $value->Sum;
-      }
+      $listBook=Book::where('author_id',$id)->paginate(12);
+      $author=Author::find($id);
+      return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>'Sách của '.$author->name]);
     }
 
     public function getSearchBook($id)

@@ -35,7 +35,7 @@
 				<div class="panel-body">
 					<ul>
 						@foreach ($listAuthor as $author)
-							<li><a href="#">{{ $author->name }}</a></li>
+							<li><a href="{{ route('getBookByAuthor',$author->author_id) }}">{{ $author->name }}</a></li>
 						@endforeach
 					</ul>
 				</div>

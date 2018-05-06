@@ -63,11 +63,7 @@ class ViewPages extends Controller
     public function getLoaiSanPham($id)
     {
         $category=category::find($id);
-        $listBook1=$category->getAllBook()->paginate(12);
-        $listBook2=category::find($id)->getAllBook()->paginate(12);
     	$listBook=Book::where('category_id',$id)->paginate(12);
-    	return view('pages.loai_san_pham',['listBook'=>$listBook]);
+    	return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>$category->category_name]);
     }
-
-
 }

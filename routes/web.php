@@ -13,7 +13,11 @@
 
 Route::get('getCategoryAndCount', 'WebManager@getCategoryAndCount')->name('getCategoryAndCount');
 
+Route::get('getBookByAuthor/{id}','WebManager@getBookByAuthor')->name('getBookByAuthor');
+
 Route::get('/home', 'ViewPages@homepage')->name('home');
+
+Route::get('/', 'ViewPages@homepage')->name('home');
 
 
 Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
