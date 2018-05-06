@@ -23,8 +23,17 @@ class WebManager extends Controller
             ->join('customer','book_review.user_id', '=', 'customer.user_id')
             ->select('customer.first_name','customer.last_name','book_review.*')
             ->get()->toArray();
-      return view('pages.book_detail',['books'=>$books], 'reviews' => $reviews);
-
+      // echo '<pre>';
+      // // var_dump($books[0]->book_name);
+      // echo $books[0]->book_name;
+      // foreach ($books as $book) {
+      //   echo $book->book_name;
+      // }
+      // // echo $book[0]["book_name"];
+      // echo '--------------------------';
+      // var_dump($reviews);
+      return view('pages.book_detail',['books'=>$books, 'reviews' => $reviews]);
+    }
     public function getAdmin()
   	{
   		return view('pages.admin.frame');
