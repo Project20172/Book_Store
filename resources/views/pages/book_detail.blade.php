@@ -31,6 +31,23 @@
 						<div class="entry value"><span>1</span></div>
 						<div class="entry value-plus active">&nbsp;</div>
 					</div>
+
+					<!--quantity-->
+					<script>
+						$('.value-plus').on('click', function(){
+							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
+							divUpd.text(newVal);
+						});
+
+						$('.value-minus').on('click', function(){
+							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
+							if(newVal>=1) divUpd.text(newVal);
+						});
+					</script>
+					<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}
+						" class="add-to item_add hvr-skew-backward">Add to cart</a>
+					<div class="clearfix"></div>
+
 				</div>
 				<!--quantity-->
 				<script>

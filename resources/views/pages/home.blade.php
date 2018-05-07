@@ -18,7 +18,7 @@
 									<img src="{{ asset($book->picture) }}" class="img-fluid" alt="" width="120" height="150">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
 						</div>
