@@ -184,6 +184,10 @@ a.dropdown-toggle.usericon:hover {
     margin-top: 1.4em;
 }
 /*start search*/
+#sb-search {
+    right: 560px;
+}
+
 .sb-search {
     position: absolute;
     right:25%;
@@ -256,7 +260,7 @@ a.dropdown-toggle.usericon:hover {
 }
 /* Open state */
 .sb-search.sb-search-open,.no-js .sb-search {
-    width:42%;
+    width:35%;
 }
 .sb-search.sb-search-open .sb-icon-search,.no-js .sb-search .sb-icon-search {
     background:#fff url(../images/img-sp-1.png) no-repeat 7px -91px;

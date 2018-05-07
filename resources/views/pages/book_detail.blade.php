@@ -45,7 +45,8 @@
 							if(newVal>=1) divUpd.text(newVal);
 						});
 					</script>
-					<a href="#" class="add-to item_add hvr-skew-backward">Add to cart</a>
+					<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}
+						" class="add-to item_add hvr-skew-backward">Add to cart</a>
 					<div class="clearfix"></div>
 				</div>
 			</div>
