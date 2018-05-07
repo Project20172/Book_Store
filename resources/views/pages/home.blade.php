@@ -302,7 +302,7 @@
 						<div class="single-products book_choose">
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
-									<img src="{{ asset($book->picture) }}" alt="">
+									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -312,6 +312,12 @@
 					</div>
 				</div>
 				@endforeach
+			</div>
+			<div >
+				
+				<button id="giaoducright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="giaoducleft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 			@endif
 			
@@ -325,7 +331,7 @@
 						<div class="single-products book_choose">
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
-									<img src="{{ asset($book->picture) }}" alt="">
+									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -335,6 +341,12 @@
 					</div>
 				</div>
 				@endforeach
+			</div>
+			<div >
+				
+				<button id="thieunhiright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="thieunhileft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 			@endif
 		</div>
@@ -348,7 +360,7 @@
 						<div class="single-products book_choose">
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
-									<img src="{{ asset($book->picture) }}" alt="">
+									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -358,6 +370,12 @@
 					</div>
 				</div>
 				@endforeach
+			</div>
+			<div >
+				
+				<button id="teenright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="teenleft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 			@endif
 		</div>

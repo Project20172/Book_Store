@@ -255,7 +255,7 @@ public function postAddBook(Request $req)
   else{
     $book->language=$req->language;
   }
-  if($book->publish_year==null){
+  if($req->publish_year==null){
     $book->publish_year=0;
   }
   else{
@@ -351,7 +351,7 @@ public function postEditBook(Request $req)
   else{
     $book->language=$req->language;
   }
-  if($book->publish_year==null){
+  if($req->publish_year==null){
     $book->publish_year=0;
   }
   else{
