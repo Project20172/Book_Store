@@ -8,10 +8,7 @@ use App\category;
 use App\Book;
 
 class ViewPages extends Controller
-{
-
-
-    
+{   
     public function getAddToCart(Request $request, $book_id){
 
         $book = Book::find($book_id);

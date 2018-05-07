@@ -31,11 +31,12 @@ Route::get('/register', function () {
     return view('pages.register');
 })->name('register');
 
-
-Route::get('/cart', [
-	'as'=>'cart',
-	'uses'=>'ViewPages@getCart'
-]);
+Route::get('/user_information',function(){
+	return view('pages.user_information');
+})->name('user_information');
+Route::post('/home','RegisterController@addCustomer')->name('addCustomer');
+Route::get('/result-search', 'ViewPages@getResultSearch')->name('result-search');
+Route::get('/cart', ['as'=>'cart','uses'=>'ViewPages@getCart']);
 
 Route::get('add-to-cart/{id}', [
 	'as' => 'book.addToCart',
