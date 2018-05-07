@@ -11,6 +11,8 @@
 |
 */
 
+Route::post('send_review','WebManager@postSendReview')->name('postSendReview');
+
 Route::get('getCategoryAndCount', 'WebManager@getCategoryAndCount')->name('getCategoryAndCount');
 
 Route::get('getBookByAuthor/{id}','WebManager@getBookByAuthor')->name('getBookByAuthor');

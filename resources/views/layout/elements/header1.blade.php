@@ -142,8 +142,8 @@
 					</div>
 					<!-- search-scripts -->
 
-					<script src="js/classie.js"></script>
-					<script src="js/uisearch.js"></script>
+					<script src="{{ asset('js/classie.js') }}"></script>
+					<script src="{{ asset('js/uisearch.js') }}"></script>
 					<script >
 						$(document).ready(function (){ 
 							$('#search').on('keyup',function (){
@@ -182,26 +182,26 @@
 				<div class="header-right">
 					@if (session('UserLogin'))
 					
-						<ul class="nav navbar-top-links navbar-right">
-							<!-- /.dropdown -->
-							<li class="dropdown">
-								<a class="dropdown-toggle usericon" data-toggle="dropdown" href="#">
-									
-									<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-								</a>
-								<ul class="dropdown-menu dropdown-user">
-									<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
-									</li>
-									<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
-									</li>
-									<li class="divider"></li>
-									<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
-									</li>
-								</ul>
-								<!-- /.dropdown-user -->
-							</li>
-							<!-- /.dropdown -->
-						</ul>
+					<ul class="nav navbar-top-links navbar-right">
+						<!-- /.dropdown -->
+						<li class="dropdown">
+							<a class="dropdown-toggle usericon" data-toggle="dropdown" href="#">
+
+								<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-user">
+								<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
+								</li>
+								<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
+								</li>
+								<li class="divider"></li>
+								<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+								</li>
+							</ul>
+							<!-- /.dropdown-user -->
+						</li>
+						<!-- /.dropdown -->
+					</ul>
 					@endif
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
@@ -218,3 +218,4 @@
 			<hr>
 		</div>
 	</div>
+</div>
