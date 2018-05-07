@@ -1,29 +1,31 @@
 
-	<div class="header">
-		<div class="container">
-			<div class="header-grid">
-				<div class="header-grid-left animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
-					<ul>
-						<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:nh.giang261197@gmail.com">nh.giang261197@gmail.com</a></li>
-						<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>01658215007</li>
-						<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="{{ route('login') }}">Đăng nhập</a></li>
-						<li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a href="{{ route('register') }}">Đăng ký</a></li>
-					</ul>
-				</div>
-				<div class="header-grid-right animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
-					<ul class="social-icons">
-						<li><a href="#" class="facebook"></a></li>
-						<li><a href="#" class="twitter"></a></li>
-						<li><a href="#" class="g"></a></li>
-						<li><a href="#" class="instagram"></a></li>
-					</ul>
-				</div>
-				<div class="clearfix"> </div>
+<div class="header">
+	<div class="container">
+		<div class="header-grid">
+			<div class="header-grid-left animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+				<ul>
+					<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:nh.giang261197@gmail.com">nh.giang261197@gmail.com</a></li>
+					<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>01658215007</li>
+					@if (!session('UserLogin'))
+					<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="{{ route('getLogin') }}">Đăng nhập</a></li>
+					<li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a href="{{ route('register') }}">Đăng ký</a></li>
+					@endif
+				</ul>
 			</div>
-			<div class="logo-nav">
-				<div class="logo-nav-left animated wow zoomIn animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;">
-					<h1><a href="{{ route('home') }}">Best Store <span class="fix">Mua sách ở mọi nơi</span></a></h1>
-				</div>
+			<div class="header-grid-right animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
+				<ul class="social-icons">
+					<li><a href="#" class="facebook"></a></li>
+					<li><a href="#" class="twitter"></a></li>
+					<li><a href="#" class="g"></a></li>
+					<li><a href="#" class="instagram"></a></li>
+				</ul>
+			</div>
+			<div class="clearfix"> </div>
+		</div>
+		<div class="logo-nav">
+			<div class="logo-nav-left animated wow zoomIn animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: zoomIn;">
+				<h1><a href="{{ route('home') }}">Best Store <span class="fix">Mua sách ở mọi nơi</span></a></h1>
+			</div>
 				{{-- <div class="logo-nav-left1">
 					<nav class="navbar navbar-default">
 						<!-- Brand and toggle get grouped for better mobile display -->
@@ -126,17 +128,51 @@
 				<div class="logo-nav-right">
 					<div class="search-box">
 						<div id="sb-search" class="sb-search sb-search-open">
-							<form >
-								<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search">
-								<input class="sb-search-submit" type="submit" value="">
-								<span class="sb-icon-search"> </span>
-							</form>
+							<div class="searchdiv">
+								<form >
+									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search">
+									<div id="result">
+										
+									</div>
+									<input class="sb-search-submit" type="submit" value="">
+									<span class="sb-icon-search"> </span>
+								</form>
+							</div>
 						</div>
 					</div>
 					<!-- search-scripts -->
 
 					<script src="js/classie.js"></script>
 					<script src="js/uisearch.js"></script>
+					<script >
+						$(document).ready(function (){ 
+							$('#search').on('keyup',function (){
+								console.log($('#search').val());
+
+								$.ajax({
+									url:"{{ url('search') }}"+"/"+$('#search').val(),
+									method: 'get',
+
+									success: function(result){
+										// console.log(result);
+										// for(var i=0;i<result.length;i++){ 
+										// 	console.log(result[i]['book_name']);
+										// }
+										var str='';
+										if(result.length>0){
+											str+='<ul>';
+											for(var i=0;i<result.length;i++){
+												str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+											}
+											str+='</ul>';
+										}
+
+										document.getElementById("result").innerHTML=str;
+									}
+								});
+							});
+						});
+					</script>
 					<!-- <script>
 						new UISearch( document.getElementById( 'sb-search' ) );
 					</script> -->
@@ -144,6 +180,29 @@
 					<!-- //search-scripts -->
 				</div>
 				<div class="header-right">
+					@if (session('UserLogin'))
+					
+						<ul class="nav navbar-top-links navbar-right">
+							<!-- /.dropdown -->
+							<li class="dropdown">
+								<a class="dropdown-toggle usericon" data-toggle="dropdown" href="#">
+									
+									<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+								</a>
+								<ul class="dropdown-menu dropdown-user">
+									<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
+									</li>
+									<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
+									</li>
+									<li class="divider"></li>
+									<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+									</li>
+								</ul>
+								<!-- /.dropdown-user -->
+							</li>
+							<!-- /.dropdown -->
+						</ul>
+					@endif
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
 							<h3> <div class="total">
