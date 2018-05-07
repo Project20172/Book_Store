@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 07, 2018 at 09:33 AM
+-- Generation Time: May 07, 2018 at 10:02 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -187,10 +187,10 @@ CREATE TABLE `customer` (
   `password` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `first_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `last_name` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `address` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `city` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `phone` text COLLATE utf8mb4_unicode_ci NOT NULL
+  `address` text COLLATE utf8mb4_unicode_ci,
+  `city` text COLLATE utf8mb4_unicode_ci,
+  `email` text COLLATE utf8mb4_unicode_ci,
+  `phone` text COLLATE utf8mb4_unicode_ci
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
@@ -198,7 +198,8 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`user_id`, `user_name`, `password`, `first_name`, `last_name`, `address`, `city`, `email`, `phone`) VALUES
-(1, 'giangnh', '123456', 'Giang', 'Nguyễn', 'Hà Nội', 'Hà Nội', 'giang.nh261197@gmail.com', '01658215007');
+(1, 'giangnh', '123456', 'Giang', 'Nguyễn', 'Hà Nội', 'Hà Nội', 'giang.nh261197@gmail.com', '01658215007'),
+(2, 'anhnv', '123456', 'Anh', 'Ngô', NULL, NULL, 'anhnv@gmail.com', NULL);
 
 -- --------------------------------------------------------
 
@@ -417,7 +418,7 @@ ALTER TABLE `category`
 -- AUTO_INCREMENT for table `customer`
 --
 ALTER TABLE `customer`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
