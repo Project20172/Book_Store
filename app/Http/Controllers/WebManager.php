@@ -13,6 +13,108 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+  public function postSendReview(Request $req)
+  {
+    $result = DB::table('book_review')->insert(['book_id'=>$req->book_id,'user_id'=>$req->customer_id,'rating'=>$req->rating,'reviews'=>$req->review,'review_date'=>NOW()]);
+    if($result){
+      $reviews = DB::table('book_review')
+      ->where('book_review.book_id',$req->book_id)
+      ->join('customer','book_review.user_id', '=', 'customer.user_id')
+      ->select('customer.first_name','customer.last_name','book_review.*')
+      ->get()->toArray();
+      $str='<table id="book_reviews" class="table table-bordered">';
+      //review
+      foreach ($reviews as $review) {
+        $str.='<tr>';
+        $str.='<td class="col-sm-2">';
+        $str.='<span>'.$review -> first_name.'</span>';
+        $str.='<span>'.$review -> last_name.'</span>';
+        $str.='<br>';
+        $str.='<span>'.$review -> review_date.'</span>';
+        $str.='</td>';
+        $str.='<td class="col-sm-10">';
+        for($i=0; $i < $review->rating; $i++){
+          $str.='<span class="fa fa-star" style="color: orange;"></span>';
+        }
+        for($j=5; $j > $review->rating; $j--){
+          $str.='<span class="fa fa-star"></span>';
+        }
+        $str.='<br>';
+        $str.=$review ->reviews;
+        $str.='</td>';
+        $str.='</tr>';
+      }
+      $str.='</table>';
+      //end review
+
+      // edit
+
+      $review_info1=DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$req->book_id)->get();
+      $temp=DB::table('book_review')->where('book_id',$req->book_id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review) AS 
+        percent')->groupby('book_review.rating')->get();
+      $review_info2=array();
+
+      foreach ($temp as $value) {
+        $review_info2[$value->rating]=$value->percent;
+      }
+      $str1='';
+      for ($i = 1; $i < 6; $i++) {
+        try{
+          if(array_key_exists($i,$review_info2)){
+            $str1.='<div id="'.$i.'-star">';
+            $str1.='        <div class="col-sm-2">';
+            $str1.='          <span>'.$i.' </span><span class="fa fa-star checked"></span>';
+            $str1.='        </div>';
+            $str1.='        <div class="col-sm-10">';
+            $str1.='          <div class="progress">';
+            $str1.='              <div class="progress-bar progress-bar-success" 
+            role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width:'.$review_info2[$i].'%">'.
+            $review_info2[$i].'%';
+            $str1.='              </div>';
+            $str1.='          </div>';
+            $str1.='        </div>';
+            $str1.='     </div>';
+          }else{
+            $str1.='<div id="'.$i.'-star">';
+            $str1.='        <div class="col-sm-2">';
+            $str1.='          <span>'.$i.' </span><span class="fa fa-star checked"></span>';
+            $str1.='        </div>';
+            $str1.='        <div class="col-sm-10">';
+            $str1.='          <div class="progress">';
+            $str1.='              <div class="progress-bar progress-bar-success" 
+            role="progressbar" aria-valuenow="40"
+            aria-valuemin="0" aria-valuemax="100" style="width: 0%">0%';
+            $str1.='              </div>';
+            $str1.='          </div>';
+            $str1.='        </div>';
+            $str1.='     </div>';
+          }
+        }catch(Exception $e){
+          echo 'Caught exception: ',  $e->getMessage(), "\n";
+        }
+      }
+
+
+      // end edit
+
+
+      $review_info3 = DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$req->book_id)->get();
+      $str3='';
+      foreach ($review_info3 as $value) {
+        $str3.='<p>Đánh giá trung bình</p>';
+                  $str3.='<h1>'.$value->medium.'/5</h1>';
+                  $str3.='<p><span>('. $value->quantity .') nhận xét</span></p>';
+      }
+      $listEdit=array('str'=>$str,'str1'=>$str1,'str3'=>$str3);
+      
+      return $listEdit;
+    }
+    else{
+      return 0;
+    }
+  }
+
   public function getBookDetail($id)
   {
     $books = DB::table('book')
@@ -24,7 +126,21 @@ class WebManager extends Controller
     ->join('customer','book_review.user_id', '=', 'customer.user_id')
     ->select('customer.first_name','customer.last_name','book_review.*')
     ->get()->toArray();
-    return view('pages.book_detail',['books'=>$books, 'reviews' => $reviews]);
+    $review_info1=DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$id)->get();
+    $temp=DB::table('book_review')->where('book_id',$id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review) AS 
+      percent')->groupby('book_review.rating')->get();
+    $review_info2=array();
+
+    foreach ($temp as $value) {
+      $review_info2[$value->rating]=$value->percent;
+    }
+    return view('pages.book_detail',
+      [
+        'books'=>$books,
+        'reviews' => $reviews,
+        'review_info2'=>$review_info2,
+        'review_info1'=>$review_info1
+      ]);
   }
 
   public function postCheckLogin(Request $req)
@@ -72,7 +188,7 @@ class WebManager extends Controller
   {
    $list = category::all();
    return view('pages.admin.listCategory',['list'=>$list]);
-  }
+ }
 
  public function getAddCategory()
  {
@@ -137,35 +253,35 @@ public function getAddAuthor()
 
 public function postAddAuthor(Request $req)
 {
-   $author=new Author;
-   $author->name=$req->author_name;
-   if($req->author_describe==null){
-    $author->author_describe="";
-    }
-  else{
-    $author->author_describe=$req->author_describe;
-    }
+ $author=new Author;
+ $author->name=$req->author_name;
+ if($req->author_describe==null){
+  $author->author_describe="";
+}
+else{
+  $author->author_describe=$req->author_describe;
+}
 
-  if($req->hasFile('author_picture')){
-    $file = $req->author_picture;
-    $this->validate($req,
-     [
-      'author_picture'=>'image|mimes:jpeg,png,jpg,gif,svg'
-    ],
-    [
-      'author_picture.image'=>'File bạn vừa chọn không phải ảnh',
-      'author_picture.mimes'=>'Chỉ hỗ trợ ảnh đuôi:jpeg,png,jpg,gif,svg',
-    ]);
-    $filename=time().'-'.$file->getClientOriginalName();
-    $file->move('images',$filename);  
-    $author->author_image='images/'.$filename; 
-  }
-  else{
-    $author->author_image="";
-  }
-  $author->save();
+if($req->hasFile('author_picture')){
+  $file = $req->author_picture;
+  $this->validate($req,
+   [
+    'author_picture'=>'image|mimes:jpeg,png,jpg,gif,svg'
+  ],
+  [
+    'author_picture.image'=>'File bạn vừa chọn không phải ảnh',
+    'author_picture.mimes'=>'Chỉ hỗ trợ ảnh đuôi:jpeg,png,jpg,gif,svg',
+  ]);
+  $filename=time().'-'.$file->getClientOriginalName();
+  $file->move('images',$filename);  
+  $author->author_image='images/'.$filename; 
+}
+else{
+  $author->author_image="";
+}
+$author->save();
 
-  return redirect('/admin/add-author')->with('thongbao','Thêm tác giả thành công');
+return redirect('/admin/add-author')->with('thongbao','Thêm tác giả thành công');
 }
 
 public function getEditAuthor($id)
