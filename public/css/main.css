@@ -220,7 +220,7 @@ ul.sub-menu {
 }
 
 .right {
-  right: 0;
+  right: -2%;
 }
 
 button#right {
@@ -372,6 +372,10 @@ h2.title:before{
   font-family: 'Roboto', sans-serif;
   font-size: 12px;
   text-transform: uppercase;
+}
+
+a.ahover:hover {
+    color: #fe980f;
 }
 
 .brands-name {
@@ -663,7 +667,11 @@ h2.title {
 }
 
 .recommended_items {
-  overflow: hidden;
+  /* overflow: hidden; */
+}
+
+.recommended_items.bk {
+    position:  relative;
 }
 
 #recommended-item-carousel .carousel-inner .item {
@@ -672,13 +680,14 @@ h2.title {
 
 .recommended-item-control {
   position: absolute;
-  top: 24%;
+  top: 44%;
+  z-index:  5;
 }
 
 .left {
-  left: 0;
+  left: -2%;
   position: absolute;
-  top: 24%;
+  top: 44%;
 }
 
 button#left {

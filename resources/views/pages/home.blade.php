@@ -282,9 +282,11 @@
 				</div>
 				@endforeach
 			</div>
-			<div class="text-xl-right">
-				<button id="vanhocleft" ><i class="fa fa-angle-left"></i></button>
-				<button id="vanhocright" ><i class="fa fa-angle-right"></i></button>
+			<div >
+				
+				<button id="vanhocright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="vanhocleft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 		</div>
 
@@ -300,7 +302,7 @@
 						<div class="single-products book_choose">
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
-									<img src="{{ asset($book->picture) }}" alt="">
+									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -310,6 +312,12 @@
 					</div>
 				</div>
 				@endforeach
+			</div>
+			<div >
+				
+				<button id="giaoducright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="giaoducleft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 			@endif
 			
@@ -323,7 +331,7 @@
 						<div class="single-products book_choose">
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
-									<img src="{{ asset($book->picture) }}" alt="">
+									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -333,6 +341,12 @@
 					</div>
 				</div>
 				@endforeach
+			</div>
+			<div >
+				
+				<button id="thieunhiright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="thieunhileft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 			@endif
 		</div>
@@ -346,7 +360,7 @@
 						<div class="single-products book_choose">
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
-									<img src="{{ asset($book->picture) }}" alt="">
+									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
@@ -356,6 +370,12 @@
 					</div>
 				</div>
 				@endforeach
+			</div>
+			<div >
+				
+				<button id="teenright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
+
+				<button id="teenleft" class="btn btn-primary pull-right"><i class="fa fa-angle-left"></i></button>
 			</div>
 			@endif
 		</div>
@@ -384,7 +404,14 @@
 						str+='<div class="productinfo text-center">';
 						str+='<img src="{{ url('') }}'+'/'+result[i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
 						str+='<h2>$'+result[i]['price']+'</h2>'	;			
-						str+="<p>"+result[i]['book_name']+"</p>";				
+						if(result[i]["book_name"].length>27){
+							var t=result[i]["book_name"];
+							t=t.substr(0,24);
+							t+="...";
+							str+='<p>'+t+'</p>';
+						}else{
+							str+='<p>'+result[i]["book_name"]+'</p>';
+						}				
 						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
@@ -419,7 +446,14 @@
 						str+='<div class="productinfo text-center">';
 						str+='<img src="{{ url('') }}'+'/'+result[i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
 						str+='<h2>$'+result[i]['price']+'</h2>'	;			
-						str+="<p>"+result[i]['book_name']+"</p>";				
+						if(result[i]["book_name"].length>27){
+							var t=result[i]["book_name"];
+							t=t.substr(0,24);
+							t+="...";
+							str+='<p>'+t+'</p>';
+						}else{
+							str+='<p>'+result[i]["book_name"]+'</p>';
+						}					
 						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
@@ -451,9 +485,17 @@
 						str+='<div class="product-image-wrapper">';
 						str+='<div class="single-products book_choose">';
 						str+='<div class="productinfo text-center">';
-						str+='<img src="{{ url('') }}'+'/'+result[i]["picture"]+'" alt="" class="img-fluid" width="100">';
+						str+='<img src="{{ url('') }}'+'/'+result[i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
 						str+='<h2>$'+result[i]["price"]+'</h2>';
-						str+='<p>'+result[i]["book_name"]+'</p>';
+						if(result[i]["book_name"].length>27){
+							var t=result[i]["book_name"];
+							t=t.substr(0,23);
+							t+="...";
+							str+='<p>'+t+'</p>';
+						}else{
+							str+='<p>'+result[i]["book_name"]+'</p>';
+						}
+						
 						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
@@ -483,9 +525,16 @@
 						str+='<div class="product-image-wrapper">';
 						str+='<div class="single-products book_choose">';
 						str+='<div class="productinfo text-center">';
-						str+='<img src="{{ url('') }}'+'/'+result[i]["picture"]+'" alt="" class="img-fluid" width="100">';
+						str+='<img src="{{ url('') }}'+'/'+result[i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
 						str+='<h2>$'+result[i]["price"]+'</h2>';
-						str+='<p>'+result[i]["book_name"]+'</p>';
+						if(result[i]["book_name"].length>27){
+							var t=result[i]["book_name"];
+							t=t.substr(0,23);
+							t+="...";
+							str+='<p>'+t+'</p>';
+						}else{
+							str+='<p>'+result[i]["book_name"]+'</p>';
+						}
 						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';

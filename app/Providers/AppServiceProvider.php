@@ -6,6 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Schema;
 use App\category;
 use App\Author;
+use Illuminate\Support\Facades\DB;
+
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -23,6 +25,14 @@ class AppServiceProvider extends ServiceProvider
             $listAuthor=Author::all();
             $view->with('listCategory',$listCategory);
             $view->with('listAuthor',$listAuthor);
+
+
+            $listCategoryAndQuantity = DB::table('book')
+            ->join('category','category.category_id','=','book.category_id')
+            ->selectraw('category.category_id,category.category_name, COUNT(*) AS "Sum"')
+            ->groupBy('category.category_id','category.category_name')
+            ->get();
+            $view->with('listCategoryAndQuantity',$listCategoryAndQuantity);
         });
     }
 

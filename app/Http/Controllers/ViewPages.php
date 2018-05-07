@@ -8,9 +8,7 @@ use App\category;
 use App\Book;
 
 class ViewPages extends Controller
-{
-
-    
+{   
     public function getAddToCart(Request $request, $book_id){
 
         $book = Book::find($book_id);
@@ -43,13 +41,26 @@ class ViewPages extends Controller
     }
 
 
+    public function getContentCheckOut()
+    {
+        return view('pages.check_out');
+    }
+
+    public function getBuyBook()
+    {
+        return view('pages.buyBook');
+    }
+
+    public function getContentPayment()
+    {
+        return view('pages.payment');
+    }
+
+
     public function getLoaiSanPham($id)
     {
         $category=category::find($id);
-        $listBook1=$category->getAllBook()->paginate(12);
-        $listBook2=category::find($id)->getAllBook()->paginate(12);
     	$listBook=Book::where('category_id',$id)->paginate(12);
-    	return view('pages.loai_san_pham',['listBook'=>$listBook]);
+    	return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>$category->category_name]);
     }
-
 }

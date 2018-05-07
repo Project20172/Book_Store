@@ -11,16 +11,21 @@
 |
 */
 
+Route::get('getCategoryAndCount', 'WebManager@getCategoryAndCount')->name('getCategoryAndCount');
 
+Route::get('getBookByAuthor/{id}','WebManager@getBookByAuthor')->name('getBookByAuthor');
 
 Route::get('/home', 'ViewPages@homepage')->name('home');
 
+Route::get('/', 'ViewPages@homepage')->name('home');
 
+Route::post('check-login','WebManager@postCheckLogin')->name('postCheckLogin');
 
+Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
 
-Route::get('login', function () {
-    return view('pages.login');
-})->name('login');
+Route::get('login', 'WebManager@getLogin')->name('getLogin');
+
+Route::get('logout', 'WebManager@getLogout')->name('getLogout');
 
 Route::get('/register', function () {
     return view('pages.register');
@@ -97,4 +102,10 @@ Route::get('admin/prevtabvanhoc/{id}','WebManager@getPrevTabVanHoc')->name('getP
 
 Route::get('admin/prev3book/{id}','WebManager@getPrev3Book')->name('getPrev3Book');
 
+Route::get('checkout','ViewPages@getContentCheckOut')->name('getContentCheckOut');
+
+
+Route::get('payment','ViewPages@getContentPayment')->name('getContentPayment');
+
+Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
 

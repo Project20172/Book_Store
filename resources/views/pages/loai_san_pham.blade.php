@@ -4,7 +4,7 @@
 <div class="features_items"><!--features_items-->
 	<br>
 	<div class="left-sidebar">
-	<h2 class="title text-center">Kết quả tìm thấy</h2></div>
+	<h2 class="title text-center">{{ $title }}</h2></div>
 	@php
 		$count=0
 	@endphp
