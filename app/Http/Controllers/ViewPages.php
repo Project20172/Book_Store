@@ -10,10 +10,6 @@ use App\Book;
 class ViewPages extends Controller
 {
 
-	public function homepage()
-    {
-    	return view('pages.home');
-    }
     
     public function getAddToCart(Request $request, $book_id){
 
