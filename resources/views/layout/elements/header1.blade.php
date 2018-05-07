@@ -206,8 +206,12 @@
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
 							<h3> <div class="total">
+								@if(Session::has('cart'))
+								<span class="simpleCart_total">${{Session::get('cart')->totalPrice }}</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">{{ Session::get('cart')->totalQty }}</span> items)</div>
+								@else
 								<span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)</div>
-								<img src="{{ asset('images/bag.png') }}" alt="">
+								@endif
+								<img src="images/bag.png" alt="">
 							</h3>
 						</a>
 						<div class="clearfix"> </div>

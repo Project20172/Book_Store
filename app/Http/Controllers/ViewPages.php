@@ -6,11 +6,12 @@ use Illuminate\Http\Request;
 use Session;
 use App\category;
 use App\Book;
+use App\Cart;
 
 class ViewPages extends Controller
 {   
     public function getAddToCart(Request $request, $book_id){
-
+        echo "string";
         $book = Book::find($book_id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
