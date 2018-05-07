@@ -6,8 +6,10 @@
 				<ul>
 					<li><i class="glyphicon glyphicon-envelope" aria-hidden="true"></i><a href="mailto:nh.giang261197@gmail.com">nh.giang261197@gmail.com</a></li>
 					<li><i class="glyphicon glyphicon-earphone" aria-hidden="true"></i>01658215007</li>
-					<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="{{ route('login') }}">Đăng nhập</a></li>
+					@if (!session('UserLogin'))
+					<li><i class="glyphicon glyphicon-log-in" aria-hidden="true"></i><a href="{{ route('getLogin') }}">Đăng nhập</a></li>
 					<li><i class="glyphicon glyphicon-book" aria-hidden="true"></i><a href="{{ route('register') }}">Đăng ký</a></li>
+					@endif
 				</ul>
 			</div>
 			<div class="header-grid-right animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
@@ -178,26 +180,29 @@
 					<!-- //search-scripts -->
 				</div>
 				<div class="header-right">
-					<ul class="nav navbar-top-links navbar-right">
+					@if (session('UserLogin'))
+					
+						<ul class="nav navbar-top-links navbar-right">
 							<!-- /.dropdown -->
 							<li class="dropdown">
 								<a class="dropdown-toggle usericon" data-toggle="dropdown" href="#">
-									Nguyễn Hoàng Giang
+									
 									<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
 								</a>
 								<ul class="dropdown-menu dropdown-user">
+									<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
+									</li>
 									<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
 									</li>
-									<li><a href="#"><i class="fa fa-gear fa-fw"></i> Cài đặt</a>
-									</li>
 									<li class="divider"></li>
-									<li><a href="login.html"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+									<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
 									</li>
 								</ul>
 								<!-- /.dropdown-user -->
 							</li>
 							<!-- /.dropdown -->
 						</ul>
+					@endif
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
 							<h3> <div class="total">

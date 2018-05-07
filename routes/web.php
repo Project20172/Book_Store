@@ -19,12 +19,13 @@ Route::get('/home', 'ViewPages@homepage')->name('home');
 
 Route::get('/', 'ViewPages@homepage')->name('home');
 
+Route::post('check-login','WebManager@postCheckLogin')->name('postCheckLogin');
 
 Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
 
-Route::get('login', function () {
-    return view('pages.login');
-})->name('login');
+Route::get('login', 'WebManager@getLogin')->name('getLogin');
+
+Route::get('logout', 'WebManager@getLogout')->name('getLogout');
 
 Route::get('/register', function () {
     return view('pages.register');
