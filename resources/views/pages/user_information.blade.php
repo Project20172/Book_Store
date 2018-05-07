@@ -13,7 +13,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-3">
-				@include('layout.elements.side_bar_user_information')
+				@include('layout.elements.side_bar_userinfo')
 			</div>
 			<div class="col-sm-9">
 				<div class="row">
