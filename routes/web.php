@@ -23,7 +23,7 @@ Route::get('/', 'ViewPages@homepage')->name('home');
 
 Route::post('check-login','WebManager@postCheckLogin')->name('postCheckLogin');
 
-Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
+Route::post('search','WebManager@postSearchBook')->name('postSearchBook');
 
 Route::get('login', 'WebManager@getLogin')->name('getLogin');
 

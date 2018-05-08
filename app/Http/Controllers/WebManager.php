@@ -173,10 +173,21 @@ class WebManager extends Controller
     return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>'Sách của '.$author->name]);
   }
 
-  public function getSearchBook($id)
+  public function postSearchBook(Request $req)
   {
-    $listBook=Book::where('book_name','LIKE','%'.$id.'%')->get();
-    return $listBook;
+    $listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->get();
+    if (count($listBook)>0) {
+      $str='';
+      $str.='<ul>';
+      foreach($listBook as $book){
+        $str.='<li><a class="giang" href="'.'/book_detail/'.$book->book_id.'" />'.$book->book_name.'</li>';
+      }
+      $str.='</ul>';
+      return $str;
+    }
+    else{
+      return 0;
+    }
   }
 
   public function getAdmin()
