@@ -154,8 +154,8 @@
 					<script >
 						$(document).ready(function (){ 
 							$('#search_content').on('keyup',function (){
-								console.log($('#search_content').val());
-								console.log($('#search_type').val());
+								// console.log($('#search_content').val());
+								// console.log($('#search_type').val());
 								if ($('#search_content').val()!='') {
 									$.ajax({
 										url:"{{ url('') }}"+'/'+'search',
@@ -166,14 +166,17 @@
 											search_type:$('#search_type').val()
 										},
 										success: function(result){
-										if (result!=0) {
-											document.getElementById("result").innerHTML=result;
+											var str='';
+											if(result.length>0){
+												str+='<ul>';
+												for(var i=0;i<result.length;i++){
+													str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+												}
+												str+='</ul>';
+											}
+											document.getElementById("result").innerHTML=str;
 										}
-										else{
-											document.getElementById("result").innerHTML='';
-										}
-									}
-								});
+									});
 								}
 								else{
 									document.getElementById("result").innerHTML='';

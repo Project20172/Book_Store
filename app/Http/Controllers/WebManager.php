@@ -176,18 +176,7 @@ class WebManager extends Controller
   public function postSearchBook(Request $req)
   {
     $listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->get();
-    if (count($listBook)>0) {
-      $str='';
-      $str.='<ul>';
-      foreach($listBook as $book){
-        $str.='<li><a class="giang" href="'.'/book_detail/'.$book->book_id.'" />'.$book->book_name.'</li>';
-      }
-      $str.='</ul>';
-      return $str;
-    }
-    else{
-      return 0;
-    }
+    return $listBook;
   }
 
   public function getAdmin()
