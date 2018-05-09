@@ -130,7 +130,15 @@
 						<div id="sb-search" class="sb-search sb-search-open">
 							<div class="searchdiv">
 								<form >
-									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search">
+									<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search_content">
+									<select class="form-control" id="search_type">
+										<option value="1">Tất cả</option>
+										<option value="2">Sách</option>
+										<option value="3">Tác giả</option>
+										<option value="4">Thể loại</option>
+										<option value="5">Nhà xuất bản</option>
+									</select>
 									<div id="result">
 										
 									</div>
@@ -146,30 +154,34 @@
 					<script src="{{ asset('js/uisearch.js') }}"></script>
 					<script >
 						$(document).ready(function (){ 
-							$('#search').on('keyup',function (){
-								console.log($('#search').val());
-
-								$.ajax({
-									url:"{{ url('search') }}"+"/"+$('#search').val(),
-									method: 'get',
-
-									success: function(result){
-										// console.log(result);
-										// for(var i=0;i<result.length;i++){ 
-										// 	console.log(result[i]['book_name']);
-										// }
-										var str='';
-										if(result.length>0){
-											str+='<ul>';
-											for(var i=0;i<result.length;i++){
-												str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+							$('#search_content').on('keyup',function (){
+								// console.log($('#search_content').val());
+								// console.log($('#search_type').val());
+								if ($('#search_content').val()!='') {
+									$.ajax({
+										url:"{{ url('') }}"+'/'+'search',
+										method: 'post',
+										data:{
+											_token: $('#token').val(),
+											search_content: $('#search_content').val(),
+											search_type:$('#search_type').val()
+										},
+										success: function(result){
+											var str='';
+											if(result.length>0){
+												str+='<ul>';
+												for(var i=0;i<result.length;i++){
+													str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+												}
+												str+='</ul>';
 											}
-											str+='</ul>';
+											document.getElementById("result").innerHTML=str;
 										}
-
-										document.getElementById("result").innerHTML=str;
-									}
-								});
+									});
+								}
+								else{
+									document.getElementById("result").innerHTML='';
+								}
 							});
 						});
 					</script>
@@ -211,7 +223,7 @@
 								@else
 								<span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)</div>
 								@endif
-								<img src="images/bag.png" alt="">
+								<img src="{{ asset('images/bag.png') }}" alt="">
 							</h3>
 						</a>
 						<div class="clearfix"> </div>
