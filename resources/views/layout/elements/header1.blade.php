@@ -134,9 +134,10 @@
 									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search_content">
 									<select class="form-control" id="search_type">
 										<option value="1">Tất cả</option>
-										<option value="2">Tác giả</option>
-										<option value="3">Thể loại</option>
-										<option value="4">Nhà xuất bản</option>
+										<option value="2">Sách</option>
+										<option value="3">Tác giả</option>
+										<option value="4">Thể loại</option>
+										<option value="5">Nhà xuất bản</option>
 									</select>
 									<div id="result">
 										

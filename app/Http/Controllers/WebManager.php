@@ -103,8 +103,8 @@ class WebManager extends Controller
       $str3='';
       foreach ($review_info3 as $value) {
         $str3.='<p>Đánh giá trung bình</p>';
-                  $str3.='<h1>'.$value->medium.'/5</h1>';
-                  $str3.='<p><span>('. $value->quantity .') nhận xét</span></p>';
+        $str3.='<h1>'.$value->medium.'/5</h1>';
+        $str3.='<p><span>('. $value->quantity .') nhận xét</span></p>';
       }
       $listEdit=array('str'=>$str,'str1'=>$str1,'str3'=>$str3);
       
@@ -175,7 +175,50 @@ class WebManager extends Controller
 
   public function postSearchBook(Request $req)
   {
-    $listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->get();
+    //var_dump($req->search_content);
+    $search_type=$req->search_type;
+    if ($search_type==1) {
+
+      // $listBook=Book::join('category','category.category_id','=','book.category_id')
+      // ->join('author','author.author_id','=','book.author_id')
+      // ->whereRaw('book.book_name like "%?%" or book.publisher like "%?%" or author.name like "%?%" or category.category_name like "%?%"',[$req->search_content,$req->search_content,$req->search_content,$req->search_content])
+      // ->get();
+
+      // $listBook=DB::select('
+      //   SELECT * FROM book,category,author WHERE book.category_id=category.category_id AND book.author_id=author.author_id AND (book.book_name like "%?%" or book.publisher like "%?%" or author.name like "%?%" or category.category_name like "%?%")
+      // ',[$req->search_content,$req->search_content,$req->search_content,$req->search_content]);
+
+    } else if ($search_type==2) {
+
+      //$listBook=Book::whereRaw('book_name','LIKE','%'.$req->search_content.'%')->get();
+
+      $listBook=Book::whereRaw('book_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+    } else if ($search_type==3) {
+
+      // $listBook=Book::join('author','book.author_id','=','author.author_id')->where('name','LIKE','%'.$req->search_content.'%')->get();
+
+      $listBook=Book::join('author','book.author_id','=','author.author_id')
+      ->whereRaw('author.author_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+    } else if ($search_type==4) {
+
+      // $listBook=DB::table('book')->join('category','category.category_id','=','book.category_id')->
+      // where('category.category_name','LIKE','%'.$req->search_content.'%')->get();
+
+      $listBook=DB::table('book')->join('category','category.category_id','=','book.category_id')->
+      whereRaw('category.category_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+    } else {
+
+      //$listBook=Book::where('publisher','LIKE','%'.$req->search_content.'%')->get();
+
+      $listBook=Book::whereRaw('publisher like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+    }
+
+    // $listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->get();
+
     return $listBook;
   }
 
