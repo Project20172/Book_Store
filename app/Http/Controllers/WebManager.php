@@ -249,9 +249,20 @@ class WebManager extends Controller
 		return view('pages.admin.listCategory',['list'=>$list]);
 	}
 
+	public function getListCustomer()
+	{
+		$list = Customer::all();
+		return view('pages.admin.listCustomer',['list'=>$list]);
+	}
+
 	public function getAddCategory()
 	{
 		return view('pages.admin.addCategory');
+	}
+
+	public function getAddCustomer()
+	{
+		return view('pages.admin.addCustomer');
 	}
 
 	public function postAddCategory(Request $req)
@@ -310,6 +321,40 @@ class WebManager extends Controller
 		return view('pages.admin.addAuthor');
 	}
 
+
+	public function postAddCustomer(Request $req)
+	{
+		//echo $req->user_name;
+		$customer=new Customer();
+		$this->validate($req,
+			[
+				'user_name'=>'required|unique:customer,user_name',
+				'password'=>'required',
+				'first_name'=>'required',
+				'last_name'=>'required'
+			]
+			,
+			[
+				'user_name.required'=>'Chưa nhập user_name',
+				'user_name.unique'=>'User Name đã tồn tại',
+				'password.required'=>'Chưa nhập password',
+				'first_name.required'=>'Chưa nhập first_name',
+				'last_name.required'=>'Chưa nhập last_name'
+			]);
+		$customer->user_name=$req->user_name;
+		$customer->password=$req->password;
+		$customer->first_name=$req->first_name;
+		$customer->last_name=$req->last_name;
+		$customer->address=$req->address;
+		$customer->city=$req->city;
+		$customer->email=$req->email;
+		$customer->phone=$req->phone;
+		$customer->save();
+		
+		return redirect('/admin/add-customer')->with('thongbao','Thêm khách hàng thành công');
+
+	}
+
 	public function postAddAuthor(Request $req)
 	{
 		$author=new Author;
@@ -343,10 +388,63 @@ class WebManager extends Controller
 		return redirect('/admin/add-author')->with('thongbao','Thêm tác giả thành công');
 	}
 
+	public function postEditCustomer(Request $req)
+	{
+		$customer=Customer::find($req->user_id);
+
+		$this->validate($req,
+			[
+				'password'=>'required',
+				'first_name'=>'required',
+				'last_name'=>'required'
+			]
+			,
+			[
+				'password.required'=>'Chưa nhập password',
+				'first_name.required'=>'Chưa nhập first_name',
+				'last_name.required'=>'Chưa nhập last_name'
+			]);
+		$customer->password=$req->password;
+		$customer->first_name=$req->first_name;
+		$customer->last_name=$req->last_name;
+		if ($req->address==null) {
+			$customer->address='';
+		} else {
+			$customer->address=$req->address;
+		}
+
+		if ($req->city==null) {
+			$customer->city='';
+		} else {
+			$customer->city=$req->city;
+		}
+
+		if ($req->email==null) {
+			$customer->email='';
+		} else {
+			$customer->email=$req->email;
+		}
+		
+		if ($req->phone==null) {
+			$customer->phone='';
+		} else {
+			$customer->phone=$req->phone;
+		}
+		$customer->save();
+		
+		return redirect('/admin/edit-customer/'.$req->user_id)->with('thongbao','Sửa thông tin khách hàng thành công');
+	}
+
 	public function getEditAuthor($id)
 	{
 		$author=Author::where('author_id',$id)->first();
 		return view('pages.admin.editAuthor',['author'=>$author]);
+	}
+
+	public function getEditCustomer($id)
+	{
+		$customer=Customer::where('user_id',$id)->first();
+		return view('pages.admin.editCustomer',['customer'=>$customer]);
 	}
 
 	public function postEditAuthor(Request $req)
@@ -383,6 +481,13 @@ class WebManager extends Controller
 		$author=Author::find($id);
 		$author->delete();
 		return redirect('/admin/list-author')->with('thongbao','Xoá thành công');
+	}
+
+	public function getRemoveCustomer($id)
+	{
+		$customer=Customer::find($id);
+		$customer->delete();
+		return redirect('/admin/list-customer')->with('thongbao','Xoá thành công');
 	}
 
 	public function getListBook()
