@@ -30,14 +30,17 @@ Route::get('login', 'WebManager@getLogin')->name('getLogin');
 Route::get('logout', 'WebManager@getLogout')->name('getLogout');
 
 Route::get('/register', function () {
-    return view('pages.register');
+	return view('pages.register');
 })->name('register');
 
 Route::get('/user_information',function(){
 	return view('pages.user_information');
 })->name('user_information');
+
 Route::post('/home','RegisterController@addCustomer')->name('addCustomer');
+
 Route::get('/result-search', 'ViewPages@getResultSearch')->name('result-search');
+// ============================ Cart ===================
 Route::get('/cart', ['as'=>'cart','uses'=>'ViewPages@getCart']);
 
 Route::get('add-to-cart/{id}', [
@@ -45,7 +48,18 @@ Route::get('add-to-cart/{id}', [
 	'uses' => 'ViewPages@getAddToCart'
 ]);
 
+Route::get('remove-all-cart', [
+	'as'=>'removeAllCart',
+	'uses'=>'ViewPages@removeAllCart'
+]);
 
+Route::get('updateCart', [
+	'as'=>'updateCart',
+	'uses'=>'ViewPages@updateCart'
+]);
+
+
+// ===================== end cart======================
 
 Route::get('/book_detail/{id}','WebManager@getBookDetail')->name('getBookDetail');
 

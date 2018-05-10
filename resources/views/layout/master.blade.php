@@ -16,6 +16,7 @@
 
 	<link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"> 
 	<script src="{{ asset('js/wow.min.js') }}"></script>
+	<script type="text/javascript" src="js/cart.js"></script>
 	<script>
 	 	new WOW().init();
 	</script>
