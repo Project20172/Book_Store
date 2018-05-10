@@ -7,6 +7,7 @@ use App\category;
 use App\Author;
 use App\Book;
 use App\Customer;
+use App\Admin;
 use Session;
 use Illuminate\Support\Facades\DB;
 
@@ -336,6 +337,12 @@ class WebManager extends Controller
 		return view('pages.admin.listCustomer',['list'=>$list]);
 	}
 
+	public function getListAdmin()
+	{
+		$list = Admin::all();
+		return view('pages.admin.listAdmin',['list'=>$list]);
+	}
+
 	public function getAddCategory()
 	{
 		return view('pages.admin.addCategory');
@@ -344,6 +351,11 @@ class WebManager extends Controller
 	public function getAddCustomer()
 	{
 		return view('pages.admin.addCustomer');
+	}
+
+	public function getAddAdmin()
+	{
+		return view('pages.admin.addAdmin');
 	}
 
 	public function postAddCategory(Request $req)
@@ -436,6 +448,40 @@ class WebManager extends Controller
 
 	}
 
+	public function postAddAdmin(Request $req)
+	{
+		//echo $req->user_name;
+		$admin=new Admin();
+		$this->validate($req,
+			[
+				'user_name'=>'required|unique:customer,user_name',
+				'password'=>'required',
+				'first_name'=>'required',
+				'last_name'=>'required'
+			]
+			,
+			[
+				'user_name.required'=>'Chưa nhập user_name',
+				'user_name.unique'=>'User Name đã tồn tại',
+				'password.required'=>'Chưa nhập password',
+				'first_name.required'=>'Chưa nhập first_name',
+				'last_name.required'=>'Chưa nhập last_name'
+			]);
+		$admin->user_name=$req->user_name;
+		$admin->password=$req->password;
+		$admin->first_name=$req->first_name;
+		$admin->last_name=$req->last_name;
+		$admin->address=$req->address;
+		$admin->city=$req->city;
+		$admin->email=$req->email;
+		$admin->phone=$req->phone;
+		$admin->permission=$req->permission;
+		$admin->save();
+		
+		return redirect('/admin/add-admin')->with('thongbao','Thêm admin thành công');
+
+	}
+
 	public function postAddAuthor(Request $req)
 	{
 		$author=new Author;
@@ -516,6 +562,53 @@ class WebManager extends Controller
 		return redirect('/admin/edit-customer/'.$req->user_id)->with('thongbao','Sửa thông tin khách hàng thành công');
 	}
 
+	public function postEditAdmin(Request $req)
+	{
+		$admin=Admin::find($req->admin_id);
+
+		$this->validate($req,
+			[
+				'password'=>'required',
+				'first_name'=>'required',
+				'last_name'=>'required'
+			]
+			,
+			[
+				'password.required'=>'Chưa nhập password',
+				'first_name.required'=>'Chưa nhập first_name',
+				'last_name.required'=>'Chưa nhập last_name'
+			]);
+		$admin->password=$req->password;
+		$admin->first_name=$req->first_name;
+		$admin->last_name=$req->last_name;
+		if ($req->address==null) {
+			$admin->address='';
+		} else {
+			$admin->address=$req->address;
+		}
+
+		if ($req->city==null) {
+			$admin->city='';
+		} else {
+			$admin->city=$req->city;
+		}
+
+		if ($req->email==null) {
+			$admin->email='';
+		} else {
+			$admin->email=$req->email;
+		}
+		
+		if ($req->phone==null) {
+			$admin->phone='';
+		} else {
+			$admin->phone=$req->phone;
+		}
+		$admin->save();
+		
+		return redirect('/admin/edit-admin/'.$req->admin_id)->with('thongbao','Sửa thông tin admin thành công');
+	}
+
 	public function getEditAuthor($id)
 	{
 		$author=Author::where('author_id',$id)->first();
@@ -526,6 +619,12 @@ class WebManager extends Controller
 	{
 		$customer=Customer::where('user_id',$id)->first();
 		return view('pages.admin.editCustomer',['customer'=>$customer]);
+	}
+
+	public function getEditAdmin($id)
+	{
+		$admin=Admin::where('admin_id',$id)->first();
+		return view('pages.admin.editAdmin',['admin'=>$admin]);
 	}
 
 	public function postEditAuthor(Request $req)
@@ -569,6 +668,13 @@ class WebManager extends Controller
 		$customer=Customer::find($id);
 		$customer->delete();
 		return redirect('/admin/list-customer')->with('thongbao','Xoá thành công');
+	}
+
+	public function getRemoveAdmin($id)
+	{
+		$admin=Admin::find($id);
+		$admin->delete();
+		return redirect('/admin/list-admin')->with('thongbao','Xoá thành công');
 	}
 
 	public function getListBook()

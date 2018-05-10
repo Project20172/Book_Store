@@ -73,9 +73,15 @@ Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
 
 Route::get('/admin/list-customer','WebManager@getListCustomer')->name('getListCustomer');
 
+Route::get('/admin/list-admin','WebManager@getListAdmin')->name('getListAdmin');
+
 Route::post('/admin/add-customer','WebManager@postAddCustomer')->name('postAddCustomer');
 
+Route::post('/admin/add-admin','WebManager@postAddAdmin')->name('postAddAdmin');
+
 Route::get('/admin/add-customer','WebManager@getAddCustomer')->name('getAddCustomer');
+
+Route::get('/admin/add-admin','WebManager@getAddAdmin')->name('getAddAdmin');
 
 Route::get('/admin/list-category','WebManager@getListCategory')->name('getListCategory');
 
@@ -103,13 +109,19 @@ Route::get('admin/edit-author/{id}','WebManager@getEditAuthor')->name('getEditAu
 
 Route::get('admin/edit-customer/{id}','WebManager@getEditCustomer')->name('getEditCustomer');
 
+Route::get('admin/edit-admin/{id}','WebManager@getEditAdmin')->name('getEditAdmin');
+
 Route::post('admin/edit-author','WebManager@postEditAuthor')->name('postEditAuthor');
 
 Route::post('admin/edit-customer','WebManager@postEditCustomer')->name('postEditCustomer');
 
+Route::post('admin/edit-admin','WebManager@postEditAdmin')->name('postEditAdmin');
+
 Route::get('/admin/remove-author/{id}','WebManager@getRemoveAuthor')->name('getRemoveAuthor');
 
 Route::get('/admin/remove-customer/{id}','WebManager@getRemoveCustomer')->name('getRemoveCustomer');
+
+Route::get('/admin/remove-admin/{id}','WebManager@getRemoveAdmin')->name('getRemoveAdmin');
 
 Route::post('/admin/add-book','WebManager@postAddBook')->name('postAddBook');
 
