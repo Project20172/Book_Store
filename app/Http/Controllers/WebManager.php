@@ -250,6 +250,75 @@ class WebManager extends Controller
 		return $listBook;
 	}
 
+
+	public function postSearchBook_1(Request $req)
+	{
+    //var_dump($req->search_content);
+		// echo 'Done';
+		$search_type=$req->search_type;
+		// echo $req->search_type;
+		// echo $req->search_content;
+		if ($search_type==1) {
+
+			// hoàng giang
+			// $listBook=Book::join('category','category.category_id','=','book.category_id')
+			// ->join('author','author.author_id','=','book.author_id')
+			// ->whereRaw('book.book_name like CONCAT("%",?,"%") or book.publisher like CONCAT("%",?,"%") or author.name like CONCAT("%",?,"%") or category.category_name like CONCAT("%",?,"%")',[$req->search_content,$req->search_content,$req->search_content,$req->search_content])
+			// ->get();
+
+			// vân anh
+			$listBook=DB::table('book')
+			->join('author','book.author_id','=','author.author_id')
+			->join('category','book.category_id','=','category.category_id')
+			->where('book.book_name','like','%'.$req->search_content.'%')
+			->orWhere('book.publisher','like','%'.$req->search_content.'%')
+			->orWhere('author.name','like','%'.$req->search_content.'%')
+			->orWhere('category.category_name','like','%'.$req->search_content.'%')
+			->paginate(12);
+
+      // $listBook=Book::join('category','category.category_id','=','book.category_id')
+      // ->join('author','author.author_id','=','book.author_id')
+      // ->whereRaw('book_name like CONCAT("%",?,"%")',[$req->search_content])
+      // ->get();
+
+      // $listBook=DB::select('
+      //   SELECT * FROM book,category,author WHERE book.category_id=category.category_id AND book.author_id=author.author_id AND (book.book_name like "%?%" or book.publisher like "%?%" or author.name like "%?%" or category.category_name like "%?%")
+      // ',[$req->search_content,$req->search_content,$req->search_content,$req->search_content]);
+
+		} else if ($search_type==2) {
+
+			$listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->paginate(12);
+
+      // $listBook=Book::whereRaw('book_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+		} else if ($search_type==3) {
+
+			$listBook=Book::join('author','book.author_id','=','author.author_id')->where('name','LIKE','%'.$req->search_content.'%')->paginate(12);
+
+      // $listBook=Book::join('author','book.author_id','=','author.author_id')
+      // ->whereRaw('author.author_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+		} else if ($search_type==4) {
+
+			$listBook=DB::table('book')->join('category','category.category_id','=','book.category_id')->
+			where('category.category_name','LIKE','%'.$req->search_content.'%')->paginate(12);
+
+      // $listBook=DB::table('book')->join('category','category.category_id','=','book.category_id')->
+      // whereRaw('category.category_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+		} else {
+
+			$listBook=Book::where('publisher','LIKE','%'.$req->search_content.'%')->paginate(12);
+
+      // $listBook=Book::whereRaw('publisher like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
+
+		}
+
+    // $listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->get();
+
+		return view('pages.result_search',['listBook'=>$listBook,'title'=>'Kết quả tìm kiếm của '.$req->search_content]);
+	}
+
 	public function getAdmin()
 	{
 		return view('pages.admin.frame');

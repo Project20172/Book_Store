@@ -129,10 +129,10 @@
 					<div class="search-box">
 						<div id="sb-search" class="sb-search sb-search-open">
 							<div class="searchdiv">
-								<form >
+								<form action="{{ route('postSearchBook_1') }}" method="post">
 									<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
-									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search_content">
-									<select class="form-control" id="search_type">
+									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search_content" name="search_content">
+									<select class="form-control" id="search_type" name="search_type">
 										<option value="1">Tất cả</option>
 										<option value="2">Sách</option>
 										<option value="3">Tác giả</option>
