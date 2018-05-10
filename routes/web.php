@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('check-username/{id}','WebManager@getCheckUserName')->name('getCheckUserName');
+
 Route::post('send_review','WebManager@postSendReview')->name('postSendReview');
 
 Route::get('getCategoryAndCount', 'WebManager@getCategoryAndCount')->name('getCategoryAndCount');

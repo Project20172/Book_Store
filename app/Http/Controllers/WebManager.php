@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+
+	public function getCheckUserName($id)
+	{
+		$customer=Customer::where('user_name',$id)->get();
+		if(count($customer)>0){
+			return 1;
+		}
+		else{
+			return 0;
+		}
+	}
+
 	public function postSendReview(Request $req)
 	{
 		$result = DB::table('book_review')->insert(['book_id'=>$req->book_id,'user_id'=>$req->customer_id,'rating'=>$req->rating,'reviews'=>$req->review,'review_date'=>NOW()]);

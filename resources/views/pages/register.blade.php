@@ -39,9 +39,10 @@
 				<input type="text" placeholder="First Name..." required=" " name="firstname">
 				<input type="text" placeholder="Last Name..." required=" " name="lastname">
 			<h6 class="animated wow slideInUp" data-wow-delay=".5s" style="visibility: hidden; animation-delay: 0.5s; animation-name: none;">Login information</h6>
-				<input type="text" placeholder="User name" required=" " name="username"><br>
+				<input type="text" placeholder="User name" required=" " name="username" id="username"><br>
+				<div id="thongbao-username"></div>
 				<input type="email" placeholder="Email Address" required=" " name="email">
-				<input type="password" placeholder="Password" required=" " name="password">
+				<input type="password" placeholder="Password" required=" " name="password" id="password">
 				<input type="password" placeholder="Password Confirmation" required=" " name="password_confirmation">
 				<div class="register-check-box">
 					<div class="check">
@@ -61,4 +62,28 @@
 	</div>
 </div>
 </div>
+
+<script>
+	$(document).ready(function (){
+		$('#username').on('change',function (){
+			//alert($(this).val());
+			$.ajax({
+				url: "{{ url('/check-username') }}"+'/'+$('#username').val(),
+				method: 'get',
+				data:{
+					username: $('#username').val()
+				},
+				success: function(result){
+					if(result){
+						document.getElementById('thongbao-username').innerHTML='<p class="text-warning">Tài khoản đã tồn tại</p>';
+					}
+				}
+			});
+		});
+
+		$('#password').on('change',function (){
+			alert($(this).val());
+		});
+	});
+</script>
 @endsection

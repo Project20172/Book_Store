@@ -1124,6 +1124,10 @@ html, body{
     font-family: 'Open Sans', sans-serif;
 }
 
+div#thongbao-username {
+    margin-top: -5%;
+}
+
 select#search_type {
     width: 21%;
     margin-left: 70%;
