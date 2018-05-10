@@ -305,7 +305,7 @@
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
 						</div>
@@ -334,7 +334,7 @@
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
 						</div>
@@ -363,7 +363,7 @@
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
 									<p>{{ $book->book_name }}</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
 						</div>
@@ -412,7 +412,7 @@
 						}else{
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}				
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
@@ -454,7 +454,7 @@
 						}else{
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}					
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
@@ -496,7 +496,7 @@
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}
 						
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
 						str+='</div>';
@@ -535,7 +535,7 @@
 						}else{
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
 						str+='</div>';
