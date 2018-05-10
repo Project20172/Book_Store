@@ -40,10 +40,14 @@
 				<input type="text" placeholder="Last Name..." required=" " name="lastname">
 			<h6 class="animated wow slideInUp" data-wow-delay=".5s" style="visibility: hidden; animation-delay: 0.5s; animation-name: none;">Login information</h6>
 				<input type="text" placeholder="User name" required=" " name="username" id="username"><br>
-				<div id="thongbao-username"></div>
+				<div id="thongbao-username"><p>&nbsp; </p></div>
 				<input type="email" placeholder="Email Address" required=" " name="email">
-				<input type="password" placeholder="Password" required=" " name="password" id="password">
-				<input type="password" placeholder="Password Confirmation" required=" " name="password_confirmation">
+				<div id="thongbao-email"><p>&nbsp; </p></div>
+				<input type="password" placeholder="Password" required=" " min="6" 
+				name="password" id="password">
+				<div id="thongbao-password"><p>&nbsp; </p></div>
+				<input type="password" id="password_2" placeholder="Password Confirmation" required=" " name="password_confirmation">
+				<div id="thongbao-password_2"><p>&nbsp; </p></div>
 				<div class="register-check-box">
 					<div class="check">
 						<label class="checkbox"><input type="checkbox" name="checkbox"><i> </i>I accept the terms and conditions</label>
@@ -67,22 +71,56 @@
 	$(document).ready(function (){
 		$('#username').on('change',function (){
 			//alert($(this).val());
-			$.ajax({
+			if($(this).val()!=''){
+				$.ajax({
 				url: "{{ url('/check-username') }}"+'/'+$('#username').val(),
 				method: 'get',
 				data:{
 					username: $('#username').val()
 				},
 				success: function(result){
-					if(result){
+					if(result==1){
 						document.getElementById('thongbao-username').innerHTML='<p class="text-warning">Tài khoản đã tồn tại</p>';
+					}
+					else{
+						document.getElementById('thongbao-username').innerHTML='<p class="text-success">Bạn có thể đăng ký với tài khoản này</p>';
 					}
 				}
 			});
+			}
+			else{
+				document.getElementById('thongbao-username').innerHTML='<p class="text-success">&nbsp;</p>';
+			}
 		});
 
 		$('#password').on('change',function (){
-			alert($(this).val());
+			//alert($(this).val());
+			if($(this).val()!=''){
+				$length=$(this).val().length;
+				if($length<6){
+					document.getElementById('thongbao-password').innerHTML='<p class="text-warning">Mật khẩu tối thiểu 6 ký tự</p>';
+				}
+				else{
+					document.getElementById('thongbao-password').innerHTML='<p class="text-success">&nbsp;</p>';
+				}
+			}
+			else{
+				document.getElementById('thongbao-password').innerHTML='<p class="text-success">&nbsp;</p>';
+			}
+		});
+		$('#password_2').on('change',function (){
+			//alert($(this).val());
+			if($(this).val()!=''){
+				$password=$('#password').val();
+				if($(this).val()!=$password){
+					document.getElementById('thongbao-password_2').innerHTML='<p class="text-warning">2 password nhập phải giống nhau</p>';
+				}
+				else{
+					document.getElementById('thongbao-password_2').innerHTML='<p class="text-success">&nbsp;</p>';
+				}
+			}else{
+				document.getElementById('thongbao-password_2').innerHTML='<p class="text-success">&nbsp;</p>';
+			}
 		});
 	});
 </script>
