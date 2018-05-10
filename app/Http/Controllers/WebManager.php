@@ -206,7 +206,7 @@ class WebManager extends Controller
 
 		} else if ($search_type==2) {
 
-			$listBook=Book::whereRaw('book_name','LIKE','%'.$req->search_content.'%')->get();
+			$listBook=Book::where('book_name','LIKE','%'.$req->search_content.'%')->get();
 
       // $listBook=Book::whereRaw('book_name like CONCAT("%", CONVERT(?, BINARY), "%")',[$req->search_content])->get();
 

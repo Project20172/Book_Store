@@ -183,6 +183,36 @@
 									document.getElementById("result").innerHTML='';
 								}
 							});
+
+
+							$('#search_type').on('change',function (){
+
+								if ($('#search_content').val()!='') {
+									$.ajax({
+										url:"{{ url('') }}"+'/'+'search',
+										method: 'post',
+										data:{
+											_token: $('#token').val(),
+											search_content: $('#search_content').val(),
+											search_type:$('#search_type').val()
+										},
+										success: function(result){
+											var str='';
+											if(result.length>0){
+												str+='<ul>';
+												for(var i=0;i<result.length;i++){
+													str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+												}
+												str+='</ul>';
+											}
+											document.getElementById("result").innerHTML=str;
+										}
+									});
+								}
+								else{
+									document.getElementById("result").innerHTML='';
+								}
+							});
 						});
 					</script>
 					<!-- <script>
