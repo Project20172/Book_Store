@@ -11,6 +11,8 @@
 |
 */
 
+Route::post('send_review','WebManager@postSendReview')->name('postSendReview');
+
 Route::get('getCategoryAndCount', 'WebManager@getCategoryAndCount')->name('getCategoryAndCount');
 
 Route::get('getBookByAuthor/{id}','WebManager@getBookByAuthor')->name('getBookByAuthor');
@@ -21,7 +23,7 @@ Route::get('/', 'ViewPages@homepage')->name('home');
 
 Route::post('check-login','WebManager@postCheckLogin')->name('postCheckLogin');
 
-Route::get('search/{id}','WebManager@getSearchBook')->name('getSearchBook');
+Route::post('search','WebManager@postSearchBook')->name('postSearchBook');
 
 Route::get('login', 'WebManager@getLogin')->name('getLogin');
 
@@ -52,6 +54,12 @@ Route::get('/home', 'ViewPages@homepage')->name('home');
 
 Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
 
+Route::get('/admin/list-customer','WebManager@getListCustomer')->name('getListCustomer');
+
+Route::post('/admin/add-customer','WebManager@postAddCustomer')->name('postAddCustomer');
+
+Route::get('/admin/add-customer','WebManager@getAddCustomer')->name('getAddCustomer');
+
 Route::get('/admin/list-category','WebManager@getListCategory')->name('getListCategory');
 
 Route::get('/admin/add-category','WebManager@getAddCategory')->name('getAddCategory');
@@ -76,9 +84,15 @@ Route::post('admin/add-author','WebManager@postAddAuthor')->name('postAddAuthor'
 
 Route::get('admin/edit-author/{id}','WebManager@getEditAuthor')->name('getEditAuthor');
 
+Route::get('admin/edit-customer/{id}','WebManager@getEditCustomer')->name('getEditCustomer');
+
 Route::post('admin/edit-author','WebManager@postEditAuthor')->name('postEditAuthor');
 
+Route::post('admin/edit-customer','WebManager@postEditCustomer')->name('postEditCustomer');
+
 Route::get('/admin/remove-author/{id}','WebManager@getRemoveAuthor')->name('getRemoveAuthor');
+
+Route::get('/admin/remove-customer/{id}','WebManager@getRemoveCustomer')->name('getRemoveCustomer');
 
 Route::post('/admin/add-book','WebManager@postAddBook')->name('postAddBook');
 

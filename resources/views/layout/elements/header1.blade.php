@@ -130,7 +130,15 @@
 						<div id="sb-search" class="sb-search sb-search-open">
 							<div class="searchdiv">
 								<form >
-									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search">
+									<input type="hidden" name="_token" id="token" value="{{ csrf_token() }}">
+									<input class="sb-search-input" placeholder="Nhập sách cần tìm..." type="search" id="search_content">
+									<select class="form-control" id="search_type">
+										<option value="1">Tất cả</option>
+										<option value="2">Sách</option>
+										<option value="3">Tác giả</option>
+										<option value="4">Thể loại</option>
+										<option value="5">Nhà xuất bản</option>
+									</select>
 									<div id="result">
 										
 									</div>
@@ -142,34 +150,68 @@
 					</div>
 					<!-- search-scripts -->
 
-					<script src="js/classie.js"></script>
-					<script src="js/uisearch.js"></script>
+					<script src="{{ asset('js/classie.js') }}"></script>
+					<script src="{{ asset('js/uisearch.js') }}"></script>
 					<script >
 						$(document).ready(function (){ 
-							$('#search').on('keyup',function (){
-								console.log($('#search').val());
-
-								$.ajax({
-									url:"{{ url('search') }}"+"/"+$('#search').val(),
-									method: 'get',
-
-									success: function(result){
-										// console.log(result);
-										// for(var i=0;i<result.length;i++){ 
-										// 	console.log(result[i]['book_name']);
-										// }
-										var str='';
-										if(result.length>0){
-											str+='<ul>';
-											for(var i=0;i<result.length;i++){
-												str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+							$('#search_content').on('keyup',function (){
+								// console.log($('#search_content').val());
+								// console.log($('#search_type').val());
+								if ($('#search_content').val()!='') {
+									$.ajax({
+										url:"{{ url('') }}"+'/'+'search',
+										method: 'post',
+										data:{
+											_token: $('#token').val(),
+											search_content: $('#search_content').val(),
+											search_type:$('#search_type').val()
+										},
+										success: function(result){
+											var str='';
+											if(result.length>0){
+												str+='<ul>';
+												for(var i=0;i<result.length;i++){
+													str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+												}
+												str+='</ul>';
 											}
-											str+='</ul>';
+											document.getElementById("result").innerHTML=str;
 										}
+									});
+								}
+								else{
+									document.getElementById("result").innerHTML='';
+								}
+							});
 
-										document.getElementById("result").innerHTML=str;
-									}
-								});
+
+							$('#search_type').on('change',function (){
+
+								if ($('#search_content').val()!='') {
+									$.ajax({
+										url:"{{ url('') }}"+'/'+'search',
+										method: 'post',
+										data:{
+											_token: $('#token').val(),
+											search_content: $('#search_content').val(),
+											search_type:$('#search_type').val()
+										},
+										success: function(result){
+											var str='';
+											if(result.length>0){
+												str+='<ul>';
+												for(var i=0;i<result.length;i++){
+													str+='<li><a class="giang" href="{{ url('') }}/book_detail/'+result[i]["book_id"]+'" />'+result[i]["book_name"]+'</li>';
+												}
+												str+='</ul>';
+											}
+											document.getElementById("result").innerHTML=str;
+										}
+									});
+								}
+								else{
+									document.getElementById("result").innerHTML='';
+								}
 							});
 						});
 					</script>
@@ -182,31 +224,35 @@
 				<div class="header-right">
 					@if (session('UserLogin'))
 					
-						<ul class="nav navbar-top-links navbar-right">
-							<!-- /.dropdown -->
-							<li class="dropdown">
-								<a class="dropdown-toggle usericon" data-toggle="dropdown" href="#">
-									
-									<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
-								</a>
-								<ul class="dropdown-menu dropdown-user">
-									<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
-									</li>
-									<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
-									</li>
-									<li class="divider"></li>
-									<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
-									</li>
-								</ul>
-								<!-- /.dropdown-user -->
-							</li>
-							<!-- /.dropdown -->
-						</ul>
+					<ul class="nav navbar-top-links navbar-right">
+						<!-- /.dropdown -->
+						<li class="dropdown">
+							<a class="dropdown-toggle usericon" data-toggle="dropdown" href="#">
+
+								<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
+							</a>
+							<ul class="dropdown-menu dropdown-user">
+								<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
+								</li>
+								<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
+								</li>
+								<li class="divider"></li>
+								<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>
+								</li>
+							</ul>
+							<!-- /.dropdown-user -->
+						</li>
+						<!-- /.dropdown -->
+					</ul>
 					@endif
 					<div class="cart box_1">
 						<a href="{{ route('cart') }}">
 							<h3> <div class="total">
+								@if(Session::has('cart'))
+								<span class="simpleCart_total">${{Session::get('cart')->totalPrice }}</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">{{ Session::get('cart')->totalQty }}</span> items)</div>
+								@else
 								<span class="simpleCart_total">$0.00</span> (<span id="simpleCart_quantity" class="simpleCart_quantity">0</span> items)</div>
+								@endif
 								<img src="{{ asset('images/bag.png') }}" alt="">
 							</h3>
 						</a>
@@ -218,3 +264,4 @@
 			<hr>
 		</div>
 	</div>
+</div>

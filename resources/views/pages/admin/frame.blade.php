@@ -120,10 +120,10 @@
                             <a href="#"><i class="fa fa-users fa-fw"></i> Khách hàng<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#">Danh sách khách hàng</a>
+                                    <a href="{{ route('getListCustomer') }}">Danh sách khách hàng</a>
                                 </li>
                                 <li>
-                                    <a href="#">Thêm khách hàng</a>
+                                    <a href="{{ route('getAddCustomer') }}">Thêm khách hàng</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
