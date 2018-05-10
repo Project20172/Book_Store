@@ -304,7 +304,16 @@
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
-									<p>{{ $book->book_name }}</p>
+									<p>
+										@php
+										if (strlen($book->book_name)>27) {
+											echo substr($book->book_name, 0,23).'...';
+										}
+										else{
+											echo $book->book_name;
+										}
+										@endphp
+									</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
@@ -333,7 +342,16 @@
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
-									<p>{{ $book->book_name }}</p>
+									<p>
+										@php
+										if (strlen($book->book_name)>27) {
+											echo substr($book->book_name, 0,23).'...';
+										}
+										else{
+											echo $book->book_name;
+										}
+										@endphp
+									</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
@@ -362,7 +380,16 @@
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
-									<p>{{ $book->book_name }}</p>
+									<p>
+										@php
+										if (strlen($book->book_name)>27) {
+											echo substr($book->book_name, 0,23).'...';
+										}
+										else{
+											echo $book->book_name;
+										}
+										@endphp
+									</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
 							</a>
