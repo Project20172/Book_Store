@@ -304,6 +304,7 @@
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
+<<<<<<< HEAD
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -315,6 +316,10 @@
 										@endphp
 									</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+=======
+									<p>{{ $book->book_name }}</p>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+>>>>>>> d600b6c87e93691cb725d10901f8b2c69cc109fe
 								</div>
 							</a>
 						</div>
@@ -342,6 +347,7 @@
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
+<<<<<<< HEAD
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -353,6 +359,10 @@
 										@endphp
 									</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+=======
+									<p>{{ $book->book_name }}</p>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+>>>>>>> d600b6c87e93691cb725d10901f8b2c69cc109fe
 								</div>
 							</a>
 						</div>
@@ -380,6 +390,7 @@
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
 									<h2>${{ $book->price }}</h2>
+<<<<<<< HEAD
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -391,6 +402,10 @@
 										@endphp
 									</p>
 									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+=======
+									<p>{{ $book->book_name }}</p>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+>>>>>>> d600b6c87e93691cb725d10901f8b2c69cc109fe
 								</div>
 							</a>
 						</div>
@@ -439,7 +454,7 @@
 						}else{
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}				
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
@@ -481,7 +496,7 @@
 						}else{
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}					
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
@@ -523,7 +538,7 @@
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}
 						
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
 						str+='</div>';
@@ -562,7 +577,7 @@
 						}else{
 							str+='<p>'+result[i]["book_name"]+'</p>';
 						}
-						str+='<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
 						str+='</div>';

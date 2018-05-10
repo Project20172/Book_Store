@@ -80,6 +80,12 @@ class Cart{
 
 		Session::put('cart', $this);
 	}
+
+	public function removeAll(){
+		$this->items = null;
+		$this->totalPrice = 0;
+		$this->totalQty = 0;
+	}
 }
 
 ?>

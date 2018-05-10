@@ -11,7 +11,7 @@ use App\Cart;
 class ViewPages extends Controller
 {   
     public function getAddToCart(Request $request, $book_id){
-        echo "string";
+        // echo "string";
         $book = Book::find($book_id);
         $oldCart = Session::has('cart') ? Session::get('cart') : null;
         $cart = new Cart($oldCart);
@@ -28,8 +28,28 @@ class ViewPages extends Controller
         $cart = null;
         return view('pages.carts', ['cart'=>$cart]);
 
-	}
+    }
 
+    public function removeAllCart(Request $request){
+        $request->session()->put('cart', null);
+        return redirect()->route('cart');
+    }
+
+    public function updateCart(Request $request){
+        $action = $request->get('action');
+        $id = $request->get('id');
+        if(Session::has('cart')){
+            $cart = Session::get('cart');
+            if($action == 'removeBook'){
+                $cart->remove($id);
+            } else if($action == 'increaseQty'){
+                $cart->increase($id);
+            } else if($action == 'decreaseQty'){
+                $cart->decrease($id);
+            }
+            return 'ok';
+        }
+    }
 
     public function homepage()
     {
@@ -38,7 +58,7 @@ class ViewPages extends Controller
         $listGiaoDuc=Book::where('category_id',2)->skip(0)->take(4)->get();
         $listThieuNhi=Book::where('category_id',5)->skip(0)->take(4)->get();
         $listTeen=Book::where('category_id',6)->skip(0)->take(4)->get();
-    	return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
+        return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
     }
 
 
@@ -61,7 +81,7 @@ class ViewPages extends Controller
     public function getLoaiSanPham($id)
     {
         $category=category::find($id);
-    	$listBook=Book::where('category_id',$id)->paginate(12);
-    	return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>$category->category_name]);
+        $listBook=Book::where('category_id',$id)->paginate(12);
+        return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>$category->category_name]);
     }
 }

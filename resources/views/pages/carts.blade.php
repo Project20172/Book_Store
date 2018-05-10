@@ -3,7 +3,7 @@
 <div class="container">
 	<div class="breadcrumbs">
 		<div class="container">
-			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+			<ol class="breadcrumb breadcrumb1 animated wow slideInLeft animated" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
 				<li><a href="{{ asset('home') }}"><span class="glyphicon glyphicon-home" aria-hidden="true"></span> Trang chủ</a></li>
 				<li class="active">Giỏ hàng</li>
 			</ol>
@@ -12,8 +12,8 @@
 </div>
 <div class="checkout">
 	<div class="container">
-		<h3 class="animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">Your shopping cart contains: <span>{{ $cart ? $cart->totalQty : 0 }} Products</span></h3>
-		<div class="checkout-right animated wow slideInUp animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
+		<h3 class="animated wow slideInLeft animated" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">Your shopping cart contains: <span>{{ $cart ? $cart->totalQty : 0 }} Products</span></h3>
+		<div class="checkout-right animated wow slideInUp animated" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInUp;">
 			<table class="timetable_sub">
 				<thead>
 					<tr>
@@ -27,10 +27,12 @@
 					</tr>
 				</thead>
 				<tbody>
-					@if($cart)
+					@if($cart and $items)
+
 					@foreach($items as $book)
-					<tr class="rem1">
-						<td class="invert">1</td>
+					<tr class="rem{{$loop->index + 1}}">
+						<td class="invert">{{$loop->index + 1}}</td>
+						<td class="book_id" id="book_id" hidden>{{$book['item']['book_id']}}</td>
 						<td class="invert-image"><a href="single.html"><img src="{{$book['item']['picture']}}" alt=" " class="img-fluid"></a>
 						</td>
 						<td class="invert">{{$book['item']['book_name']}}</td>
@@ -43,17 +45,18 @@
 								</div>
 							</div>
 						</td>
-						<td class="invert">5,000 VNĐ</td>
-						<td class="invert">{{number_format($book['price'], 0, '.', ',')}} VNĐ</td>
+						<td class="invert">5,000 đ</td>
+						<td class="invert">{{number_format($book['price'], 0, '.', ',')}} đ</td>
 						<td class="invert">
 							<div class="rem">
-								<div class="close1"> </div>
+								<div class="close{{$loop->index + 1}}"> </div>
 							</div>
 							<script>$(document).ready(function(c) {
-								$('.close1').on('click', function(c){
-									$('.rem1').fadeOut('slow', function(c){
-										$('.rem1').remove();
-
+								$('.close{{$loop->index + 1}}').on('click', function(c){
+									$('.rem{{$loop->index + 1}}').fadeOut('slow', function(c){
+										var id = document.getElementById('book_id').innerHTML;
+										removeBook(id);
+										$('.rem{{$loop->index + 1}}').remove();
 									});
 								});	  
 							});	</script>
@@ -61,7 +64,7 @@
 					</tr>
 					@endforeach
 					@else
-					<tr class="rem1">
+					<tr class="rem">
 						Giỏ hàng trống
 					</tr>
 
@@ -72,11 +75,17 @@
 						$('.value-plus').on('click', function(){
 							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
 							divUpd.text(newVal);
+							var id = document.getElementById('book_id').innerHTML;
+							increaseQty(id);
 						});
 
 						$('.value-minus').on('click', function(){
 							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
-							if(newVal>=1) divUpd.text(newVal);
+							if(newVal>=1){
+								divUpd.text(newVal);
+								var id = document.getElementById('book_id').innerHTML;
+								decreaseQty(id);
+							}
 						});
 					</script>
 					<!--quantity-->
@@ -84,15 +93,15 @@
 			</table>
 		</div>
 		<div class="checkout-left">	
-			<div class="checkout-left-basket animated wow slideInLeft animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
+			<div class="checkout-left-basket animated wow slideInLeft animated" data-wow-delay=".3" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInLeft;">
 				<h4>Thông tin</h4>
 				<ul>
 					@if($cart)
 					@foreach($items as $book)
-						<li>{{$book['item']['book_name']}} <i>-</i> <span>{{number_format($book['price'], 0, '.', ',')}} VNĐ </span></li>
+					<li>{{$book['item']['book_name']}} <i>-</i> <span>{{number_format($book['price'], 0, '.', ',')}} đ </span></li>
 					@endforeach
-						<li>Total Service Charges <i>-</i> <span>{{number_format($cart->totalQty * 5000, 0, '.', ',')}} VNĐ</span></li>
-						<li>Total <i>-</i> <span>{{number_format($cart->totalPrice + $cart->totalQty * 5000, 0, '.', ',')}} VNĐ</span></li>
+					<li>Total Service Charges <i>-</i> <span>{{number_format($cart->totalQty * 5000, 0, '.', ',')}} đ</span></li>
+					<li>Total <i>-</i> <span>{{number_format($cart->totalPrice + $cart->totalQty * 5000, 0, '.', ',')}} đ</span></li>
 					@else
 					<tr class="rem1">
 						Giỏ hàng trống
@@ -101,19 +110,19 @@
 					@endif
 
 					{{-- <li>Total Service Charges <i>-</i> <span>$15.00</span></li>
-					<li>Total <i>-</i> <span>$854.00</span></li> --}}
+						<li>Total <i>-</i> <span>$854.00</span></li> --}}
 
 
-				</ul>
+					</ul>
+				</div>
+				<div class="checkout-right-basket animated wow slideInRight animated" data-wow-delay=".3s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
+					<a href="{{route('home')}}" class="btn btn-primary">Chọn thêm</a>
+					<a href="{{route('removeAllCart')}}" class="btn btn-primary ">Xóa toàn bộ</a>
+					<a href="{{route('cart')}}" class="btn btn-primary">Cập nhật</a>
+					<a href="#" class="btn btn-primary">Thanh toán</a>
+				</div>
+				<div class="clearfix"> </div>
 			</div>
-			<div class="checkout-right-basket animated wow slideInRight animated" data-wow-delay=".5s" style="visibility: visible; animation-delay: 0.5s; animation-name: slideInRight;">
-				<a href="single.html" class="btn btn-primary">Chọn thêm</a>
-				<a href="" class="btn btn-primary ">Xóa toàn bộ</a>
-				<a href="" class="btn btn-primary">Cập nhật</a>
-				<a href="" class="btn btn-primary">Thanh toán</a>
-			</div>
-			<div class="clearfix"> </div>
 		</div>
 	</div>
-</div>
-@endsection
+	@endsection
