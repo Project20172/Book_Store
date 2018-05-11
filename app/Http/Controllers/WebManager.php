@@ -15,6 +15,24 @@ class WebManager extends Controller
 {
 
 
+	public function getAdminLogin()
+	{
+		return view('pages.admin.admin-login');
+	}
+
+	public function postAdminLogin(Request $req)
+	{
+		$user_name=$req->user_name;
+		$password=$req->password;
+		$check=Admin::where('user_name',$user_name)->where('password',$password)->get();
+		if(count($check)>0){
+			return redirect('admin');
+		}
+		else{
+			return redirect('admin-login')->with('thongbao','Sai user_name hoặc password');
+		}
+	}
+
 	public function getCheckUserName($id)
 	{
 		$customer=Customer::where('user_name',$id)->get();
@@ -322,24 +340,27 @@ class WebManager extends Controller
 
 	public function getAdmin()
 	{
-		return view('pages.admin.frame');
+		$countBook=Book::all()->count();
+		$countCustomer=Customer::all()->count();
+		$countCategory=category::all()->count();
+		return view('pages.admin.homeadmin',['countBook'=>$countBook,'countCategory'=>$countCategory,'countCustomer'=>$countCustomer]);
 	}
 
 	public function getListCategory()
 	{
-		$list = category::all();
+		$list = category::paginate(12);
 		return view('pages.admin.listCategory',['list'=>$list]);
 	}
 
 	public function getListCustomer()
 	{
-		$list = Customer::all();
+		$list = Customer::paginate(12);
 		return view('pages.admin.listCustomer',['list'=>$list]);
 	}
 
 	public function getListAdmin()
 	{
-		$list = Admin::all();
+		$list = Admin::paginate(12);
 		return view('pages.admin.listAdmin',['list'=>$list]);
 	}
 
@@ -365,7 +386,7 @@ class WebManager extends Controller
 				'txtCateName' => 'required|unique:category,category_name'
 			], 
 			[
-				'txtCateName.requried'=>'Bạn chưa nhập thể loại',
+				'txtCateName.required'=>'Bạn chưa nhập thể loại',
 				'txtCateName.unique'=>'Thể loại đã tồn tại'
 			]);
 		$cate = new category;
@@ -405,7 +426,7 @@ class WebManager extends Controller
 
 	public function getListAuthor()
 	{
-		$list = Author::all();
+		$list = Author::paginate(12);
 		return view('pages.admin.listAuthor',['listAuthor'=>$list]);
 	}
 
@@ -443,7 +464,6 @@ class WebManager extends Controller
 		$customer->email=$req->email;
 		$customer->phone=$req->phone;
 		$customer->save();
-		
 		return redirect('/admin/add-customer')->with('thongbao','Thêm khách hàng thành công');
 
 	}
@@ -485,6 +505,13 @@ class WebManager extends Controller
 	public function postAddAuthor(Request $req)
 	{
 		$author=new Author;
+		$this->validate($req,
+			[
+				'author_name'=>'required'
+			],
+			[
+				'author_name.required'=>'Bạn chưa nhập tên tác giả'
+			]);
 		$author->name=$req->author_name;
 		if($req->author_describe==null){
 			$author->author_describe="";
@@ -679,7 +706,7 @@ class WebManager extends Controller
 
 	public function getListBook()
 	{
-		$listBook=Book::all();
+		$listBook=Book::paginate(12);
 		return view('pages.admin.listBook',['listBook'=>$listBook]);
 	}
 
@@ -774,7 +801,6 @@ class WebManager extends Controller
 			$book->picture="";
 		}
 		$book->save();
-
 		return redirect('/admin/add-book')->with('thongbao','Thêm sách thành công');
 	}
 
@@ -866,7 +892,6 @@ class WebManager extends Controller
 			$book->picture='images/'.$filename; 
 		}
 		$book->save();
-
 		return redirect('/admin/edit-book/'.$book->book_id)->with('thongbao','Sửa sách thành công');
 	}
 

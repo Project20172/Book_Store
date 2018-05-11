@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('admin-login','WebManager@getAdminLogin')->name('getAdminLogin');
+
+Route::post('admin-login','WebManager@postAdminLogin')->name('postAdminLogin');
+
 Route::get('check-username/{id}','WebManager@getCheckUserName')->name('getCheckUserName');
 
 Route::post('send_review','WebManager@postSendReview')->name('postSendReview');
