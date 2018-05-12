@@ -47,7 +47,7 @@
               <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
               <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
               <li><a href="#"><i class="fa fa-bell-o"></i> Thông báo</a></li>
-              <li><a href="login.html"><i class="fa fa-key"></i> Đăng xuất</a></li>
+              <li><a href="{{ route('getAdminLogout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
           </li>
 
@@ -78,6 +78,20 @@
             </a>
             <ul class="sub">
               <li><a  href="{{ route('getListCategory') }}">Thể Loại</a></li>
+              <li><a  href="{{ route('getListAuthor') }}">Tác Giả</a></li>
+              <li><a  href="{{ route('getListBook') }}">Sách</a></li>
+              <li><a  href="{{ route('getListCustomer') }}">Khách Hàng</a></li>
+              <li><a  href="{{ route('getListAdmin') }}">Admin</a></li>
+            </ul>
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="fa fa-th"></i>
+              <span>Bán Hàng</span>
+            </a>
+            <ul class="sub">
+              <li><a  href="{{ route('getListOrderDetail') }}">Danh Sách Đơn Hàng</a></li>
               <li><a  href="{{ route('getListAuthor') }}">Tác Giả</a></li>
               <li><a  href="{{ route('getListBook') }}">Sách</a></li>
               <li><a  href="{{ route('getListCustomer') }}">Khách Hàng</a></li>

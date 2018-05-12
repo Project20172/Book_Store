@@ -11,7 +11,17 @@
 |
 */
 
+Route::get('list-order-detail','WebManager@getListOrderDetail')->name('getListOrderDetail')->middleware('adminlogin');
+
+Route::get('delete-order/{id}','WebManager@getDeleteOrder')->name('getDeleteOrder')->middleware('adminlogin');
+
+Route::get('edit-order-detail/{id}','WebManager@getEditOrderDetail')->name('getEditOrderDetail')->middleware('adminlogin');
+
+Route::post('edit-order-detail','WebManager@postEditOrderDetail')->name('postEditOrderDetail')->middleware('adminlogin');
+
 Route::get('admin-login','WebManager@getAdminLogin')->name('getAdminLogin');
+
+Route::get('admin-logout','WebManager@getAdminLogout')->name('getAdminLogout');
 
 Route::post('admin-login','WebManager@postAdminLogin')->name('postAdminLogin');
 
@@ -70,70 +80,73 @@ Route::get('updateCart', [
 
 Route::get('/book_detail/{id}','WebManager@getBookDetail')->name('getBookDetail');
 
+Route::get('404','WebManager@get404'
+)->name('get404');
+
 Route::get('/home', 'ViewPages@homepage')->name('home');
 
 
-Route::get('/admin','WebManager@getAdmin')->name('getAdmin');
+Route::get('/admin','WebManager@getAdmin')->name('getAdmin')->middleware('adminlogin');
 
-Route::get('/admin/list-customer','WebManager@getListCustomer')->name('getListCustomer');
+Route::get('/admin/list-customer','WebManager@getListCustomer')->name('getListCustomer')->middleware('adminlogin');
 
-Route::get('/admin/list-admin','WebManager@getListAdmin')->name('getListAdmin');
+Route::get('/admin/list-admin','WebManager@getListAdmin')->name('getListAdmin')->middleware('adminlogin');
 
-Route::post('/admin/add-customer','WebManager@postAddCustomer')->name('postAddCustomer');
+Route::post('/admin/add-customer','WebManager@postAddCustomer')->name('postAddCustomer')->middleware('adminlogin');
 
-Route::post('/admin/add-admin','WebManager@postAddAdmin')->name('postAddAdmin');
+Route::post('/admin/add-admin','WebManager@postAddAdmin')->name('postAddAdmin')->middleware('adminlogin');
 
-Route::get('/admin/add-customer','WebManager@getAddCustomer')->name('getAddCustomer');
+Route::get('/admin/add-customer','WebManager@getAddCustomer')->name('getAddCustomer')->middleware('adminlogin');
 
-Route::get('/admin/add-admin','WebManager@getAddAdmin')->name('getAddAdmin');
+Route::get('/admin/add-admin','WebManager@getAddAdmin')->name('getAddAdmin')->middleware('adminlogin');
 
-Route::get('/admin/list-category','WebManager@getListCategory')->name('getListCategory');
+Route::get('/admin/list-category','WebManager@getListCategory')->name('getListCategory')->middleware('adminlogin');
 
-Route::get('/admin/add-category','WebManager@getAddCategory')->name('getAddCategory');
+Route::get('/admin/add-category','WebManager@getAddCategory')->name('getAddCategory')->middleware('adminlogin');
 
-Route::get('admin/list-author','WebManager@getListAuthor')->name('getListAuthor');
+Route::get('admin/list-author','WebManager@getListAuthor')->name('getListAuthor')->middleware('adminlogin');
 
-Route::get('admin/add-author','WebManager@getAddAuthor')->name('getAddAuthor');
+Route::get('admin/add-author','WebManager@getAddAuthor')->name('getAddAuthor')->middleware('adminlogin');
 
-Route::get('/admin/list-book','WebManager@getListBook')->name('getListBook');
+Route::get('/admin/list-book','WebManager@getListBook')->name('getListBook')->middleware('adminlogin');
 
-Route::get('/admin/add-book','WebManager@getAddBook')->name('getAddBook');
+Route::get('/admin/add-book','WebManager@getAddBook')->name('getAddBook')->middleware('adminlogin');
 
-Route::get('/admin/edit-category/{id}','WebManager@getEditCategory')->name('getEditCategory');
+Route::get('/admin/edit-category/{id}','WebManager@getEditCategory')->name('getEditCategory')->middleware('adminlogin');
 
-Route::post('/admin/add-category','WebManager@postAddCategory')->name('postAddCategory');
+Route::post('/admin/add-category','WebManager@postAddCategory')->name('postAddCategory')->middleware('adminlogin');
 
-Route::post('/admin/edit-category','WebManager@postEditCategory')->name('postEditCategory');
+Route::post('/admin/edit-category','WebManager@postEditCategory')->name('postEditCategory')->middleware('adminlogin');
 
-Route::get('/admin/remove-category/{id}','WebManager@getRemoveCategory')->name('getRemoveCategory');
+Route::get('/admin/remove-category/{id}','WebManager@getRemoveCategory')->name('getRemoveCategory')->middleware('adminlogin');
 
-Route::post('admin/add-author','WebManager@postAddAuthor')->name('postAddAuthor');
+Route::post('admin/add-author','WebManager@postAddAuthor')->name('postAddAuthor')->middleware('adminlogin');
 
-Route::get('admin/edit-author/{id}','WebManager@getEditAuthor')->name('getEditAuthor');
+Route::get('admin/edit-author/{id}','WebManager@getEditAuthor')->name('getEditAuthor')->middleware('adminlogin');
 
-Route::get('admin/edit-customer/{id}','WebManager@getEditCustomer')->name('getEditCustomer');
+Route::get('admin/edit-customer/{id}','WebManager@getEditCustomer')->name('getEditCustomer')->middleware('adminlogin');
 
-Route::get('admin/edit-admin/{id}','WebManager@getEditAdmin')->name('getEditAdmin');
+Route::get('admin/edit-admin/{id}','WebManager@getEditAdmin')->name('getEditAdmin')->middleware('adminlogin');
 
-Route::post('admin/edit-author','WebManager@postEditAuthor')->name('postEditAuthor');
+Route::post('admin/edit-author','WebManager@postEditAuthor')->name('postEditAuthor')->middleware('adminlogin');
 
-Route::post('admin/edit-customer','WebManager@postEditCustomer')->name('postEditCustomer');
+Route::post('admin/edit-customer','WebManager@postEditCustomer')->name('postEditCustomer')->middleware('adminlogin');
 
-Route::post('admin/edit-admin','WebManager@postEditAdmin')->name('postEditAdmin');
+Route::post('admin/edit-admin','WebManager@postEditAdmin')->name('postEditAdmin')->middleware('adminlogin');
 
-Route::get('/admin/remove-author/{id}','WebManager@getRemoveAuthor')->name('getRemoveAuthor');
+Route::get('/admin/remove-author/{id}','WebManager@getRemoveAuthor')->name('getRemoveAuthor')->middleware('adminlogin');
 
-Route::get('/admin/remove-customer/{id}','WebManager@getRemoveCustomer')->name('getRemoveCustomer');
+Route::get('/admin/remove-customer/{id}','WebManager@getRemoveCustomer')->name('getRemoveCustomer')->middleware('adminlogin');
 
-Route::get('/admin/remove-admin/{id}','WebManager@getRemoveAdmin')->name('getRemoveAdmin');
+Route::get('/admin/remove-admin/{id}','WebManager@getRemoveAdmin')->name('getRemoveAdmin')->middleware('adminlogin');
 
-Route::post('/admin/add-book','WebManager@postAddBook')->name('postAddBook');
+Route::post('/admin/add-book','WebManager@postAddBook')->name('postAddBook')->middleware('adminlogin');
 
-Route::get('/admin/edit-book/{id}','WebManager@getEditBook')->name('getEditBook');
+Route::get('/admin/edit-book/{id}','WebManager@getEditBook')->name('getEditBook')->middleware('adminlogin');
 
-Route::post('/admin/edit-book','WebManager@postEditBook')->name('postEditBook');
+Route::post('/admin/edit-book','WebManager@postEditBook')->name('postEditBook')->middleware('adminlogin');
 
-Route::get('/admin/remove-book/{id}','WebManager@getRemoveBook')->name('getRemoveBook');
+Route::get('/admin/remove-book/{id}','WebManager@getRemoveBook')->name('getRemoveBook')->middleware('adminlogin');
 
 
 Route::get('loai-san-pham/{id}','ViewPages@getLoaiSanPham')->name('loaisanpham');

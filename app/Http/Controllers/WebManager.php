@@ -15,6 +15,39 @@ class WebManager extends Controller
 {
 
 
+	public function get404()
+	{
+		return view('pages.admin.404');
+	}
+
+	public function getEditOrderDetail($id)
+	{
+		$item=DB::table('order_details')->where('order_id',$id)->get();
+		return view('pages.admin.edit-order-detail',['item'=>$item]);
+	}
+
+	public function postEditOrderDetail(Request $req)
+	{
+		$order_detail=DB::table('order_details')->where('order_id',$req->order_id)->update(['status'=>$req->status,'date_received'=>date('Y-m-d h:m:s',strtotime($req->date_received))]);
+		return redirect('edit-order-detail/'.$req->order_id)->with('thongbao','Cập nhật thành công');
+	}
+
+	public function getDeleteOrder($id)
+	{
+		DB::table('ordered_book')->where('order_id',$id)->delete();
+		DB::table('order_details')->where('order_id',$id)->delete();
+		return redirect('list-order-detail')->with('thongbao','Xóa thành công');
+	}
+
+
+	public function getListOrderDetail()
+	{
+		$list=DB::table('order_details')->join('customer','customer.user_id','=','order_details.user_id')
+		->selectRaw('order_details.*,customer.user_name,customer.last_name,customer.first_name')
+		->get();
+		return view('pages.admin.list-order-book',['list'=>$list]);
+	}
+
 	public function getAdminLogin()
 	{
 		return view('pages.admin.admin-login');
@@ -26,6 +59,7 @@ class WebManager extends Controller
 		$password=$req->password;
 		$check=Admin::where('user_name',$user_name)->where('password',$password)->get();
 		if(count($check)>0){
+			Session::put('adminlogin',1);
 			return redirect('admin');
 		}
 		else{
@@ -195,6 +229,12 @@ class WebManager extends Controller
 	{
 		Session::forget('UserLogin');
 		return redirect('/home');
+	}
+
+	public function getAdminLogout()
+	{
+		Session::forget('adminlogin');
+		return redirect('admin-login');
 	}
 
 	public function getBookByAuthor($id)
