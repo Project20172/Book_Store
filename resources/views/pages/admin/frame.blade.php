@@ -38,13 +38,13 @@
           <!-- user login dropdown start-->
           <li class="dropdown">
             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-              <img alt="" src="{{ asset('images/avatar1_small.jpg') }}">
-              <span class="username">Nguyễn Hoàng Giang</span>
+              <img alt="" class="img-fluid" width="32" src="{{ asset('images/40848077334_db3b7055a3_o.jpg') }}">
+              <span class="username">{{ session('adminlogin')->first_name.' '.session('adminlogin')->last_name }}</span>
               <b class="caret"></b>
             </a>
             <ul class="dropdown-menu extended logout">
               <div class="log-arrow-up"></div>
-              <li><a href="#"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
+              <li><a href="{{ route('getProfile',session('adminlogin')->admin_id) }}"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
               <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
               <li><a href="#"><i class="fa fa-bell-o"></i> Thông báo</a></li>
               <li><a href="{{ route('getAdminLogout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
@@ -87,15 +87,30 @@
 
           <li class="sub-menu">
             <a href="javascript:;" class="">
-              <i class="fa fa-th"></i>
+              <i class="fa fa-money"></i>
               <span>Bán Hàng</span>
             </a>
             <ul class="sub">
               <li><a  href="{{ route('getListOrderDetail') }}">Danh Sách Đơn Hàng</a></li>
-              <li><a  href="{{ route('getListAuthor') }}">Tác Giả</a></li>
-              <li><a  href="{{ route('getListBook') }}">Sách</a></li>
-              <li><a  href="{{ route('getListCustomer') }}">Khách Hàng</a></li>
-              <li><a  href="{{ route('getListAdmin') }}">Admin</a></li>
+            </ul>
+          </li>
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="fa fa-list"></i>
+              <span>Danh Sách</span>
+            </a>
+            <ul class="sub">
+              <li><a  href="{{ route('getListOrderDetail') }}">Danh Sách Sách Bán Chạy</a></li>
+            </ul>
+          </li>
+
+          <li class="sub-menu">
+            <a href="javascript:;" class="">
+              <i class="fa fa-bar-chart-o"></i>
+              <span>Thống Kê</span>
+            </a>
+            <ul class="sub">
+              <li><a  href="{{ route('getListOrderDetail') }}">Thể Loại,Tác Giả</a></li>
             </ul>
           </li>
 

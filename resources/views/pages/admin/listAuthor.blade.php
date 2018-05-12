@@ -44,8 +44,8 @@
         <table class="table table-striped table-advance table-hover">
           <thead>
             <tr>
-              <th><i class="fa fa-bullhorn"></i> ID</th>
-              <th>Ảnh</th>
+              <th style="width: 5%"><i class="fa fa-bullhorn"></i> ID</th>
+              <th style="width: 10%">Ảnh</th>
               <th class="hidden-phone"><i class="fa fa-question-circle"></i> Tên Tác Giả</th>
               <th>Giới Thiệu</th>
               <th style="width: 10%"></th>

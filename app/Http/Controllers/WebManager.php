@@ -14,6 +14,63 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+	public function postProfileEdit(Request $req)
+	{
+		echo $req->phone;
+		$admin=Admin::find($req->admin_id);
+		$this->validate($req,
+			[
+				'first_name'=>'required',
+				'last_name'=>'required'
+			],
+			[
+				'first_name.required'=>'Bạn chưa nhập tên',
+				'last_name.required'=>'Bạn chưa nhập họ',
+			]);
+		$admin->first_name=$req->first_name;
+		session('adminlogin')->first_name=$req->first_name;
+		$admin->last_name=$req->last_name;
+		session('adminlogin')->last_name=$req->last_name;
+		$admin->address=$req->address;
+		session('adminlogin')->address=$req->address;
+		$admin->city=$req->city;
+		session('adminlogin')->city=$req->city;
+		$admin->email=$req->email;
+		session('adminlogin')->email=$req->email;
+		$admin->phone=$req->phone;
+		session('adminlogin')->phone=$req->phone;
+		$admin->permission=$req->permission;
+		session('adminlogin')->permission=$req->permission;
+		$admin->save();
+		return redirect('profile-edit/'.$req->admin_id)->with('thongbao','Sửa thông tin thành công');
+
+	}
+
+	public function postPasswordEdit(Request $req)
+	{
+		$admin=Admin::find($req->admin_id);
+		if($admin->password==$req->pass_old){
+			$admin->password=$req->pass_new;
+			$admin->save();
+			return redirect('profile-edit/'.$req->admin_id)->with('thongbaothaydoithanhcong','Thay đổi mật khẩu thành công');
+		}
+		else{
+			return redirect('profile-edit/'.$req->admin_id)->with('thongbaothaydoiloi','Sai mật khẩu');
+		}
+	}
+
+	public function getContentProEdit($id)
+	{
+		$admin=Admin::find($id);
+		return view('pages.admin.profile-edit',['admin'=>$admin]);
+	}
+
+
+	public function getProfile($id)
+	{
+		$admin=Admin::find($id);
+		return view('pages.admin.profile',['admin'=>$admin]);
+	}
 
 	public function get404()
 	{
@@ -66,7 +123,7 @@ class WebManager extends Controller
 		$password=$req->password;
 		$check=Admin::where('user_name',$user_name)->where('password',$password)->get();
 		if(count($check)>0){
-			Session::put('adminlogin',1);
+			Session::put('adminlogin',$check[0]);
 			return redirect('admin');
 		}
 		else{
@@ -435,7 +492,28 @@ class WebManager extends Controller
 
 		$dayTotal=DB::table('order_details')->selectRaw('DAYNAME(CURRENT_DATE) as Name,SUM(order_details.total_money) as total_money')
 		->whereRaw('DATE(order_details.date_received)=CURRENT_DATE and status=1')->get();
-		return view('pages.admin.homeadmin',['countBook'=>$countBook,'countCategory'=>$countCategory,'countCustomer'=>$countCustomer,'t'=>$arr,'numberw'=>$numberw,'countOrder'=>$countOrder,'dayTotal'=>$dayTotal]);
+		// $monthTotal=DB::table('order_details')->selectRaw('MONTHNAME(CURRENT_DATE) as Name,DAYOFMONTH(CURRENT_DATE) as dayofmonth,SUM(order_details.total_money) as total_money')
+		// ->whereRaw('MONTH(order_details.date_received)=MONTH(CURRENT_DATE) AND order_details.status=1')
+		// ->get();
+
+		$monthTotal=DB::select('SELECT 
+			MONTHNAME(CURRENT_DATE) as Name,
+			DAYOFMONTH(CURRENT_DATE) as dayofmonth,
+			SUM(order_details.total_money) as total_money,
+			SUM(order_details.total_money)*100/
+			(
+			SELECT SUM(order_details.total_money) FROM order_details WHERE YEAR(order_details.date_received)=YEAR(CURRENT_DATE) AND order_details.status=1
+			) as percent
+			FROM order_details WHERE MONTH(order_details.date_received)=MONTH(CURRENT_DATE) AND order_details.status=1');
+		$_10order=DB::table('order_details')->join('customer','customer.user_id','=','order_details.user_id')
+		->selectRaw('order_details.*,customer.first_name,customer.last_name')
+		->orderBy('order_details.date_created', 'desc')
+		->take(10)->get();
+		// echo '<pre>';
+		// var_dump($_10order);
+		// echo '</pre>';
+		// echo count($_10order);
+		return view('pages.admin.homeadmin',['countBook'=>$countBook,'countCategory'=>$countCategory,'countCustomer'=>$countCustomer,'t'=>$arr,'numberw'=>$numberw,'countOrder'=>$countOrder,'dayTotal'=>$dayTotal,'monthTotal'=>$monthTotal,'_10order'=>$_10order]);
 	}
 
 	public function getListCategory()

@@ -1,5 +1,30 @@
 @extends('pages.admin.frame')
 @section('content')
+@php
+	$arrThu=array(
+		'Monday'=>'Thứ 2',
+		'Tuesday'=>'Thứ 3',
+		'Wednesday'=>'Thứ 4',
+		'Thursday'=>'Thứ 5',
+		'Friday'=>'Thứ 6',
+		'Saturday'=>'Thứ 7',
+		'Sunday'=>'Chủ Nhật'
+	);
+	$arrThang=array(
+		'Jan'=>'Tháng Một',
+		'Feb'=>'Tháng Hai',
+		'Mar'=>'Tháng Ba',
+		'Apr'=>'Tháng Tư',
+		'May'=>'Tháng Năm',
+		'Jun'=>'Tháng Sáu',
+		'Jul'=>'Tháng Bảy',
+		'Aug'=>'Tháng Tám',
+		'Sep'=>'Tháng Chín',
+		'Oct'=>'Tháng Mười',
+		'Nov'=>'Tháng Mười Một',
+		'Dec'=>'Tháng Mười Hai'
+	);
+@endphp
 <section class="wrapper">
 	<!--state overview start-->
 	<div class="row state-overview">
@@ -76,7 +101,7 @@
 				</ul>
 				@foreach ($t as $key=>$value)
 				<div class="bar">
-					<div class="title">{{ $key }}</div>
+					<div class="title">{{ $arrThu[$key] }}</div>
 					<div class="value tooltips" data-original-title="{{ $value }}%" data-toggle="tooltip" data-placement="top">{{ $value }}%</div>
 				</div>
 				@endforeach
@@ -90,7 +115,7 @@
 					<div class="chart">
 						<div class="heading">
 							@foreach ($dayTotal as $element)
-							<span>{{ $element->Name }}</span>
+							<span>{{ $arrThu[$element->Name] }}</span>
 							<strong>{{ $element->total_money }} VND | {{ $t[$element->Name] }}%</strong>
 							@endforeach
 						</div>
@@ -113,15 +138,19 @@
 				<div class="panel-body">
 					<div class="chart">
 						<div class="heading">
-							<span>Tháng 6</span>
-							<strong>23 Ngày | 65%</strong>
+							@foreach ($monthTotal as $element)
+							<span>{{ $arrThang[$element->Name] }}</span>
+							<strong>{{ $element->dayofmonth }} Ngày | {{ $element->percent }}%</strong>
+							@endforeach
 						</div>
 						<div id="barchart"></div>
 					</div>
 				</div>
 				<div class="chart-tittle">
 					<span class="title">Tổng Doanh Thu</span>
-					<span class="value">76,540,678 VND</span>
+					@foreach ($monthTotal as $element)
+					<span class="value">{{ $element->total_money }} VND</span>
+					@endforeach
 				</div>
 			</div>
 			<!--total earning end-->
@@ -134,95 +163,41 @@
 				<div class="panel-body">
 					<div class="text-center mbot30">
 						<h3 class="timeline-title">Timeline</h3>
-						<p class="t-info">This is a project timeline</p>
+						<p class="t-info">10 Đơn đặt hàng gần đây</p>
 					</div>
 
 					<div class="timeline">
+						@for ($i = 0; $i <count($_10order) ; $i++)
+						@if ($i%2==0)
 						<article class="timeline-item">
 							<div class="timeline-desk">
 								<div class="panel">
 									<div class="panel-body">
 										<span class="arrow"></span>
 										<span class="timeline-icon red"></span>
-										<span class="timeline-date">08:25 am</span>
-										<h1 class="red">12 July | Sunday</h1>
-										<p>Nguyễn Hoàng Giang mua một cuốn sách</p>
+										<span class="timeline-date">{{ date('h:m',strtotime($_10order[$i]->date_created)) }}</span>
+										<h1 class="red">{{ date('d ',strtotime($_10order[$i]->date_created)).$arrThang[date('M',strtotime($_10order[$i]->date_created))].' | '.$arrThu[date('l',strtotime($_10order[$i]->date_created))] }}</h1>
+										<p><a class="bgiang" href="{{ route('getEditOrderDetail',$_10order[$i]->order_id) }}">{{ $_10order[$i]->first_name.' '.$_10order[$i]->last_name.' ' }}</a> đã đặt mua một đơn hàng</p>
 									</div>
 								</div>
 							</div>
 						</article>
+						@else
 						<article class="timeline-item alt">
 							<div class="timeline-desk">
 								<div class="panel">
 									<div class="panel-body">
 										<span class="arrow-alt"></span>
 										<span class="timeline-icon green"></span>
-										<span class="timeline-date">10:00 am</span>
-										<h1 class="green">10 July | Wednesday</h1>
-										<p><a href="#">Ngô Vân Anh</a>đặt một đơn hàng <span><a href="#" class="green"></a></span></p>
+										<span class="timeline-date">{{ date('h:m',strtotime($_10order[$i]->date_created)) }}</span>
+										<h1 class="green">{{ date('d ',strtotime($_10order[$i]->date_created)).$arrThang[date('M',strtotime($_10order[$i]->date_created))].' | '.$arrThu[date('l',strtotime($_10order[$i]->date_created))] }}</h1>
+										<p><a href="{{ route('getEditOrderDetail',$_10order[$i]->order_id) }}">{{ $_10order[$i]->first_name.' '.$_10order[$i]->last_name.' ' }}</a>đã đặt mua một đơn hàng <span><a href="#" class="green"></a></span></p>
 									</div>
 								</div>
 							</div>
 						</article>
-						<article class="timeline-item">
-							<div class="timeline-desk">
-								<div class="panel">
-									<div class="panel-body">
-										<span class="arrow"></span>
-										<span class="timeline-icon blue"></span>
-										<span class="timeline-date">11:35 am</span>
-										<h1 class="blue">05 July | Monday</h1>
-										<p><a href="#">Nguyễn Hoàng Giang</a> thêm <span><a href="#" class="blue">10 quển sách</a></span></p>
-										<div class="album">
-											<a href="#">
-												<img alt="" src="{{ asset('images/sm-img-1.jpg') }}">
-											</a>
-											<a href="#">
-												<img alt="" src="{{ asset('images/sm-img-2.jpg') }}">
-											</a>
-											<a href="#">
-												<img alt="" src="{{ asset('images/sm-img-3.jpg') }}">
-											</a>
-											<a href="#">
-												<img alt="" src="{{ asset('images/sm-img-1.jpg') }}">
-											</a>
-											<a href="#">
-												<img alt="" src="{{ asset('images/sm-img-2.jpg') }}">
-											</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-						<article class="timeline-item alt">
-							<div class="timeline-desk">
-								<div class="panel">
-									<div class="panel-body">
-										<span class="arrow-alt"></span>
-										<span class="timeline-icon purple"></span>
-										<span class="timeline-date">3:20 pm</span>
-										<h1 class="purple">29 June | Saturday</h1>
-										<p>Nguyễn Hoàng Giang thêm 20 quyển sách</p>
-										<div class="notification">
-											<i class=" fa fa-exclamation-sign"></i> New task added for <a href="#">Denial Collins</a>
-										</div>
-									</div>
-								</div>
-							</div>
-						</article>
-						<article class="timeline-item">
-							<div class="timeline-desk">
-								<div class="panel">
-									<div class="panel-body">
-										<span class="arrow"></span>
-										<span class="timeline-icon light-green"></span>
-										<span class="timeline-date">07:49 pm</span>
-										<h1 class="light-green">10 June | Friday</h1>
-										<p><a href="#">Jonatha Smith</a> added new milestone <span><a href="#" class="light-green">prank</a></span> Lorem ipsum dolor sit amet consiquest dio</p>
-									</div>
-								</div>
-							</div>
-						</article>
+						@endif
+						@endfor
 					</div>
 
 					<div class="clearfix">&nbsp;</div>

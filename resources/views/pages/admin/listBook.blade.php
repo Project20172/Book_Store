@@ -46,15 +46,15 @@
             <tr>
               <th><i class="fa fa-bullhorn"></i> ID</th>
               <th>Ảnh Bìa</th>
-              <th class="hidden-phone"><i class="fa fa-question-circle"></i> Tên Sách</th>
+              <th class="hidden-phone" style="width: 19%"><i class="fa fa-question-circle" ></i> Tên Sách</th>
               <th>Tác Giả</th>
-              <th>Thể Loại</th>
-              <th>Ngôn Ngữ</th>
-              <th>Năm Xuất Bản</th>
-              <th>Nhà Xuất Bản</th>
-              <th>Giá</th>
-              <th>Số Lượng</th>
-              <th style="width: 10%"></th>
+              <th style="width: 10%">Thể Loại</th>
+              <th style="width: 10%">Ngôn Ngữ</th>
+              <th style="width: 11%">Năm Xuất Bản</th>
+              <th style="width: 10%">Nhà Xuất Bản</th>
+              <th >Giá</th>
+              <th style="width: 8%">Số Lượng</th>
+              <th style="width: 7%"></th>
             </tr>
           </thead>
           <tbody>

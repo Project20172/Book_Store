@@ -10,6 +10,13 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::post('passwordedit','WebManager@postPasswordEdit')->name('postPasswordEdit')->middleware('adminlogin');
+
+Route::get('profile-edit/{id}','WebManager@getContentProEdit')->name('getContentProEdit')->middleware('adminlogin');
+
+Route::post('profile-edit','WebManager@postProfileEdit')->name('postProfileEdit')->middleware('adminlogin');
+
+Route::get('profile/{id}','WebManager@getProfile')->name('getProfile')->middleware('adminlogin');
 
 Route::get('list-order-detail','WebManager@getListOrderDetail')->name('getListOrderDetail')->middleware('adminlogin');
 
