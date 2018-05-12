@@ -23,7 +23,14 @@ class WebManager extends Controller
 	public function getEditOrderDetail($id)
 	{
 		$item=DB::table('order_details')->where('order_id',$id)->get();
-		return view('pages.admin.edit-order-detail',['item'=>$item]);
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('category','category.category_id','=','book.category_id')
+		->where('order_id',$id)
+		->selectRaw('ordered_book.*,author.name,category.category_name,book.book_name,book.language,book.publish_year,book.picture,book.publisher')
+		->paginate(12);
+		return view('pages.admin.edit-order-detail',['item'=>$item,'listBook'=>$listBook]);
 	}
 
 	public function postEditOrderDetail(Request $req)
@@ -380,10 +387,55 @@ class WebManager extends Controller
 
 	public function getAdmin()
 	{
+		$w=DB::select('SELECT WEEKOFYEAR(NOW()) as week');
+		$numberw=$w[0]->week;
+		$countOrder=DB::table('order_details')->selectRaw('COUNT(*) as count')->get();
 		$countBook=Book::all()->count();
 		$countCustomer=Customer::all()->count();
 		$countCategory=category::all()->count();
-		return view('pages.admin.homeadmin',['countBook'=>$countBook,'countCategory'=>$countCategory,'countCustomer'=>$countCustomer]);
+		$t=DB::select('SELECT WEEKDAY(order_details.date_received) AS day_of_week,DAYNAME(order_details.date_received) As Name,
+			(SUM(order_details.total_money)*100/
+			(
+			SELECT SUM(order_details.total_money) FROM order_details
+			WHERE DATE(order_details.date_received)
+			IN (
+			SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) AS day
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 1 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 2 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 3 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 4 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 5 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 6 DAY
+			)
+			AND order_details.status=1
+			)
+			)
+			as 
+			percent FROM order_details 
+			WHERE DATE(order_details.date_received)
+			IN (
+			SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) AS day
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 1 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 2 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 3 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 4 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 5 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 6 DAY
+			)
+			AND order_details.status=1
+			GROUP BY order_details.date_received');
+		//var_dump($t);
+		$arr=array('Monday'=>0,'Tuesday'=>0,'Wednesday'=>0,'Thursday'=>0,'Friday'=>0,'Saturday'=>0,'Sunday'=>0);
+		foreach ($t as $value) {
+			if (array_key_exists($value->Name,$arr)) {
+				$arr[$value->Name]=$value->percent;
+			}
+		}
+		//var_dump($arr);
+
+		$dayTotal=DB::table('order_details')->selectRaw('DAYNAME(CURRENT_DATE) as Name,SUM(order_details.total_money) as total_money')
+		->whereRaw('DATE(order_details.date_received)=CURRENT_DATE and status=1')->get();
+		return view('pages.admin.homeadmin',['countBook'=>$countBook,'countCategory'=>$countCategory,'countCustomer'=>$countCustomer,'t'=>$arr,'numberw'=>$numberw,'countOrder'=>$countOrder,'dayTotal'=>$dayTotal]);
 	}
 
 	public function getListCategory()

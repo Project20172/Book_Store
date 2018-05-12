@@ -59,14 +59,14 @@
               @if ($order->status==-1)
               <td><span class="label label-danger label-mini">Từ Chối</span></td>
               @elseif ($order->status==0)
-              <td><span class="label label-warning label-mini">Test</span></td>
+              <td><span class="label label-warning label-mini">Đang Duyệt</span></td>
               @elseif ($order->status==1)
               <td><span class="label label-success label-mini">Chấp Nhận</span></td>
               @endif
               <td>{{ $order->date_created }}</td>
               <td>{{ $order->date_received }}</td>
               <td>
-               <button class="btn btn-primary btn-xs"><a class="agiang" href="{{ route('getEditOrderDetail',$order->order_id) }}"><i class="fa fa-pencil"></i></a></button>
+               <button class="btn btn-primary btn-xs"><a class="agiang" href="{{ route('getEditOrderDetail',$order->order_id) }}"><i class="fa fa-info-circle"></i></a></button>
                <button class="btn btn-danger btn-xs"><a class="agiang" href="{{ route('getDeleteOrder',$order->order_id) }}"><i class="fa fa-trash-o "></i></a></button>
              </td>
            </tr>

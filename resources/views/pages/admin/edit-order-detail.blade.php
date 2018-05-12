@@ -8,7 +8,7 @@
         <div>
           <section class="panel">
             <header class="panel-heading">
-              Sửa Thông Tin Đặt Hàng
+              Thông Tin Đặt Hàng
             </header>
             <div class="panel-body">
               @if (count($errors)>0)
@@ -107,19 +107,85 @@
                     </div>
                   </div> 
                   @endforeach
+
+                </div>
+                <div class="col-sm-4">
+                  <br>
                   <div class="col-sm-12">
+                    <button type="button" class="btn btn-primary"><a class="agiang" href="{{ route('getListOrderDetail') }}">Xem Danh Sách Đơn Hàng</a></button>
+                  </div>
+                  <div class="col-sm-12">
+                    <br>
                     <button type="submit" class="btn btn-success">Sửa Thông Tin Đặt Hàng</button>
+                  </div>
+                  <div class="col-sm-12">
+                    <br>
                     <button type="reset" class="btn btn-danger">Nhập Lại</button>
-                  </div>               
+                  </div>
+
                 </div>
               </form>
             </div>
-          </section>
-        </div>
-      </section>
-    </div>
-  </div>
+            <br>
+            <header class="panel-heading">
+              Danh Sách Sách
+            </header>
+            <div class="panel-body">
+              <div class="clearfix">
+                <div class="btn-group pull-right">
+                  <button class="btn dropdown-toggle" data-toggle="dropdown">Công cụ <i class="fa fa-angle-down"></i>
+                  </button>
+                  <ul class="dropdown-menu pull-right">
+                    <li><a href="#">In</a></li>
+                    <li><a href="#">Lưu ra pdf</a></li>
+                    <li><a href="#">Lưu ra Excel</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <table class="table table-striped table-advance table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa fa-bullhorn"></i> ID</th>
+                  <th>Ảnh Bìa</th>
+                  <th class="hidden-phone" style="width: 28%"><i class="fa fa-question-circle"></i> Tên Sách</th>
+                  <th>Tác Giả</th>
+                  <th>Thể Loại</th>
+                  <th>Ngôn Ngữ</th>
+                  <th>Năm Xuất Bản</th>
+                  <th style="width: 10%">Nhà Xuất Bản</th>
+                  <th>Giá</th>
+                  <th>Số Lượng</th>
+                </tr>
+              </thead>
+              <tbody>
+               @foreach ($listBook as $book)
+               <tr>
+                 <td><a href="#">{{ $book->book_id }}</a></td>
+                 <td>@if ($book->picture!=null)
+                  <img src="{{ asset($book->picture) }}" class="img-fluid" width="60">
+                @endif</td>
+                <td class="hidden-phone">{{ $book->book_name }}</td>
+                <td>{{ $book->name }}</td>
+                <td>{{ $book->category_name }}</td>
+                <td>{{ $book->language }}</td>
+                <td>{{ $book->publish_year }}</td>
+                <td>{{ $book->publisher }}</td>
+                <td>{{ $book->price }}</td>
+                <td>{{ $book->quantity }}</td>
+              </tr>
+              @endforeach
+            </tbody>
+          </table>
+          <div class="text-center">
+           {{ $listBook->links() }}
+         </div>
+       </section>
+     </div>
+   </section>
+ </div>
+</div>
 
-  <!-- page end-->
+<!-- page end-->
 </section>
 @endsection
