@@ -7,6 +7,7 @@ use Session;
 use App\category;
 use App\Book;
 use App\Cart;
+use App\Customer;
 
 class ViewPages extends Controller
 {   
@@ -83,5 +84,22 @@ class ViewPages extends Controller
         $category=category::find($id);
         $listBook=Book::where('category_id',$id)->paginate(12);
         return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>$category->category_name]);
+    }
+
+    public function postUpdateInformation(Request $req)
+    {
+        $customer=Customer::find(Session('UserLogin')->user_id);
+        $customer->user_name=$req->username;
+        $customer->phone=$req->phone;
+        $customer->email=$req->email;
+        $customer->address=$req->address;
+        $customer->save();
+        $req->session()->put('UserLogin',$customer);
+        return redirect('/user_information')->with('thongbao','Cập nhật thông tin thành công');
+    }
+    public function postChangePassword(Request $red)
+    {
+        $customer = Customer:find(Session('UserLogin')->user_id);
+        
     }
 }

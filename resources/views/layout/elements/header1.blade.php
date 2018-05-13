@@ -232,9 +232,9 @@
 								<i class="fa fa-user fa-fw"></i>  <i class="fa fa-caret-down"></i>
 							</a>
 							<ul class="dropdown-menu dropdown-user">
-								<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->first_name }} {{ session('UserLogin')->last_name }}</b>
+								<li class="text-center" style="font-size: 15px"><b>{{ session('UserLogin')->user_name }}</b>
 								</li>
-								<li><a href="#"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
+								<li><a href="{{route('user_information')}}"><i class="fa fa-user fa-fw"></i> Thông tin tài khoản</a>
 								</li>
 								<li class="divider"></li>
 								<li><a href="{{ route('getLogout') }}"><i class="fa fa-sign-out fa-fw"></i> Đăng xuất</a>

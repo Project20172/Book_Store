@@ -40,6 +40,14 @@ Route::get('/user_information',function(){
 	return view('pages.user_information');
 })->name('user_information');
 
+Route::post('/user_information/updateinfo','ViewPages@postUpdateInformation')->name('postUpdateInformation');
+
+Route::post('/user_information/changepassword','ViewPages@postChangePassword')->name('postChangePassword');
+
+Route::get('/order_history',function(){
+	return view('pages.order_history');
+})-> name('order_history');
+
 Route::post('/home','RegisterController@addCustomer')->name('addCustomer');
 
 Route::get('/result-search', 'ViewPages@getResultSearch')->name('result-search');
