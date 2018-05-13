@@ -119,6 +119,57 @@
                 </div>
               </form>
             </div>
+            <br>
+            <header class="panel-heading">
+              Danh Sách Bình Luận
+            </header>
+            <div class="panel-body">
+              <div class="clearfix">
+                <div class="btn-group pull-right">
+                  <button class="btn dropdown-toggle" data-toggle="dropdown">Công cụ <i class="fa fa-angle-down"></i>
+                  </button>
+                  <ul class="dropdown-menu pull-right">
+                    <li><a href="#">In</a></li>
+                    <li><a href="#">Lưu ra pdf</a></li>
+                    <li><a href="#">Lưu ra Excel</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            @if (session('thongbaoxoa'))
+              <div class="alert alert-success">
+                {{ session('thongbaoxoa') }}
+              </div>
+            @endif
+            <table class="table table-striped table-advance table-hover">
+              <thead>
+                <tr>
+                  <th><i class="fa fa-bullhorn"></i>User ID</th>
+                  <th>User Name</th>
+                  <th>Thời Gian</th>
+                  <th>Đánh Giá</th>
+                  <th>Nội Dung</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody>
+                @foreach ($listReview as $element)
+                <tr>
+                  <th>{{ $element->user_id }}</th>
+                  <th>{{ $element->user_name }}</th>
+                  <th>{{ $element->review_date }}</th>
+                  <th>{{ $element->rating }}</th>
+                  <th>{{ $element->reviews }}</th>
+                  <th>
+                    <button class="btn btn-danger btn-xs"><a class="agiang" href="{{ route('getDeleteReview',['book_id'=>$element->book_id,'user_id'=>$element->user_id,'review_date'=>$element->review_date]) }}"><i class="fa fa-trash-o "></i></a></button>
+                  </th>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+            <div class="text-center">
+
+            </div>
           </section>
         </div>
       </section>

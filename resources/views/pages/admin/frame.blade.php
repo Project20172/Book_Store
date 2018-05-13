@@ -131,8 +131,7 @@
                         <li><a  href="{{ route('getStatisticalDoanhThuThang') }}">Năm</a></li>
                       </ul>
                     </li>
-                    <li><a href="{{ route('getComingSoon') }}">Nhà Xuất Bản</a></li>
-                    <li><a href="{{ route('getComingSoon') }}">Ngôn Ngữ</a></li>
+                    <li><a href="{{ route('getComingSoon') }}">Lợi Nhuận</a></li>
                   </ul>
                 </li>
               </ul>
