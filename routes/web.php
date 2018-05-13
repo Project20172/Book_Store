@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('admin/delete/review/{book_id}/{user_id}/{review_date}','WebManager@getDeleteReview')->name('getDeleteReview')->middleware('adminlogin');
 
 Route::post('statistical/doanhthunam','WebManager@postTinhDoanhThuNam')->name('postTinhDoanhThuNam')->middleware('adminlogin');
 

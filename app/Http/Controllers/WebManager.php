@@ -1104,12 +1104,27 @@ class WebManager extends Controller
 		return redirect('/admin/add-book')->with('thongbao','Thêm sách thành công');
 	}
 
+	public function getDeleteReview($book_id,$user_id,$review_date)
+	{
+		DB::table('book_review')->where('book_id',$book_id)
+		->where('user_id',$user_id)
+		->where('review_date',$review_date)
+		->delete();
+		return redirect('/admin/edit-book/'.$book_id)->with('thongbaoxoa','Xóa bình luận thành công');
+	}
+
 	public function getEditBook($id)
 	{
 		$book=Book::find($id);
 		$listAuthor=Author::all();
 		$listCategory=category::all();
-		return view('pages.admin.editBook',['book'=>$book,'listAuthor'=>$listAuthor,'listCategory'=>$listCategory]);
+		$listReview=DB::table('book_review')
+		->join('customer','customer.user_id','=','book_review.user_id')
+		->where('book_id','=',$id)
+		->orderBy('review_date','DESC')
+		->get();
+
+		return view('pages.admin.editBook',['book'=>$book,'listAuthor'=>$listAuthor,'listCategory'=>$listCategory,'listReview'=>$listReview]);
 	}
 
 	public function postEditBook(Request $req)
