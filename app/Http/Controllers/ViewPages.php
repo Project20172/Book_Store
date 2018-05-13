@@ -67,7 +67,7 @@ class ViewPages extends Controller
         $listGiaoDuc=Book::where('category_id',2)->skip(0)->take(4)->get();
         $listThieuNhi=Book::where('category_id',5)->skip(0)->take(4)->get();
         $listTeen=Book::where('category_id',6)->skip(0)->take(4)->get();
-        return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen,'trangSachBanChay'=>0,'trangSachVanHoc'=>0]);
+        return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
     }
 
 
