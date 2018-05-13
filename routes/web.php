@@ -11,9 +11,13 @@
 |
 */
 
+Route::post('statistical/doanhthunam','WebManager@postTinhDoanhThuNam')->name('postTinhDoanhThuNam')->middleware('adminlogin');
+
 Route::get('statistical/category','WebManager@getStatisticalCategory')->name('getStatisticalCategory')->middleware('adminlogin');
 
 Route::get('statistical/doanhthu','WebManager@getStatisticalDoanhThu')->name('getStatisticalDoanhThu')->middleware('adminlogin');
+
+Route::get('statistical/doanhthuthang','WebManager@getStatisticalDoanhThuThang')->name('getStatisticalDoanhThuThang')->middleware('adminlogin');
 
 Route::get('statistical/total-customer-buy','WebManager@getStatisticalTotalCustomerBuy')->name('getStatisticalTotalCustomerBuy')->middleware('adminlogin');
 
