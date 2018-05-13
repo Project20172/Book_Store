@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('coming-soon','WebManager@getComingSoon')->name('getComingSoon');
+
 Route::get('look-screen/{id}','WebManager@getLookScreen')->name('getLookScreen');
 
 Route::post('passwordedit','WebManager@postPasswordEdit')->name('postPasswordEdit')->middleware('adminlogin');

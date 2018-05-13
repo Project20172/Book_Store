@@ -45,7 +45,7 @@
             <ul class="dropdown-menu extended logout">
               <div class="log-arrow-up"></div>
               <li><a href="{{ route('getProfile',session('adminlogin')->admin_id) }}"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
-              <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
+              <li><a href="{{ route('getComingSoon') }}"><i class="fa fa-cog"></i> Cài đặt</a></li>
               <li><a href="{{ route('getLookScreen',session('adminlogin')->admin_id) }}"><i class="fa fa-lock"></i> Khóa</a></li>
               <li><a href="{{ route('getAdminLogout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
@@ -100,7 +100,7 @@
               <span>Danh Sách</span>
             </a>
             <ul class="sub">
-              <li><a  href="{{ route('getListOrderDetail') }}">Danh Sách Sách Bán Chạy</a></li>
+              <li><a  href="{{ route('getComingSoon') }}">Danh Sách Sách Bán Chạy</a></li>
             </ul>
           </li>
 
@@ -110,7 +110,7 @@
               <span>Thống Kê</span>
             </a>
             <ul class="sub">
-              <li><a  href="{{ route('getListOrderDetail') }}">Thể Loại,Tác Giả</a></li>
+              <li><a  href="{{ route('getComingSoon') }}">Thể Loại,Tác Giả</a></li>
             </ul>
           </li>
 

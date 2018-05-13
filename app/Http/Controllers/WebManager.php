@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+	public function getComingSoon()
+	{
+		return view('pages.admin.coming_soon');
+	}
+
 	public function getLookScreen($id)
 	{
 		$admin=Admin::find($id);

@@ -25,7 +25,7 @@
                 	<input type="hidden" name="user_name" value="{{ $admin->user_name }}">
                 	<input type="hidden" name="admin_id" value="{{ $admin->admin_id }}">
                     <input type="password" placeholder="Mật Khẩu" name="password" class="form-control lock-input">
-                    <button class="btn btn-lock" type="submit">
+                    <button style="float: left;" class="btn btn-lock" type="submit">
                         <i class="fa fa-arrow-right"></i>
                     </button>
                 </div>
