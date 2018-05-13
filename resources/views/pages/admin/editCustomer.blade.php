@@ -1,70 +1,89 @@
 @extends('pages.admin.frame')
 @section('content')
-	<div class="col-lg-12">
-                        <h1 class="page-header">Khách hàng
-                            <small>Sửa</small>
-                        </h1>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                    <div class="col-lg-7" style="padding-bottom:120px">
-                    	@if (count($errors)>0)
-                    		@foreach ($errors->all() as $err)
-                    			<div class="alert alert-danger">
-                    				{{ $err }}
-                    			</div>
-                    			<br>
-                    		@endforeach
-                    	@endif
-                    	@if (session('thongbao'))
-                    		<div class="alert alert-success">
-                    			{{ session('thongbao') }}
-                    		</div>
-                    	@endif
-                        <form action="{{ route('postEditCustomer') }}" method="POST" enctype="multipart/form-data">
-                            <div class="form-group">
-                            	<input type="hidden" name="_token" value="{{ csrf_token() }}">
-                            	<input type="hidden" name="user_id" value="{{ $customer->user_id }} }}">
-                                <label>User Name</label>
-                                <input class="form-control" name="user_name" readonly value="{{ $customer->user_name }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Password</label>
-                                <input class="form-control" type="password" name="password" value="{{ $customer->password }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>First Name</label>
-                                <input class="form-control" name="first_name" value="{{ $customer->first_name }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Last Name</label>
-                                <input class="form-control" name="last_name" value="{{ $customer->last_name }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Address</label>
-                                <input class="form-control" name="address" value="{{ $customer->address }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>City</label>
-                                <input class="form-control" name="city" value="{{ $customer->city }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input class="form-control" name="email" value="{{ $customer->email }}">
-                            </div>
-
-                            <div class="form-group">
-                                <label>Phone</label>
-                                <input class="form-control" name="phone" value="{{ $customer->phone }}">
-                            </div>
-
-                            <button type="submit" class="btn btn-default">Sửa tác giả</button>
-                            <button type="reset" class="btn btn-default">Nhập lại</button>
-                        <form>
-                    </div>
+<section class="wrapper">
+  <!-- page start-->
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="panel">
+        <div>
+          <section class="panel">
+            <header class="panel-heading">
+              Sửa Khách Hàng
+            </header>
+            <div class="panel-body">
+              @if (count($errors)>0)
+              @foreach ($errors->all() as $element)
+              <div class="alert alert-danger">
+                {{ $element }}
+              </div>
+              <br>
+              @endforeach
+              @endif
+              @if (session('thongbao'))
+              <div class="alert alert-success">
+                {{ session('thongbao') }}
+              </div>
+              @endif
+              <form role="form" action="{{ route('postEditCustomer') }}" method="POST" enctype="multipart/form-data">
+               <div class="col-sm-8">
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">User Name</label>
+                    <input type="hidden" name="user_id" value="{{ $customer->user_id }} }}">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <input class="form-control" name="user_name" readonly value="{{ $customer->user_name }}">
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">First Name</label>
+                    <input name="first_name" class="spinner-input form-control" value="{{ $customer->first_name }}">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Password</label>
+                    <input type="password" class="form-control" name="password" value="{{ $customer->password }}" >
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Last Name</label>
+                    <input class="form-control" name="last_name" value="{{ $customer->last_name }}" >
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Address</label>
+                    <input class="form-control" name="address" value="{{ $customer->address }}" >
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">City</label>
+                    <input name="city" class="spinner-input form-control" value="{{ $customer->city }}">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Email</label>
+                    <input name="email" class="spinner-input form-control" value="{{ $customer->email }}">
+                  </div>
+                </div>
+                <div class="col-sm-6">
+                  <div class="form-group">
+                    <label for="exampleInputEmail1">Phone</label>
+                    <input class="form-control" name="phone"  value="{{ $customer->phone }}">
+                  </div>
+                </div>
+                <div class="col-sm-12">
+                  <button type="submit" class="btn btn-success">Thêm Khách Hàng</button>
+                  <button type="reset" class="btn btn-danger">Nhập Lại</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </section>
+      </div>
+    </section>
+  </div>
+</div>
+<!-- page end-->
+</section>
 @endsection
