@@ -7,6 +7,7 @@ use Session;
 use App\category;
 use App\Book;
 use App\Cart;
+use Illuminate\Support\Facades\DB;
 
 class ViewPages extends Controller
 {   
@@ -53,12 +54,20 @@ class ViewPages extends Controller
 
     public function homepage()
     {
-        $listBook=Book::where('category_id',1)->skip(0)->take(3)->get();
+        // $listBook=Book::where('category_id',1)->skip(0)->take(3)->get();
+        $listBook=DB::table('ordered_book')
+        ->join('book','book.book_id','=','ordered_book.book_id')
+        ->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+        ->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+        ->orderByRaw('SUM(ordered_book.quantity) DESC')
+        ->skip(0)
+        ->take(3)
+        ->get();
         $listVanHoc=Book::where('category_id',1)->skip(0)->take(4)->get();
         $listGiaoDuc=Book::where('category_id',2)->skip(0)->take(4)->get();
         $listThieuNhi=Book::where('category_id',5)->skip(0)->take(4)->get();
         $listTeen=Book::where('category_id',6)->skip(0)->take(4)->get();
-        return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen]);
+        return view('pages.home',['listBook'=>$listBook,'listVanHoc'=>$listVanHoc,'listGiaoDuc'=>$listGiaoDuc,'listThieuNhi'=>$listThieuNhi,'listTeen'=>$listTeen,'trangSachBanChay'=>0,'trangSachVanHoc'=>0]);
     }
 
 

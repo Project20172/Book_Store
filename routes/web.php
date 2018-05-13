@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('sach-ban-chay','WebManager@getSachBanChay')->name('getSachBanChay');
+
+Route::get('sach-danh-gia-cao','WebManager@getSachDanhGiaCao')->name('getSachDanhGiaCao');
+
+Route::get('sach-xem-nhieu','WebManager@getSachBinhLuanNhieu')->name('getSachXemNhieu');
+
 Route::get('admin/delete/review/{book_id}/{user_id}/{review_date}','WebManager@getDeleteReview')->name('getDeleteReview')->middleware('adminlogin');
 
 Route::post('statistical/doanhthunam','WebManager@postTinhDoanhThuNam')->name('postTinhDoanhThuNam')->middleware('adminlogin');

@@ -19,7 +19,7 @@
 						<div class="productinfo text-center">
 							<br>
 							<img class="img-fluid" src="{{ asset($book->picture) }}" alt="" width="100" height="145">
-							<h2>${{ $book->price }}</h2>
+							<h2>{{ $book->price }}VND</h2>
 							<p>
 								@php
 									if (strlen($book->book_name)>27) {

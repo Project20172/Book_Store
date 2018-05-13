@@ -1218,29 +1218,80 @@ class WebManager extends Controller
 	}
 	public function getNext3Book($book_id)
 	{
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
-		return $listBook;
+		// $listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+		->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->skip(($book_id +1)*3 )
+		->take(3)
+		->get();
+		$arr=array('listBook'=>$listBook,'trangSachBanChay'=>$book_id+1);
+		return $arr;
 	}
 
 	public function getNextTabVanHoc($book_id)
 	{
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(4)->get();
-		return $listBook;
+		$listBook=Book::where('category_id','1')->skip(($book_id+1)*4)->take(4)->get();
+		$arr=array('listBook'=>$listBook,'trangSachVanHoc'=>$book_id+1);
+		return $arr;
 	}
 
 	public function getPrevTabVanHoc($book_id)
 	{
-		$book_id=$book_id-4;
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(4)->get();
-		return $listBook;
+		$listBook=Book::where('category_id','1')->skip(($book_id-1)*4)->take(4)->get();
+		$arr=array('listBook'=>$listBook,'trangSachVanHoc'=>$book_id-1);
+		return $arr;
 	}
 
 	public function getPrev3Book($book_id)
 	{
-		$book_id=$book_id-4;
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
-		return $listBook;
+		// $listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+		->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->skip(($book_id-1)*3)
+		->take(3)
+		->get();
+		$arr=array('listBook'=>$listBook,'trangSachBanChay'=>$book_id-1);
+		return $arr;
 
+	}
+
+	public function getSachBanChay()
+	{
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+		->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->paginate(12);
+		return view('pages.result_search',['title'=>'SÁCH BÁN CHẠY','listBook'=>$listBook]);
+	}
+
+	public function getSachDanhGiaCao()
+	{
+		$listBook=DB::table('book_review')
+		->join('book','book.book_id','=','book_review.book_id')
+		->selectRaw('book_review.book_id,book.*,SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) as 
+			percent')
+		->groupBy('book_review.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) DESC')
+		->paginate(12);
+		return view('pages.result_search',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
+	}
+
+	public function getSachBinhLuanNhieu()
+	{
+		$listBook=DB::table('book_review')->join('book','book.book_id','=','book_review.book_id')
+		->selectRaw('book.*,COUNT(book_review.reviews) as quantity')
+		->groupBy('book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('COUNT(book_review.reviews) DESC')
+		->paginate(12);
+		return view('pages.result_search',['title'=>'SÁCH XEM NHIỀU','listBook'=>$listBook]);
 	}
 
 	public function tinhDoanhThuTrongKhoangThoiGian(Request $req)
