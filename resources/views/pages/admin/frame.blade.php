@@ -46,7 +46,7 @@
               <div class="log-arrow-up"></div>
               <li><a href="{{ route('getProfile',session('adminlogin')->admin_id) }}"><i class=" fa fa-suitcase"></i>Thông tin</a></li>
               <li><a href="#"><i class="fa fa-cog"></i> Cài đặt</a></li>
-              <li><a href="#"><i class="fa fa-bell-o"></i> Thông báo</a></li>
+              <li><a href="{{ route('getLookScreen',session('adminlogin')->admin_id) }}"><i class="fa fa-lock"></i> Khóa</a></li>
               <li><a href="{{ route('getAdminLogout') }}"><i class="fa fa-key"></i> Đăng xuất</a></li>
             </ul>
           </li>

@@ -14,6 +14,15 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+	public function getLookScreen($id)
+	{
+		$admin=Admin::find($id);
+		if(session('adminlogin')){
+			Session::forget('adminlogin');
+		}
+		return view('pages.admin.lock_screen',['admin'=>$admin]);
+	}
+
 	public function postProfileEdit(Request $req)
 	{
 		echo $req->phone;
@@ -128,6 +137,21 @@ class WebManager extends Controller
 		}
 		else{
 			return redirect('admin-login')->with('thongbao','Sai user_name hoặc password');
+		}
+	}
+
+	public function postAdminLoginFromLockScreen(Request $req)
+	{
+		$user_name=$req->user_name;
+		$password=$req->password;
+		$check=Admin::where('user_name',$user_name)->where('password',$password)->get();
+		if(count($check)>0){
+			Session::put('adminlogin',$check[0]);
+			return redirect('admin');
+		}
+		else{
+			Session::forget('adminlogin');
+			return redirect('look-screen/'.$req->admin_id)->with('thongbao','Sai mật khẩu');
 		}
 	}
 

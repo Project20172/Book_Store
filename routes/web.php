@@ -10,6 +10,9 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('look-screen/{id}','WebManager@getLookScreen')->name('getLookScreen');
+
 Route::post('passwordedit','WebManager@postPasswordEdit')->name('postPasswordEdit')->middleware('adminlogin');
 
 Route::get('profile-edit/{id}','WebManager@getContentProEdit')->name('getContentProEdit')->middleware('adminlogin');
@@ -31,6 +34,8 @@ Route::get('admin-login','WebManager@getAdminLogin')->name('getAdminLogin');
 Route::get('admin-logout','WebManager@getAdminLogout')->name('getAdminLogout');
 
 Route::post('admin-login','WebManager@postAdminLogin')->name('postAdminLogin');
+
+Route::post('admin-login-from-lockscreen','WebManager@postAdminLoginFromLockScreen')->name('postAdminLoginFromLockScreen');
 
 Route::get('check-username/{id}','WebManager@getCheckUserName')->name('getCheckUserName');
 

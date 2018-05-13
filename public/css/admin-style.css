@@ -63,6 +63,11 @@ a.agiang {
     background: #FF6C60;
     color: #fff;
 }
+
+.form-group.col-lg-12.aform {
+    left: 8%;
+    margin-top: -5%;
+}
 ::-moz-selection {
     background: #FF6C60;
     color: #fff;
@@ -4541,7 +4546,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 /*lock screen*/
 
 .lock-screen {
-    background:#02bac6 url("../img/lock-bg.jpg");
+    background:#02bac6 url("../images/40848077334_db3b7055a3_o.jpg");
     background-size: cover;
     background-repeat: repeat;
 }
@@ -4553,16 +4558,17 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
 
 .lock-box {
     background: rgba(255,255,255,.3);
-    padding: 20px;
+    padding: 37px;
     border-radius: 10px;
     -webkit-border-radius: 10px;
     position: relative;
+    padding-bottom: 2%
 }
 
 .lock-wrapper img {
     position: absolute;
-    left: 40%;
-    top: -40px;
+    left: -63%;
+    top: -22px;
     border-radius: 50%;
     -webkit-border-radius: 50%;
     border: 5px solid #fff;
@@ -4574,6 +4580,7 @@ tr.odd.gradeX td.sorting_1, tr.even.gradeX td.sorting_1, table.display tr.even.g
     font-size: 18px;
     text-transform: uppercase;
     padding: 20px 0 0 0;
+    margin-top: -8%;
 }
 
 .lock-wrapper .locked {
