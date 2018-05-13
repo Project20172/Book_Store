@@ -16,7 +16,77 @@ class WebManager extends Controller
 
 	public function getComingSoon()
 	{
+		
 		return view('pages.admin.coming_soon');
+	}
+
+	public function getStatisticalTotalCustomerBuy()
+	{
+		$list=DB::select('SELECT customer.user_id,customer.user_name,COUNT(order_details.user_id) as orderquantity,SUM(giang.quantity) as bookquantity
+			FROM customer,order_details
+			LEFT JOIN
+			(
+			SELECT ordered_book.order_id,SUM(ordered_book.quantity) as quantity
+			FROM ordered_book
+			GROUP BY ordered_book.order_id
+			) as giang
+			ON order_details.order_id=giang.order_id
+			WHERE customer.user_id=order_details.user_id
+
+			GROUP BY customer.user_id,customer.user_name');
+		return view('pages.admin.statistical.total_customer_buy',['list'=>$list]);
+	}
+
+	public function getStatisticalDoanhThu()
+	{
+		return view('pages.admin.statistical.doanhthu');
+	}
+
+	public function getStatisticalCategory()
+	{
+		$list=DB::table('category')->join('book','book.category_id','=','category.category_id')
+		->selectRaw('category.category_id,category.category_name,COUNT(book.book_id) as quantity')
+		->groupBy('category.category_id','category.category_name')
+		->paginate(6);
+		return view('pages.admin.statistical.category',['list'=>$list]);
+	}
+
+	public function getStatisticalSellingBook()
+	{
+		$listBook=Book::join('category','category.category_id','=','book.category_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('ordered_book','ordered_book.book_id','=','book.book_id')
+		->selectRaw('book.book_id,book.book_name,book.picture,book.language,book.publish_year,book.publisher,
+			category.category_name,author.name,SUM(ordered_book.quantity) AS quantitysell')
+		->groupBy('book.book_id','book.book_name','book.picture','book.language','book.publish_year','book.publisher','category.category_name','author.name')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->paginate(6);
+		return view('pages.admin.statistical.selling_book',['listBook'=>$listBook]);
+	}
+
+	public function getStatisticalAuthor()
+	{
+		$list=DB::table('author')->join('book','book.author_id','=','author.author_id')
+		->selectRaw('author.author_id,author.name,COUNT(book.book_id) as quantity')
+		->groupBy('author.author_id','author.name')
+		->orderBy('author.name','ASC')
+		->paginate(6);
+		return view('pages.admin.statistical.author',['list'=>$list]);
+	}
+
+	public function getStatisticalPublisher()
+	{
+		$list=Book::selectRaw('book.publisher,COUNT(book.book_id) as quantity')
+		->groupBy('book.publisher')
+		->orderBy('book.publisher','ASC')->paginate(6);
+		return view('pages.admin.statistical.publisher',['list'=>$list]);
+	}
+
+	public function getStatisticalLanguage()
+	{
+		$list=Book::selectRaw('book.language,COUNT(book.book_id) as quantity')
+		->groupBy('book.language')->orderBy('book.language','ASC')->paginate(12);
+		return view('pages.admin.statistical.language',['list'=>$list]);
 	}
 
 	public function getLookScreen($id)
@@ -1125,5 +1195,32 @@ class WebManager extends Controller
 		$listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
 		return $listBook;
 
+	}
+
+	public function tinhDoanhThuTrongKhoangThoiGian(Request $req)
+	{
+		// echo $req->time1;
+		// echo $req->time2;
+		$result=DB::table('order_details')->selectRaw('DATE(order_details.date_created) as date_created ,SUM(order_details.total_money) as total_money')
+		->where('order_details.status','!=','-1')
+		->whereRaw('DATE(order_details.date_created) BETWEEN "'.$req->time1.'" AND "'.$req->time2.'"')
+		->groupBy(DB::raw('DATE(order_details.date_created)'))->get();
+		$str='';
+		$total=0;
+		if(count($result)>0){
+			foreach ($result as $value) {
+				$str.='<tr>';
+				$str.='<td>';
+				$str.=$value->date_created;
+				$str.='</td>';
+				$str.='<td>';
+				$str.=$value->total_money.' '.'VND';
+				$str.='</td>';
+				$str.='</tr>';
+				$total+=$value->total_money;
+			}
+		}
+		$kq=array('str'=>$str,'total'=>$total);
+		return $kq;
 	}
 }

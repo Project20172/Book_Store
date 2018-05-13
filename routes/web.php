@@ -11,6 +11,20 @@
 |
 */
 
+Route::get('statistical/category','WebManager@getStatisticalCategory')->name('getStatisticalCategory')->middleware('adminlogin');
+
+Route::get('statistical/doanhthu','WebManager@getStatisticalDoanhThu')->name('getStatisticalDoanhThu')->middleware('adminlogin');
+
+Route::get('statistical/total-customer-buy','WebManager@getStatisticalTotalCustomerBuy')->name('getStatisticalTotalCustomerBuy')->middleware('adminlogin');
+
+Route::get('statistical/sellingbook','WebManager@getStatisticalSellingBook')->name('getStatisticalSellingBook')->middleware('adminlogin');
+
+Route::get('statistical/author','WebManager@getStatisticalAuthor')->name('getStatisticalAuthor')->middleware('adminlogin');
+
+Route::get('statistical/publisher','WebManager@getStatisticalPublisher')->name('getStatisticalPublisher')->middleware('adminlogin');
+
+Route::get('statistical/language','WebManager@getStatisticalLanguage')->name('getStatisticalLanguage')->middleware('adminlogin');
+
 Route::get('coming-soon','WebManager@getComingSoon')->name('getComingSoon');
 
 Route::get('look-screen/{id}','WebManager@getLookScreen')->name('getLookScreen');
@@ -183,3 +197,4 @@ Route::get('payment','ViewPages@getContentPayment')->name('getContentPayment');
 
 Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
 
+Route::post('tinhdoanhthutrongkhoangthoigian','WebManager@tinhDoanhThuTrongKhoangThoiGian')->name('tinhDoanhThuTrongKhoangThoiGian')->middleware('adminlogin');
