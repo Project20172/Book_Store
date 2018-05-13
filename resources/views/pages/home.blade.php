@@ -8,7 +8,8 @@
 	<h2 class="title text-center">Sách Bán Chạy</h2>
 	<div class="row" id="vanhoc">
 		<div id="hoanggiang">
-			<div id="nhieusach" hoanggiangnext="{{ $trangSachBanChay }}" hoanggiangprev="{{ $trangSachBanChay }}">
+			<div id="nhieusach" hoanggiangnext="0" hoanggiangprev="0">
+				@if (count($listBook)>0)
 				@foreach ($listBook as $book)
 				<div class="col-sm-4">
 					<div class="product-image-wrapper">
@@ -25,6 +26,7 @@
 					</div>
 				</div>
 				@endforeach
+				@endif
 			</div>
 		</div>
 	</div>
@@ -255,7 +257,8 @@
 	</div>
 	<div class="tab-content">
 		<div class="tab-pane fade active in" id="tshirt">
-			<div class="row" id="tabVanHoc" vanhocdau="{{ $trangSachVanHoc }}" vanhoccuoi="{{ $trangSachVanHoc }}">
+			@if (count($listVanHoc)>0)
+			<div class="row" id="tabVanHoc" vanhocdau="0" vanhoccuoi="0">
 				@foreach ($listVanHoc as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper">
@@ -282,6 +285,7 @@
 				</div>
 				@endforeach
 			</div>
+			@endif
 			<div >
 				
 				<button id="vanhocright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
@@ -295,7 +299,7 @@
 
 		<div class="tab-pane fade" id="blazers">
 			@if (count($listGiaoDuc)>0)
-			<div class="row" id="tabGiaoDuc" giaoducdau="{{ $listGiaoDuc[0]->book_id }}" giaoduccuoi="{{ $listGiaoDuc[3]->book_id }}">
+			<div class="row" id="tabGiaoDuc" giaoducdau="0" giaoduccuoi="0">
 				@foreach ($listGiaoDuc as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper">
@@ -319,7 +323,6 @@
 
 									<p>{{ $book->book_name }}</p>
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-
 								</div>
 							</a>
 						</div>
@@ -338,7 +341,7 @@
 		</div>
 		<div class="tab-pane fade" id="sunglass">
 			@if (count($listThieuNhi)>0)
-			<div class="row" id="tabThieuNhi" thieunhidau="{{ $listGiaoDuc[0]->book_id }}" thieunhicuoi="{{ $listThieuNhi[3]->book_id }}">
+			<div class="row" id="tabThieuNhi" thieunhidau="0" thieunhicuoi="0">
 				@foreach ($listThieuNhi as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper ">
@@ -381,7 +384,7 @@
 
 		<div class="tab-pane fade" id="kids">
 			@if (count($listTeen)>0)
-			<div class="row" id="tabTeen" teendau="{{ $listTeen[0]->book_id }}" teencuoi="{{ $listTeen[3]->book_id }}">
+			<div class="row" id="tabTeen" teendau="0" teencuoi="0">
 				@foreach ($listTeen as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper">
