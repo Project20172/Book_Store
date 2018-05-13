@@ -124,14 +124,19 @@
                   <a href="" class="dcjq-parent"><i class="fa fa-book"></i>Bán Hàng<span class="dcjq-icon"></span></a>
                   <ul class="sub" style="display: block;">
                     <li><a href="{{ route('getStatisticalTotalCustomerBuy') }}">Khách Hàng</a></li>
-                    <li><a href="{{ route('getStatisticalDoanhThu') }}">Doanh Thu</a></li>
+                    <li>
+                      <a href="">Doanh Thu</a>
+                      <ul class="sub">
+                        <li><a  href="{{ route('getStatisticalDoanhThu') }}">Ngày,Tháng</a></li>
+                        <li><a  href="{{ route('getStatisticalDoanhThuThang') }}">Năm</a></li>
+                      </ul>
+                    </li>
                     <li><a href="{{ route('getComingSoon') }}">Nhà Xuất Bản</a></li>
                     <li><a href="{{ route('getComingSoon') }}">Ngôn Ngữ</a></li>
                   </ul>
                 </li>
               </ul>
             </li>
-
           </ul>
           <!-- sidebar menu end-->
         </div>

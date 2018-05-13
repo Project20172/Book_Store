@@ -42,6 +42,37 @@ class WebManager extends Controller
 		return view('pages.admin.statistical.doanhthu');
 	}
 
+	public function getStatisticalDoanhThuThang()
+	{
+		return view('pages.admin.statistical.doanhthuthang');
+	}
+
+	public function postTinhDoanhThuNam(Request $req)
+	{
+		$arr=DB::table('order_details')
+		->whereRaw('DATE_FORMAT(order_details.date_created,"%Y")='.$req->year)
+		->selectRaw('DATE_FORMAT(order_details.date_created,"%Y-%m") as month,SUM(order_details.total_money) AS total_money')
+		->groupBy(DB::raw('DATE_FORMAT(order_details.date_created,"%Y-%m")'))
+		->get();
+		$str='';
+		$total=0;
+		if(count($arr)>0){
+			foreach ($arr as $value) {
+				$str.='<tr>';
+				$str.='<td>';
+				$str.=$value->month;
+				$str.='</td>';
+				$str.='<td>';
+				$str.=$value->total_money.' '.'VND';
+				$str.='</td>';
+				$str.='</tr>';
+				$total+=$value->total_money;
+			}
+		}
+		$kq=array('str'=>$str,'total'=>$total);
+		return $kq;
+	}
+
 	public function getStatisticalCategory()
 	{
 		$list=DB::table('category')->join('book','book.category_id','=','category.category_id')
