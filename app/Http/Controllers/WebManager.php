@@ -309,8 +309,7 @@ class WebManager extends Controller
       // edit
 
 			$review_info1=DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$req->book_id)->get();
-			$temp=DB::table('book_review')->where('book_id',$req->book_id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review) AS 
-				percent')->groupby('book_review.rating')->get();
+			$temp=DB::table('book_review')->where('book_id',$req->book_id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review WHERE book_review.book_id='.$req->book_id.') AS percent')->groupby('book_review.rating')->get();
 			$review_info2=array();
 
 			foreach ($temp as $value) {
@@ -386,8 +385,7 @@ class WebManager extends Controller
 		->select('customer.first_name','customer.last_name','book_review.*')
 		->get()->toArray();
 		$review_info1=DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$id)->get();
-		$temp=DB::table('book_review')->where('book_id',$id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review) AS 
-			percent')->groupby('book_review.rating')->get();
+		$temp=DB::table('book_review')->where('book_id',$id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review WHERE book_review.book_id='.$id.') AS percent')->groupby('book_review.rating')->get();
 		$review_info2=array();
 
 		foreach ($temp as $value) {
