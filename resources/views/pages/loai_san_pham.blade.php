@@ -4,7 +4,7 @@
 <div class="features_items"><!--features_items-->
 	<br>
 	<div class="left-sidebar">
-	<h2 class="title text-center">Kết quả tìm thấy</h2></div>
+	<h2 class="title text-center">{{ $title }}</h2></div>
 	@php
 		$count=0
 	@endphp
@@ -19,7 +19,7 @@
 						<div class="productinfo text-center">
 							<br>
 							<img class="img-fluid" src="{{ asset($book->picture) }}" alt="" width="100" height="145">
-							<h2>${{ $book->price }}</h2>
+							<h2>{{ $book->price }}VND</h2>
 							<p>
 								@php
 									if (strlen($book->book_name)>27) {
@@ -30,7 +30,7 @@
 									}
 								@endphp
 							</p>
-							<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 						</div>
 					</a>
 				</div>

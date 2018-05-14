@@ -3,6 +3,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Book Store</title>
+	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 	<script type="text/javascript" src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
@@ -15,6 +16,7 @@
 
 	<link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"> 
 	<script src="{{ asset('js/wow.min.js') }}"></script>
+	<script type="text/javascript" src="js/cart.js"></script>
 	<script>
 	 	new WOW().init();
 	</script>

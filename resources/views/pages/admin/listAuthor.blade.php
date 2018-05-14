@@ -1,41 +1,79 @@
 @extends('pages.admin.frame')
 @section('content')
-	<div class="col-lg-12">
-                        <h1 class="page-header">Tác giả
-                            <small>Danh sách</small>
-                        </h1>
-                    </div>
-                </div>
-                @if (session('thongbao'))
-                    <div class="alert alert-success">
-                        {{ session('thongbao') }}
-                    </div>
-                @endif
-                    <!-- /.col-lg-12 -->
-                    <table class="table table-striped table-bordered table-hover" id="dataTables-example">
-                        <thead>
-                            <tr align="center">
-                                <th>ID</th>
-                                <th>Ảnh</th>
-                                <th>Tên</th>
-                                <th>Giới thiệu</th>
-                                <th>Xóa</th>
-                                <th>Sửa</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        	@foreach ($listAuthor as $author)
-                        		<tr align="center">
-                                    <td>{{ $author->author_id }}</td>
-                                    <td><img class="img-fluid" width="100" @if ($author->author_image!="")
-                                        src="{{ asset($author->author_image) }}"
-                                    @endif></td>
-                                    <td>{{ $author->name }}</td>
-                                    <td>{{ $author->author_describe }}</td>
-                                    <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a href="remove-author/{{ $author->author_id }}"> Xóa</a></td>
-                                    <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="edit-author/{{ $author->author_id }}">Sửa</a></td>
-                                </tr>
-                                @endforeach
-                        </tbody>
-                    </table>
+<section class="wrapper">
+  <!-- page start-->
+  <div class="row">
+    <div class="col-lg-12">
+      <section class="panel">
+        <header class="panel-heading">
+          Danh Sách Tác Giả
+        </header>
+        <div class="panel-body">
+          <div class="clearfix">
+            <div class="btn-group">
+              <button id="editable-sample_new" class="btn green">
+                <a href="{{ route('getAddAuthor') }}">
+                  Thêm Tác Giả <i class="fa fa-plus"></i>
+                </a>
+              </button>
+            </div>
+            <div class="btn-group pull-right">
+              <button class="btn dropdown-toggle" data-toggle="dropdown">Công cụ <i class="fa fa-angle-down"></i>
+              </button>
+              <ul class="dropdown-menu pull-right">
+                <li><a href="#">In</a></li>
+                <li><a href="#">Lưu ra pdf</a></li>
+                <li><a href="#">Lưu ra Excel</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        @if (count($errors)>0)
+        @foreach ($errors->all() as $element)
+        <div class="alert alert-danger">
+          {{ $element }}
+        </div>
+        <br>
+        @endforeach
+        @endif
+        @if (session('thongbao'))
+        <div class="alert alert-success">
+          {{ session('thongbao') }}
+        </div>
+        @endif
+        <table class="table table-striped table-advance table-hover">
+          <thead>
+            <tr>
+              <th style="width: 5%"><i class="fa fa-bullhorn"></i> ID</th>
+              <th style="width: 10%">Ảnh</th>
+              <th class="hidden-phone"><i class="fa fa-question-circle"></i> Tên Tác Giả</th>
+              <th>Giới Thiệu</th>
+              <th style="width: 10%"></th>
+            </tr>
+          </thead>
+          <tbody>
+           @foreach ($listAuthor as $author)
+           <tr>
+             <td><a href="#">{{ $author->author_id }}</a></td>
+             <td>@if ($author->author_image!='')
+              <img src="{{ asset($author->author_image) }}" alt="" class="img-fluid" width="60">
+            @endif</td>
+            <td class="hidden-phone">{{ $author->name }}</td>
+            <td>{{ $author->author_describe }}</td>
+            <td>
+             <button class="btn btn-primary btn-xs"><a class="agiang" href="{{ route('getEditAuthor',$author->author_id) }}"><i class="fa fa-pencil"></i></a></button>
+             <button class="btn btn-danger btn-xs"><a class="agiang" href="{{ route('getRemoveAuthor',$author->author_id) }}"><i class="fa fa-trash-o "></i></a></button>
+           </td>
+         </tr>
+         @endforeach
+       </tbody>
+     </table>
+     <div class="text-center">
+         {{ $listAuthor->links() }}
+       </div>
+   </section>
+ </div>
+</div>
+<!-- page end-->
+</section>
 @endsection
