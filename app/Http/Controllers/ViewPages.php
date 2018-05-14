@@ -97,9 +97,19 @@ class ViewPages extends Controller
         $req->session()->put('UserLogin',$customer);
         return redirect('/user_information')->with('thongbao','Cập nhật thông tin thành công');
     }
-    public function postChangePassword(Request $red)
+    public function postChangePassword(Request $req)
     {
-        $customer = Customer:find(Session('UserLogin')->user_id);
-        
+        $customer = Customer::find(Session('UserLogin')->user_id);
+        if($customer->password== $req->currentpassword)
+        {
+            $customer->password = $req->newpassword;
+            $customer->save();
+            $req->session()->put('UserLogin',$customer);
+            return redirect('/user_information')->with('passwordcorrect','Đổi mật khẩu thành công');
+        }
+        else
+        {
+            return redirect('/user_information')->with('passwordincorrect','Mật khẩu sai!');
+        }
     }
 }

@@ -71,18 +71,29 @@
 				        <h4 class="panel-title">Đổi mật khẩu</h4>
 				        </div>
 				        <div class="panel-body">
-				        
+				        	@if (session('passwordcorrect'))
+                            <div class="alert alert-success">
+                                {{ session('passwordcorrect') }}
+                            </div>
+                        	@endif
+							@if (session('passwordincorrect'))
+                            <div class="alert alert-danger">
+                                {{ session('passwordincorrect') }}
+                            </div>
+                        	@endif
+
+							<input type="hidden" name="_token" value="{{ csrf_token() }}">
 				          <div class="form-group">
 				            <label class="col-sm-2 control-label">Mật khẩu hiện tại</label>
 				            <div class="col-sm-10">
-				              <input type="password" class="form-control" required=" ">
+				              <input type="password" class="form-control" required=" " name="currentpassword">
 				            </div>
 				          </div>
 
 				          <div class="form-group">
 				            <label class="col-sm-2 control-label">Mật khẩu mới</label>
 				            <div class="col-sm-10">
-				              <input type="password" class="form-control" required=" ">
+				              <input type="password" class="form-control" required=" " name="newpassword">
 				            </div>
 				          </div>
 
