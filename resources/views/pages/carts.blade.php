@@ -54,7 +54,7 @@
 							<script>$(document).ready(function(c) {
 								$('.close{{$loop->index + 1}}').on('click', function(c){
 									$('.rem{{$loop->index + 1}}').fadeOut('slow', function(c){
-										var id = document.getElementById('book_id').innerHTML;
+										// var id = document.getElementById('book_id').innerHTML;
 										var id = $(this).parent().parent().parent().find("#book_id").text();
 										console.log("id book remove : " + id);
 										removeBook(id);
