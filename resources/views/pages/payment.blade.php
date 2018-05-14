@@ -1,6 +1,6 @@
 
 	<h4>
-	    3. Chọn phương thức thanh toán
+	    2. Chọn phương thức thanh toán
 	</h4>
   <div class="row">
     <div class="col-sm-8">
@@ -74,10 +74,10 @@
           
           <div style="border-top: 1px solid #c9c9c9; padding-top: 10px;
                         margin-top: 10px;">
-            <h4 id="receiver_name">Ngô Vân Anh</h4>
+            <h4 id="receiver_name">{{ session('full_name') }}</h4>
             <div style="margin-top: 10px;">
               <p id="receiver_address">
-                Đại học Bách Khoa Hà Nội, số 1, Đại Cồ Việt, Hai Bà Trưng, Hà Nội.
+                {{ session('address') }}
               </p>
           </div>
           </div>

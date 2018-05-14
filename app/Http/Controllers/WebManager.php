@@ -14,6 +14,20 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+	public function postSetInfo(Request $req)
+	{
+		Session::put('full_name', $req->full_name);
+		Session::put('phone_number', $req->phone_number);
+		Session::put('city', $req->city);
+		Session::put('address', $req->address);
+		//echo 'Set Done';
+		echo '<pre>';
+		var_dump($req->full_name);
+		echo '</pre>';
+		return 1;
+
+	}
+
 	public function getComingSoon()
 	{
 		

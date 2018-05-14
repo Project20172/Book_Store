@@ -248,3 +248,5 @@ Route::get('payment','ViewPages@getContentPayment')->name('getContentPayment');
 Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
 
 Route::post('tinhdoanhthutrongkhoangthoigian','WebManager@tinhDoanhThuTrongKhoangThoiGian')->name('tinhDoanhThuTrongKhoangThoiGian')->middleware('adminlogin');
+
+Route::post('set-info-to-buy-book','WebManager@postSetInfo')->name('postSetInfo');
