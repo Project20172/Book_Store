@@ -10,6 +10,12 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('export/listbook','ExportFile@getExportListBook')->name('getExportListBook');
+
+Route::get('export/listcategory','ExportFile@getExportListCategory')->name('getExportListCategory');
+
+Route::get('export/listauthor','ExportFile@getExportListAuthor')->name('getExportListAuthor');
+
 Route::get('sach-ban-chay','WebManager@getSachBanChay')->name('getSachBanChay');
 
 Route::get('sach-danh-gia-cao','WebManager@getSachDanhGiaCao')->name('getSachDanhGiaCao');
