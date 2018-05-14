@@ -27,35 +27,42 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <th>#</th>
             <th>Mã đơn hàng</th>
-            <th>Ngày tạo</th>
+            <th>Ngày đặt</th>
             <th>Tổng tiền</th>
-            <th>Phương thức thanh toán</th>
+            <th>Thanh toán</th>
             <th>Trạng thái</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>1</td>
-            <td>12345</td>
-            <td>11/2/2018</td>
-            <td>$899.00</td>
-            <td>Credit</td>
-            <td><span class="label label-info">Processing</span></td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>123456</td>
-            <td>19/4/2018</td>
-            <td>$899.00</td>
-            <td>Credit</td>
-            <td><span class="label label-success">Shipped</span></td>
-          </tr>
+          @foreach ($listorder as $order)
+            <tr class="odd gradeX">
+              <td><a href="{{ route('getOrderDetail',$order->order_id) }}">{{ $order->order_id}}</a></td>
+              <td>{{ $order->date_created}}</td>
+              <td>{{ $order->total_money}}</td>
+
+              @if($order->method_payment==0)
+              <td>Tiền mặt</td>
+              @else($order->method_payment==1)
+              <td>ATM</td>
+              @endif
+              
+              @if($order->status==-1)
+              <td><span class="label label-info">Từ chối</span></td>
+              @elseif($order->status==0)
+              <td><span class="label label-info">Đang xử lý</span></td>
+              @elseif($order->status==1)
+              <td><span class="label label-success">Chấp nhận</span></td>
+              @endif
+
+            </tr>
+          @endforeach
+          
         </tbody>
       </table>
     </div>
 	</div>
+    {{ $listorder->links() }}
 			</div>
 		</div>
 	</div>

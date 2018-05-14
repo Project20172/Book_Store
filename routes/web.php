@@ -44,9 +44,9 @@ Route::post('/user_information/updateinfo','ViewPages@postUpdateInformation')->n
 
 Route::post('/user_information/changepassword','ViewPages@postChangePassword')->name('postChangePassword');
 
-Route::get('/order_history',function(){
-	return view('pages.order_history');
-})-> name('order_history');
+Route::get('/order_history','ViewPages@listOrder')-> name('order_history');
+
+Route::get('/order_history/{id}','ViewPages@getOrderDetail')->name('getOrderDetail');
 
 Route::post('/home','RegisterController@addCustomer')->name('addCustomer');
 
