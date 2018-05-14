@@ -16,7 +16,7 @@
 							<ul class="dropdown-menu pull-right">
 								<li><a href="#">In</a></li>
 								<li><a href="#">Lưu ra pdf</a></li>
-								<li><a href="#">Lưu ra Excel</a></li>
+								<li><a id="export_excel" style="cursor: pointer;">Lưu ra Excel</a></li>
 							</ul>
 						</div>
 					</div>
@@ -47,4 +47,20 @@
 	</div>
 	<!-- page end-->
 </section>
+<script type="text/javascript">
+  $(document).ready(function (){
+    $('#export_excel').on('click',function (){
+      if(confirm("Bạn có muốn xuất ra file excel")){
+        $.ajax({
+          url:"{{ route('getExportThongKeNhaXuatBan') }}",
+          method:'get',
+          success: function(result){
+            alert('Xuất ra file excel thành công. Xem trong public/export của server.');
+          }
+        });
+      }
+    });
+  });
+
+</script>
 @endsection

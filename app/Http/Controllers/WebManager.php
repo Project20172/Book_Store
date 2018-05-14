@@ -1282,6 +1282,20 @@ class WebManager extends Controller
 		return view('pages.result_search',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
 	}
 
+	public function getBXHSachRatingCao()
+	{
+		$listBook=DB::table('book_review')
+		->join('book','book.book_id','=','book_review.book_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('category','category.category_id','=','book.category_id')
+		->selectRaw('book_review.book_id,book.*,author.name,category.category_name,SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) as 
+			percent')
+		->groupBy('book_review.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity','author.name','category.category_name')
+		->orderByRaw('SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) DESC')
+		->paginate(12);
+		return view('pages.admin.statistical.bxh_sach_rating_cao',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
+	}
+
 	public function getSachBinhLuanNhieu()
 	{
 		$listBook=DB::table('book_review')->join('book','book.book_id','=','book_review.book_id')
