@@ -55,6 +55,8 @@
 								$('.close{{$loop->index + 1}}').on('click', function(c){
 									$('.rem{{$loop->index + 1}}').fadeOut('slow', function(c){
 										var id = document.getElementById('book_id').innerHTML;
+										var id = $(this).parent().parent().parent().find("#book_id").text();
+										console.log("id book remove : " + id);
 										removeBook(id);
 										$('.rem{{$loop->index + 1}}').remove();
 									});
@@ -75,7 +77,9 @@
 						$('.value-plus').on('click', function(){
 							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
 							divUpd.text(newVal);
-							var id = document.getElementById('book_id').innerHTML;
+							// var id = document.getElementById('book_id').innerHTML;
+							var id = $(this).parent().parent().parent().parent().find('#book_id').text();
+							console.log('id book: ' + id);
 							increaseQty(id);
 						});
 
@@ -83,7 +87,9 @@
 							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
 							if(newVal>=1){
 								divUpd.text(newVal);
-								var id = document.getElementById('book_id').innerHTML;
+								// var id = document.getElementById('book_id').innerHTML;
+								var id = $(this).parent().parent().parent().parent().find('#book_id').text();
+								console.log('id book: ' + id);
 								decreaseQty(id);
 							}
 						});

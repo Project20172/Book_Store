@@ -31,10 +31,10 @@
 		</div>
 	</div>
 	<div>
-		<button class="left recommended-item-control" id="left" value="{{ $listBook[0]->book_id }}">
+		<button class="left recommended-item-control" id="left" value="">
 			<i class="fa fa-angle-left"></i>
 		</button>
-		<button class="right recommended-item-control" id="right" value="{{ $listBook[2]->book_id }}">
+		<button class="right recommended-item-control" id="right" value="">
 			<i class="fa fa-angle-right"></i>
 		</button>
 	</div>

@@ -15,9 +15,11 @@
 			<div id="sportswear" class="panel-collapse collapse">
 				<div class="panel-body">
 					<ul>
+						@if (count($listCategory)>0)
 						@foreach ($listCategory as $category)
 						<li><a class="ahover" href="{{ route('loaisanpham',$category->category_id) }}">{{ $category->category_name }} </a></li>
 						@endforeach
+						@endif
 					</ul>
 				</div>
 			</div>
@@ -34,9 +36,11 @@
 			<div id="mens" class="panel-collapse collapse">
 				<div class="panel-body">
 					<ul>
+						@if (count($listAuthor)>0)
 						@foreach ($listAuthor as $author)
 						<li><a class="ahover" href="{{ route('getBookByAuthor',$author->author_id) }}">{{ $author->name }}</a></li>
 						@endforeach
+						@endif
 					</ul>
 				</div>
 			</div>
@@ -83,9 +87,11 @@
 		<h2>Số lượng</h2>
 		<div class="brands-name">
 			<ul class="nav nav-pills nav-stacked">
+				@if (count($listCategoryAndQuantity)>0)
 				@foreach ($listCategoryAndQuantity as $element)
 				<li><a href="{{ route('loaisanpham',$element->category_id) }}"> <span class="pull-right">({{ $element->Sum }})</span>{{ $element->category_name }}</a></li>
 				@endforeach
+				@endif
 			</ul>
 		</div>
 	</div><!--/brands_products-->
