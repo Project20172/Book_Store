@@ -254,3 +254,5 @@ Route::post('set-info-to-buy-book','WebManager@postSetInfo')->name('postSetInfo'
 Route::get('thong-bao','WebManager@getThongBao')->name('getThongBao');
 
 Route::post('dat-hang','WebManager@postDatHang')->name('postDatHang');
+
+Route::get('check-exist-credit-card/{id}','WebManager@get_check_exist_credit_card')->name('get_check_exist_credit_card');

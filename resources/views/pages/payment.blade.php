@@ -157,23 +157,36 @@
           alert('Bạn chưa nhập đủ thông tin thẻ ngân hàng');
         }
         else{
-          alert('Đặt hàng');
-
           $.ajax({
-            url:"{{ route('postDatHang') }}",
-            method: 'post',
-            data: {
-              _token:$('#_token').val(),
-              card_number:$('#card_number').val(),
-              bill_to_name:$('#bill_to_name').val(),
-              card_expiry_date:$('#card_expiry').val(),
-              card_type:$('#id_card_type').val(),
-              is_pay_by_money:$('#is_pay_by_money').val()
-            },
+
+            url:"{{url('check-exist-credit-card') }}"+'/'+$('#card_number').val(),
+            method: 'get',
             success: function(result){
-              window.location.replace("{{ route('getThongBao') }}");
+              if(result==1){
+                alert('Thẻ đã được đăng ký. Vui lòng nhập mã thẻ khác.')
+              }
+              else{
+                alert('Đặt hàng');
+
+                $.ajax({
+                  url:"{{ route('postDatHang') }}",
+                  method: 'post',
+                  data: {
+                    _token:$('#_token').val(),
+                    card_number:$('#card_number').val(),
+                    bill_to_name:$('#bill_to_name').val(),
+                    card_expiry_date:$('#card_expiry').val(),
+                    card_type:$('#id_card_type').val(),
+                    is_pay_by_money:$('#is_pay_by_money').val()
+                  },
+                  success: function(result){
+                    window.location.replace("{{ route('getThongBao') }}");
+                  }
+                });
+              }
             }
           });
+          
         }
       }
       else{
