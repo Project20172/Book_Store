@@ -1,6 +1,7 @@
 @extends('layout.master')
 @section('container')
 <div class="container">
+	<br>
 	<div id="contentbuybook">
 		
 	</div>
