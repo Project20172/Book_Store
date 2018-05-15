@@ -250,3 +250,7 @@ Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
 Route::post('tinhdoanhthutrongkhoangthoigian','WebManager@tinhDoanhThuTrongKhoangThoiGian')->name('tinhDoanhThuTrongKhoangThoiGian')->middleware('adminlogin');
 
 Route::post('set-info-to-buy-book','WebManager@postSetInfo')->name('postSetInfo');
+
+Route::get('thong-bao','WebManager@getThongBao')->name('getThongBao');
+
+Route::post('dat-hang','WebManager@postDatHang')->name('postDatHang');
