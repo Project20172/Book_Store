@@ -10,7 +10,46 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+// START EXPORT FILE EXCEL =======================================================================
+
+Route::get('export/listbook','ExportFile@getExportListBook')->name('getExportListBook');
+
+Route::get('export/listcustomer','ExportFile@getExportListCustomer')->name('getExportListCustomer');
+
+Route::get('export/listadmin','ExportFile@getExportListAdmin')->name('getExportListAdmin');
+
+Route::get('export/listcategory','ExportFile@getExportListCategory')->name('getExportListCategory');
+
+Route::get('export/listauthor','ExportFile@getExportListAuthor')->name('getExportListAuthor');
+
+Route::get('export/list-order-details','ExportFile@getExportListOrderDetail')->name('getExportListOrderDetail');
+
+Route::get('export/list-order-book/{id}','ExportFile@getExportListOrderBookByOrderID')->name('getExportListOrderBookByOrderID');
+
+Route::get('export/thong-ke/tacgia','ExportFile@getExportThongKeTacGia')->name('getExportThongKeTacGia');
+
+Route::get('export/thong-ke/theloai','ExportFile@getExportThongKeTheLoai')->name('getExportThongKeTheLoai');
+
+Route::get('export/thong-ke/nhaxuatban','ExportFile@getExportThongKeNhaXuatBan')->name('getExportThongKeNhaXuatBan');
+
+Route::get('export/thong-ke/ngonngu','ExportFile@getExportThongKeNgonNgu')->name('getExportThongKeNgonNgu');
+
+Route::get('export/thong-ke/donhangtheokhachhang','ExportFile@getExportThongKeMuaHangCuaKhachHang')->name('getExportThongKeMuaHangCuaKhachHang');
+
+Route::post('export/thong-ke/doanhthuthangngay','ExportFile@postExportThongKeDoanhThuNgayThang')->name('postExportThongKeDoanhThuNgayThang');
+
+Route::post('export/thong-ke/doanhthunam','ExportFile@postExportThongKeDoanhThuNam')->name('postExportThongKeDoanhThuNam');
+
+Route::get('export/thong-ke/bxhsach','ExportFile@getThongKeSachBanChay')->name('getThongKeSachBanChay');
+
+Route::get('export/thong-ke/bxhsachrating','ExportFile@getExportBXHSachRatingCao')->name('getExportBXHSachRatingCao');
+
+// END EXPORT FILE EXCEL =========================================================================
+
 Route::get('sach-ban-chay','WebManager@getSachBanChay')->name('getSachBanChay');
+
+Route::get('bxh-sach-rating','WebManager@getBXHSachRatingCao')->name('getBXHSachRatingCao');
 
 Route::get('sach-danh-gia-cao','WebManager@getSachDanhGiaCao')->name('getSachDanhGiaCao');
 
@@ -209,3 +248,9 @@ Route::get('payment','ViewPages@getContentPayment')->name('getContentPayment');
 Route::get('buybook','ViewPages@getBuyBook')->name('getBuyBook');
 
 Route::post('tinhdoanhthutrongkhoangthoigian','WebManager@tinhDoanhThuTrongKhoangThoiGian')->name('tinhDoanhThuTrongKhoangThoiGian')->middleware('adminlogin');
+
+Route::post('set-info-to-buy-book','WebManager@postSetInfo')->name('postSetInfo');
+
+Route::get('thong-bao','WebManager@getThongBao')->name('getThongBao');
+
+Route::post('dat-hang','WebManager@postDatHang')->name('postDatHang');
