@@ -61,8 +61,6 @@
 						if(newVal>=1) divUpd.text(newVal);
 					});
 				</script>
-				<a href="#" class="add-to item_add hvr-skew-backward">Add to cart</a>
-				<div class="clearfix"></div>
 			</div>
 		</div>
 		<div class="clearfix"></div>

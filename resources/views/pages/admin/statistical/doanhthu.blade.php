@@ -16,7 +16,7 @@
               <ul class="dropdown-menu pull-right">
                 <li><a href="#">In</a></li>
                 <li><a href="#">Lưu ra pdf</a></li>
-                <li><a href="#">Lưu ra Excel</a></li>
+                <li><a id="export_excel" style="cursor: pointer;">Lưu ra Excel</a></li>
               </ul>
             </div>
           </div>
@@ -68,6 +68,7 @@
 
 <script type="text/javascript">
   $(document).ready(function (){
+
     $('#btnView').on('click',function (){
       var time1=$('#time1').val();
       var time2=$('#time2').val();
@@ -104,6 +105,30 @@
         }
       }
     });
+
+    $('#export_excel').on('click',function (){
+      if(confirm("Bạn có muốn xuất ra file excel")){
+        if ($('#time1').val()==''&&$('#time2').val()=='') 
+        {
+          alert('Bạn chưa chọn đủ khoảng thời gian');
+        }
+        else {
+          $.ajax({
+            url:"{{ route('postExportThongKeDoanhThuNgayThang') }}",
+            method:'post',
+            data:{
+              _token: $('#_token').val(),
+              time1:$('#time1').val(),
+              time2:$('#time2').val()
+            },
+            success: function(result){
+              alert('Xuất ra file excel thành công. Xem trong public/export của server.');
+            }
+          });
+        }
+      }
+    });
+
   });
 </script>
 @endsection

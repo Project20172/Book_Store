@@ -16,7 +16,7 @@
               <ul class="dropdown-menu pull-right">
                 <li><a href="#">In</a></li>
                 <li><a href="#">Lưu ra pdf</a></li>
-                <li><a href="#">Lưu ra Excel</a></li>
+                <li><a id="export_excel" style="cursor: pointer;">Lưu ra Excel</a></li>
               </ul>
             </div>
           </div>
@@ -64,6 +64,7 @@
 
 <script type="text/javascript">
   $(document).ready(function (){
+
     $('#btnView').on('click',function (){
       var year=$('#year').val();
       if(year!=''){
@@ -91,6 +92,27 @@
         }
       }
     });
+
+    $('#export_excel').on('click',function (){
+      if(confirm("Bạn có muốn xuất ra file excel")){
+        if($('#year').val()==''){
+          alert('Bạn chưa chọn năm.');
+        }else{
+          $.ajax({
+            url:"{{ route('postExportThongKeDoanhThuNam') }}",
+            method: 'post',
+            data: {
+              _token: $('#_token').val(),
+              year:$('#year').val()
+            },
+            success: function(result){
+              alert('Xuất ra file excel thành công. Xem trong public/export của server.');
+            }
+          });
+        }
+      }
+    });
+
   });
 </script>
 @endsection

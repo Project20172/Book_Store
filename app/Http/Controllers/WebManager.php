@@ -14,6 +14,42 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+	public function postSetInfo(Request $req)
+	{
+		Session::put('full_name', $req->full_name);
+		Session::put('phone_number', $req->phone_number);
+		Session::put('city', $req->city);
+		Session::put('address', $req->address);
+		//echo 'Set Done';
+		// echo '<pre>';
+		// var_dump($req->full_name);
+		// echo '</pre>';
+		return 1;
+
+	}
+
+	public function getUnsetInfo()
+	{
+		if(session('full_name')){
+			Session::forget('full_name');
+		}
+		if(session('phone_number')){
+			Session::forget('phone_number');
+		}
+		if(session('city')){
+			Session::forget('city');
+		}
+		if(session('address')){
+			Session::forget('address');
+		}
+		return 1;
+	}
+
+	public function getThongBao()
+	{
+		return view('pages.thongbao');
+	}
+
 	public function getComingSoon()
 	{
 		
@@ -1282,6 +1318,20 @@ class WebManager extends Controller
 		return view('pages.result_search',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
 	}
 
+	public function getBXHSachRatingCao()
+	{
+		$listBook=DB::table('book_review')
+		->join('book','book.book_id','=','book_review.book_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('category','category.category_id','=','book.category_id')
+		->selectRaw('book_review.book_id,book.*,author.name,category.category_name,SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) as 
+			percent')
+		->groupBy('book_review.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity','author.name','category.category_name')
+		->orderByRaw('SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) DESC')
+		->paginate(12);
+		return view('pages.admin.statistical.bxh_sach_rating_cao',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
+	}
+
 	public function getSachBinhLuanNhieu()
 	{
 		$listBook=DB::table('book_review')->join('book','book.book_id','=','book_review.book_id')
@@ -1317,5 +1367,92 @@ class WebManager extends Controller
 		}
 		$kq=array('str'=>$str,'total'=>$total);
 		return $kq;
+	}
+
+	public function postDatHang(Request $req)
+	{
+		
+		$customer=Session::get('UserLogin');
+		$full_name=$customer->first_name.' '.$customer->last_name;
+		if(session('full_name')){
+			$full_name=Session::get('full_name');
+		}
+		$phone_number=$customer->phone_number;
+		if(session('phone_number')){
+			$phone_number=Session::get('phone_number');
+		}
+		$city=$customer->city;
+		if(session('city')){
+			$city=Session::get('city');
+		}
+		$address=$customer->address;
+		if(session('address')){
+			$address=Session::get('address');
+		}
+
+		$cart=Session::get('cart');
+
+		if ($req->is_pay_by_money=='false') {
+
+			DB::table('credit_card')->insert(
+				[
+					'credit_card_number'=>$req->card_number,
+					'credit_cart_name'=>$req->bill_to_name,
+					'expire_date'=>$req->card_expiry_date,
+					'card_type'=>$req->card_type,
+					'user_id'=>(Session::get('UserLogin'))->user_id,
+				]
+			);
+
+			DB::table('order_details')->insert(
+				[
+					'user_id'=>(Session::get('UserLogin'))->user_id,
+					'receiver_name'=>$full_name,
+					'address'=>$address,
+					'city'=>$city,
+					'date_created'=>date(NOW()),
+					'method_payment'=>1,
+					'status'=>0,
+					'total_money'=>$cart->totalPrice
+				]
+			);
+		} else {
+			DB::table('order_details')->insert(
+				[
+					'user_id'=>(Session::get('UserLogin'))->user_id,
+					'receiver_name'=>$full_name,
+					'address'=>$address,
+					'city'=>$city,
+					'date_created'=>date(NOW()),
+					'method_payment'=>0,
+					'status'=>0,
+					'total_money'=>$cart->totalPrice
+				]
+			);
+
+		}
+
+		$listBook=$cart->items;
+
+		$last_order_details=DB::table('order_details')->select('order_id')->orderBy('order_id','DESC')
+		->first();
+
+		foreach ($listBook as $book) {
+			DB::table('ordered_book')->insert(
+				[
+					'order_id'=>$last_order_details->order_id,
+					'book_id'=>$book['item']->book_id,
+					'quantity'=>$book['qty'],
+					'price'=>$book['price'],
+				]
+			);
+		}
+
+		$this->getUnsetInfo();
+		Session::put('cart', null);
+
+		Session::flash('dat_hang_thanh_cong','Bạn đã yêu cầu đặt hàng. Đơn hàng của bạn đang được duyệt.Xem chi tiết trong thông tin tài khoản.Cám ơn bạn đã đặt hàng.');
+		return 'Done';
+		
 	}
 }

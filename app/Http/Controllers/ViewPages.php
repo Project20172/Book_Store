@@ -78,7 +78,24 @@ class ViewPages extends Controller
 
     public function getBuyBook()
     {
-        return view('pages.buyBook');
+        if(Session::has('cart')){
+            $cart=Session::get('cart');
+            if($cart->items==null || count($cart->items)==0){
+                return redirect('thong-bao')->with('nhac_nho','Giỏ Hàng Đang Trống. Bạn Hãy Thêm Hàng Vào Giỏ');
+            }
+            else{
+                if (session('UserLogin')) {
+                    return view('pages.buyBook');
+                }
+                else{
+                    return view('pages.login');
+                }
+            }
+        }
+        else{
+            return redirect('thong-bao')->with('nhac_nho','Giỏ Hàng Đang Trống. Bạn Hãy Thêm Hàng Vào Giỏ');
+        }
+        
     }
 
     public function getContentPayment()

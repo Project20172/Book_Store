@@ -125,7 +125,7 @@
 					<a href="{{route('home')}}" class="btn btn-primary">Chọn thêm</a>
 					<a href="{{route('removeAllCart')}}" class="btn btn-primary ">Xóa toàn bộ</a>
 					<a href="{{route('cart')}}" class="btn btn-primary">Cập nhật</a>
-					<a href="#" class="btn btn-primary">Thanh toán</a>
+					<a href="{{ route('getBuyBook') }}" class="btn btn-primary">Thanh toán</a>
 				</div>
 				<div class="clearfix"> </div>
 			</div>

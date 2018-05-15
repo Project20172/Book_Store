@@ -100,7 +100,7 @@
               <span>Danh Sách</span>
             </a>
             <ul class="sub">
-              <li><a  href="{{ route('getComingSoon') }}">Danh Sách Sách Bán Chạy</a></li>
+              <li><a  href="{{ route('getBXHSachRatingCao') }}">BXH Sách Có Rating Cao</a></li>
             </ul>
           </li>
 
