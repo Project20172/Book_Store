@@ -52,7 +52,7 @@
 
       <div class="form-group">        
         <div class="col-sm-offset-4 col-sm-8">
-          <button type="button" class="btn btn-default" style="width: 120px; height: 40px">Hủy bỏ</button>
+          <button type="button" class="btn btn-default" id="huybo" style="width: 120px; height: 40px">Hủy bỏ</button>
           <button type="button" class="btn btn-primary" id="getContentPayMent" style="width: 120px; height: 40px;">Tiếp tục</button>
         </div>
       </div>
@@ -83,6 +83,13 @@
             $('#contentbuybook').load('{{ route('getContentPayment') }}');
           }
         });
+      }
+    });
+
+    $('#huybo').on('click',function (){
+      if (confirm('Bạn có chắc muốn hủy bỏ')) 
+      {
+        window.location.replace("{{ route('cart') }}");
       }
     });
   });
