@@ -259,6 +259,7 @@ class WebManager extends Controller
 	{
 		$list=DB::table('order_details')->join('customer','customer.user_id','=','order_details.user_id')
 		->selectRaw('order_details.*,customer.user_name,customer.last_name,customer.first_name')
+		->orderBy('order_details.order_id','ASC')
 		->get();
 		return view('pages.admin.list-order-book',['list'=>$list]);
 	}
