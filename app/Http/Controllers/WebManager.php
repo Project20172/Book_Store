@@ -243,7 +243,7 @@ class WebManager extends Controller
 
 	public function postEditOrderDetail(Request $req)
 	{
-		$order_detail=DB::table('order_details')->where('order_id',$req->order_id)->update(['status'=>$req->status,'date_received'=>date('Y-m-d h:m:s',strtotime($req->date_received))]);
+		$order_detail=DB::table('order_details')->where('order_id',$req->order_id)->update(['status'=>$req->status,'date_received'=>date('Y-m-d H:m:s',strtotime($req->date_received))]);
 		return redirect('edit-order-detail/'.$req->order_id)->with('thongbao','Cập nhật thành công');
 	}
 
@@ -614,11 +614,11 @@ class WebManager extends Controller
 		$countBook=Book::all()->count();
 		$countCustomer=Customer::all()->count();
 		$countCategory=category::all()->count();
-		$t=DB::select('SELECT WEEKDAY(order_details.date_received) AS day_of_week,DAYNAME(order_details.date_received) As Name,
+		$t=DB::select(DB::raw('SELECT WEEKDAY(DATE(order_details.date_created)) AS day_of_week,DAYNAME(order_details.date_created) As Name,
 			(SUM(order_details.total_money)*100/
 			(
 			SELECT SUM(order_details.total_money) FROM order_details
-			WHERE DATE(order_details.date_received)
+			WHERE DATE(order_details.date_created)
 			IN (
 			SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) AS day
 			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 1 DAY
@@ -630,10 +630,8 @@ class WebManager extends Controller
 			)
 			AND order_details.status=1
 			)
-			)
-			as 
-			percent FROM order_details 
-			WHERE DATE(order_details.date_received)
+			) as percent FROM order_details 
+			WHERE DATE(order_details.date_created)
 			IN (
 			SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) AS day
 			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 1 DAY
@@ -644,7 +642,7 @@ class WebManager extends Controller
 			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 6 DAY
 			)
 			AND order_details.status=1
-			GROUP BY order_details.date_received');
+			GROUP BY WEEKDAY(DATE(order_details.date_created))'));
 		//var_dump($t);
 		$arr=array('Monday'=>0,'Tuesday'=>0,'Wednesday'=>0,'Thursday'=>0,'Friday'=>0,'Saturday'=>0,'Sunday'=>0);
 		foreach ($t as $value) {
@@ -655,7 +653,7 @@ class WebManager extends Controller
 		//var_dump($arr);
 
 		$dayTotal=DB::table('order_details')->selectRaw('DAYNAME(CURRENT_DATE) as Name,SUM(order_details.total_money) as total_money')
-		->whereRaw('DATE(order_details.date_received)=CURRENT_DATE and status=1')->get();
+		->whereRaw('DATE(order_details.date_created)=CURRENT_DATE and status=1')->get();
 		// $monthTotal=DB::table('order_details')->selectRaw('MONTHNAME(CURRENT_DATE) as Name,DAYOFMONTH(CURRENT_DATE) as dayofmonth,SUM(order_details.total_money) as total_money')
 		// ->whereRaw('MONTH(order_details.date_received)=MONTH(CURRENT_DATE) AND order_details.status=1')
 		// ->get();
@@ -666,9 +664,9 @@ class WebManager extends Controller
 			SUM(order_details.total_money) as total_money,
 			SUM(order_details.total_money)*100/
 			(
-			SELECT SUM(order_details.total_money) FROM order_details WHERE YEAR(order_details.date_received)=YEAR(CURRENT_DATE) AND order_details.status=1
+			SELECT SUM(order_details.total_money) FROM order_details WHERE YEAR(order_details.date_created)=YEAR(CURRENT_DATE) AND order_details.status=1
 			) as percent
-			FROM order_details WHERE MONTH(order_details.date_received)=MONTH(CURRENT_DATE) AND order_details.status=1');
+			FROM order_details WHERE MONTH(order_details.date_created)=MONTH(CURRENT_DATE) AND order_details.status=1');
 		$_10order=DB::table('order_details')->join('customer','customer.user_id','=','order_details.user_id')
 		->selectRaw('order_details.*,customer.first_name,customer.last_name')
 		->orderBy('order_details.date_created', 'desc')
@@ -1347,7 +1345,7 @@ class WebManager extends Controller
 		// echo $req->time1;
 		// echo $req->time2;
 		$result=DB::table('order_details')->selectRaw('DATE(order_details.date_created) as date_created ,SUM(order_details.total_money) as total_money')
-		->where('order_details.status','!=','-1')
+		->where('order_details.status','=','1')
 		->whereRaw('DATE(order_details.date_created) BETWEEN "'.$req->time1.'" AND "'.$req->time2.'"')
 		->groupBy(DB::raw('DATE(order_details.date_created)'))->get();
 		$str='';
@@ -1454,5 +1452,16 @@ class WebManager extends Controller
 		Session::flash('dat_hang_thanh_cong','Bạn đã yêu cầu đặt hàng. Đơn hàng của bạn đang được duyệt.Xem chi tiết trong thông tin tài khoản.Cám ơn bạn đã đặt hàng.');
 		return 'Done';
 		
+	}
+
+	public function get_check_exist_credit_card($credit_card_number)
+	{
+		$credit_card=DB::table('credit_card')->where('credit_card_number',$credit_card_number)->get();
+		if(count($credit_card)>0){
+			return 1;
+		}
+		else{
+			return 0;
+		}
 	}
 }
