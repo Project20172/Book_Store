@@ -97,7 +97,9 @@
                   <div class="col-sm-5">
                     <div class="form-group">
                       <label for="exampleInputEmail1">Thời Gian Nhận</label>
-                      <input type="datetime-local" name="date_received" value="{{ date('Y-m-d',strtotime($element->date_received)).'T'.date('h:m',strtotime($element->date_received)) }}" class="spinner-input form-control">
+                      <input type="datetime-local" name="date_received" @if ($element->date_received!='')
+                      value="{{ date('Y-m-d',strtotime($element->date_received)).'T'.date('H:m',strtotime($element->date_received)) }}"
+                      @endif class="spinner-input form-control">
                     </div>
                   </div> 
                   <div class="col-sm-12">

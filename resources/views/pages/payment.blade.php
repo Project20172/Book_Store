@@ -65,7 +65,7 @@
             @foreach ($cart->items as $book)
             <tr>
               <td><span id="number1">{{ $book['qty'] }} x </span>{{ $book['item']->book_name }}</td>
-              <td style="text-align: right;"><span id="price1">{{ $book['price'] }}đ</span></td>
+              <td style="text-align: right;"><span id="price">{{ $book['price'] }}đ</span></td>
 
             </tr>
             @endforeach
@@ -78,11 +78,11 @@
           </tr>
           <tr>
             <td>Phí vận chuyển</td>
-            <td style="text-align: right;"><span id="price1">12.000đ</span></td>
+            <td style="text-align: right;"><span id="price2">12.000đ</span></td>
           </tr>
           <tr>
             <td><h4><b>Thành tiền</b></h4></td>
-            <td style="text-align: right;"><h4><b><span id="total">{{ $cart->totalPrice}}đ<b></span></h4></td>
+            <td style="text-align: right;"><h4><b><span id="total">{{ $cart->totalPrice + 12000}}đ<b></span></h4></td>
 
             </tr>
           </table>
@@ -99,8 +99,8 @@
       $("#pay_by_atm").prop("checked", false);
       document.getElementById('is_pay_by_money').value="true";
       document.getElementById('atm').innerHTML='';
-      document.getElementById('price1').innerHTML='12.000đ';
-      document.getElementById('total').innerHTML={{ $cart->totalPrice}};
+      document.getElementById('price2').innerHTML='12.000đ';
+      document.getElementById('total').innerHTML={{ $cart->totalPrice + 12000}};
     });
 
     $('#pay_by_atm').on('click',function (){
@@ -138,8 +138,8 @@
       str+='          </div>';
       str+='        </div>';
       document.getElementById('atm').innerHTML=str;
-      document.getElementById('price1').innerHTML='12.000đ';
-      document.getElementById('total').innerHTML={{ $cart->totalPrice - 12000 }};
+      document.getElementById('price2').innerHTML='0đ';
+      document.getElementById('total').innerHTML={{ $cart->totalPrice }};
     });
 
     $("#getContentChekout").on("click",function (){
@@ -157,23 +157,36 @@
           alert('Bạn chưa nhập đủ thông tin thẻ ngân hàng');
         }
         else{
-          alert('Đặt hàng');
-
           $.ajax({
-            url:"{{ route('postDatHang') }}",
-            method: 'post',
-            data: {
-              _token:$('#_token').val(),
-              card_number:$('#card_number').val(),
-              bill_to_name:$('#bill_to_name').val(),
-              card_expiry_date:$('#card_expiry').val(),
-              card_type:$('#id_card_type').val(),
-              is_pay_by_money:$('#is_pay_by_money').val()
-            },
+
+            url:"{{url('check-exist-credit-card') }}"+'/'+$('#card_number').val(),
+            method: 'get',
             success: function(result){
-              window.location.replace("{{ route('getThongBao') }}");
+              if(result==1){
+                alert('Thẻ đã được đăng ký. Vui lòng nhập mã thẻ khác.')
+              }
+              else{
+                alert('Đặt hàng');
+
+                $.ajax({
+                  url:"{{ route('postDatHang') }}",
+                  method: 'post',
+                  data: {
+                    _token:$('#_token').val(),
+                    card_number:$('#card_number').val(),
+                    bill_to_name:$('#bill_to_name').val(),
+                    card_expiry_date:$('#card_expiry').val(),
+                    card_type:$('#id_card_type').val(),
+                    is_pay_by_money:$('#is_pay_by_money').val()
+                  },
+                  success: function(result){
+                    window.location.replace("{{ route('getThongBao') }}");
+                  }
+                });
+              }
             }
           });
+          
         }
       }
       else{
