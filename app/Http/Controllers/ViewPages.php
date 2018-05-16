@@ -144,17 +144,17 @@ class ViewPages extends Controller
     {
         $listorder = DB::table('order_details')
         //    ->join('ordered_book','order_details.order_id','=','ordered_book.order_id')
-            ->where('order_details.user_id','=',Session('UserLogin')->user_id)
-            ->paginate(5);
+        ->where('order_details.user_id','=',Session('UserLogin')->user_id)
+        ->paginate(5);
         return view('pages.order_history',['listorder'=>$listorder]);
     }
     public function getOrderDetail($id)
     {
         $detail = DB::table('ordered_book')
-            ->join('book','ordered_book.book_id','=','book.book_id')
-            ->where('order_id',$id)
-            ->select('ordered_book.quantity','ordered_book.price','book.book_name')
-            ->get();
+        ->join('book','ordered_book.book_id','=','book.book_id')
+        ->where('order_id',$id)
+        ->select('ordered_book.quantity','ordered_book.price','book.book_name')
+        ->get();
         return view('pages.order_history_detail',['detail'=>$detail]);
     }
 }
