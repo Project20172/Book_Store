@@ -7,6 +7,9 @@ use Session;
 use App\category;
 use App\Book;
 use App\Cart;
+use App\Customer;
+use  App\order_details;
+use  App\ordered_book;
 use Illuminate\Support\Facades\DB;
 
 class ViewPages extends Controller
@@ -109,5 +112,49 @@ class ViewPages extends Controller
         $category=category::find($id);
         $listBook=Book::where('category_id',$id)->paginate(12);
         return view('pages.loai_san_pham',['listBook'=>$listBook,'title'=>$category->category_name]);
+    }
+
+    public function postUpdateInformation(Request $req)
+    {
+        $customer=Customer::find(Session('UserLogin')->user_id);
+        $customer->user_name=$req->username;
+        $customer->phone=$req->phone;
+        $customer->email=$req->email;
+        $customer->address=$req->address;
+        $customer->save();
+        $req->session()->put('UserLogin',$customer);
+        return redirect('/user_information')->with('thongbao','Cập nhật thông tin thành công');
+    }
+    public function postChangePassword(Request $req)
+    {
+        $customer = Customer::find(Session('UserLogin')->user_id);
+        if($customer->password== $req->currentpassword)
+        {
+            $customer->password = $req->newpassword;
+            $customer->save();
+            $req->session()->put('UserLogin',$customer);
+            return redirect('/user_information')->with('passwordcorrect','Đổi mật khẩu thành công');
+        }
+        else
+        {
+            return redirect('/user_information')->with('passwordincorrect','Mật khẩu sai!');
+        }
+    }
+    public function listOrder()
+    {
+        $listorder = DB::table('order_details')
+        //    ->join('ordered_book','order_details.order_id','=','ordered_book.order_id')
+            ->where('order_details.user_id','=',Session('UserLogin')->user_id)
+            ->paginate(5);
+        return view('pages.order_history',['listorder'=>$listorder]);
+    }
+    public function getOrderDetail($id)
+    {
+        $detail = DB::table('ordered_book')
+            ->join('book','ordered_book.book_id','=','book.book_id')
+            ->where('order_id',$id)
+            ->select('ordered_book.quantity','ordered_book.price','book.book_name')
+            ->get();
+        return view('pages.order_history_detail',['detail'=>$detail]);
     }
 }

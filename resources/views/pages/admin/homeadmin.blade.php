@@ -179,7 +179,7 @@
 									<div class="panel-body">
 										<span class="arrow"></span>
 										<span class="timeline-icon red"></span>
-										<span class="timeline-date">{{ date('h:m',strtotime($_10order[$i]->date_created)) }}</span>
+										<span class="timeline-date">{{ date('H:m',strtotime($_10order[$i]->date_created)) }}</span>
 										<h1 class="red">{{ date('d ',strtotime($_10order[$i]->date_created)).$arrThang[date('M',strtotime($_10order[$i]->date_created))].' | '.$arrThu[date('l',strtotime($_10order[$i]->date_created))] }}</h1>
 										<p><a class="bgiang" href="{{ route('getEditOrderDetail',$_10order[$i]->order_id) }}">{{ $_10order[$i]->first_name.' '.$_10order[$i]->last_name.' ' }}</a> đã đặt mua một đơn hàng</p>
 									</div>
