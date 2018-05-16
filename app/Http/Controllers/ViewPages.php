@@ -144,7 +144,7 @@ class ViewPages extends Controller
     {
         $listorder = DB::table('order_details')
         //    ->join('ordered_book','order_details.order_id','=','ordered_book.order_id')
-        ->where('order_details.user_id','=',Session('UserLogin')->user_id)
+        ->where('order_details.user_id','=',Session('UserLogin')->user_id)->orderBy('order_details.date_created','ASC')
         ->paginate(5);
         return view('pages.order_history',['listorder'=>$listorder]);
     }
