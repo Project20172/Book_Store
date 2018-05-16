@@ -456,7 +456,8 @@ class WebManager extends Controller
 
 	public function getLogout()
 	{
-		Session::forget('UserLogin');
+		//Session::forget('UserLogin');
+		Session::flush();
 		return redirect('/home');
 	}
 
