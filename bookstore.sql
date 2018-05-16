@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 13, 2018 at 05:53 PM
+-- Generation Time: May 16, 2018 at 04:32 PM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -201,6 +201,22 @@ CREATE TABLE `credit_card` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+--
+-- Dumping data for table `credit_card`
+--
+
+INSERT INTO `credit_card` (`credit_card_number`, `credit_cart_name`, `expire_date`, `card_type`, `user_id`) VALUES
+('00000000000', 'Tô Hương Giang', '2018-05-18', 'VIP', 1),
+('01658215007', 'Nguyễn Hoàng Giang', '2018-05-15', 'VIP', 1),
+('01658215008', 'Nguyễn Hoàng Giang', '2018-05-18', 'VIP', 1),
+('01658215009', 'Nguyen Giang', '2018-05-12', 'So 1', 1),
+('12', 'Nguyễn Hoàng Giang', '2018-05-27', 'VIP', 1),
+('1234', 'Tô Hương Giang', '2018-05-18', 'VIP', 1),
+('123456', 'Nguyễn hoàng Giang', '1997-11-26', 'Việt Nam', 1),
+('26111997', 'Ruan Jiang', '2020-11-26', 'VIP', 1),
+('9876', 'Ngô Vân Anh', '2018-05-13', 'VIP', 1),
+('9999', 'Nguyễn Hoàng Giang', '2018-05-25', 'Thường', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -224,7 +240,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`user_id`, `user_name`, `password`, `first_name`, `last_name`, `address`, `city`, `email`, `phone`) VALUES
-(1, 'giangnh', '123456', 'Giang', 'Nguyễn', 'Hà Nội', 'Hà Nội', 'giang.nh261197@gmail.com', '01658215007'),
+(1, 'giangnh', 'hot10000%', 'Giang', 'Nguyễn', 'Hà Nội', 'Hà Nội', 'giang.nh@gmail.com', '01658215007'),
 (2, 'anhnv', '123456', 'Anh', 'Ngô', 'Hà Nội', '', 'anhnv@gmail.com', ''),
 (3, 'giangth', '123456', 'Giang', 'Tô', '', '', 'giangth@gmail.com', '');
 
@@ -267,12 +283,15 @@ CREATE TABLE `ordered_book` (
 
 INSERT INTO `ordered_book` (`order_id`, `book_id`, `quantity`, `price`) VALUES
 (1, 1, 5, 50000),
+(1, 9, 2, 126400),
 (1, 16, 7, 18000),
 (1, 17, 8, 60000),
 (1, 18, 2, 50000),
 (2, 7, 4, 50000),
 (2, 8, 5, 67800),
+(2, 9, 3, 189600),
 (2, 12, 15, 120000),
+(2, 15, 1, 118400),
 (2, 18, 3, 50000),
 (3, 1, 8, 12000),
 (3, 3, 21, 27800),
@@ -287,7 +306,53 @@ INSERT INTO `ordered_book` (`order_id`, `book_id`, `quantity`, `price`) VALUES
 (5, 14, 5, 25000),
 (5, 19, 56, 12890),
 (7, 2, 7, 80000),
-(7, 18, 5, 25000);
+(7, 18, 5, 25000),
+(15, 1, 2, 124800),
+(15, 2, 1, 63200),
+(15, 9, 1, 63200),
+(15, 15, 1, 118400),
+(15, 19, 2, 137600),
+(16, 1, 2, 124800),
+(16, 2, 1, 63200),
+(16, 9, 1, 63200),
+(16, 15, 1, 118400),
+(16, 19, 2, 137600),
+(17, 1, 2, 124800),
+(17, 2, 1, 63200),
+(17, 9, 1, 63200),
+(17, 15, 1, 118400),
+(17, 19, 2, 137600),
+(18, 1, 2, 124800),
+(18, 2, 1, 63200),
+(18, 9, 1, 63200),
+(18, 15, 1, 118400),
+(18, 19, 2, 137600),
+(19, 9, 2, 126400),
+(20, 2, 1, 63200),
+(20, 9, 1, 63200),
+(21, 2, 2, 126400),
+(21, 9, 1, 63200),
+(21, 19, 1, 68800),
+(22, 2, 2, 126400),
+(22, 9, 1, 63200),
+(22, 19, 1, 68800),
+(23, 19, 1, 68800),
+(24, 1, 1, 62400),
+(24, 2, 1, 63200),
+(24, 3, 1, 52800),
+(25, 19, 2, 137600),
+(26, 2, 1, 63200),
+(26, 9, 1, 63200),
+(26, 19, 1, 68800),
+(27, 9, 1, 63200),
+(27, 19, 1, 68800),
+(28, 16, 1, 143200),
+(28, 17, 1, 103200),
+(29, 19, 2, 137600),
+(30, 3, 1, 52800),
+(30, 14, 2, 601600),
+(31, 2, 1, 63200),
+(31, 19, 2, 137600);
 
 -- --------------------------------------------------------
 
@@ -304,7 +369,7 @@ CREATE TABLE `order_details` (
   `date_created` datetime NOT NULL,
   `method_payment` bit(1) NOT NULL COMMENT 'Foreign key to Shipping Type',
   `status` int(11) NOT NULL,
-  `date_received` datetime NOT NULL,
+  `date_received` datetime DEFAULT NULL,
   `total_money` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -319,7 +384,31 @@ INSERT INTO `order_details` (`order_id`, `user_id`, `receiver_name`, `address`, 
 (4, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-09 06:00:00', b'1', 1, '2018-05-11 06:00:00', 200000),
 (5, 1, 'Nguyễn Hoàng Giang', 'Đông Anh, Hà Nội', 'Hà Nội', '2018-05-01 06:06:00', b'1', 1, '2018-05-08 07:08:00', 120000),
 (6, 1, 'Nguyễn Hoàng Giang', 'Đông Anh, Hà Nội', 'Hà Nội', '2018-04-14 00:00:00', b'1', 1, '2018-04-04 00:00:00', 120000),
-(7, 3, 'Tô Hương Giang', 'Hà Nội', 'Hà Nội', '2018-05-13 06:00:00', b'1', 1, '2018-05-13 17:00:00', 350000);
+(7, 3, 'Tô Hương Giang', 'Hà Nội', 'Hà Nội', '2018-05-13 06:00:00', b'1', 1, '2018-05-13 17:00:00', 350000),
+(8, 1, 'Nguyễn Giang', 'Hà Nội', 'Hà Nội', '2018-05-15 09:47:38', b'0', 1, '2018-05-16 08:05:00', 126400),
+(9, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 09:59:14', b'1', 1, '2018-05-15 08:05:00', 189600),
+(10, 1, 'Nguyễn Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:04:56', b'0', 1, '2018-05-15 05:05:00', 118400),
+(11, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:07:34', b'0', 1, '2018-05-15 17:05:00', 118400),
+(12, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:11:19', b'0', 1, '2018-05-15 05:05:00', 118400),
+(13, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:20:19', b'0', 0, NULL, 118400),
+(14, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:20:45', b'0', 1, '2018-05-15 17:05:00', 118400),
+(15, 1, 'Ruan Jiang', 'Cổ Loa,Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:23:05', b'1', 0, NULL, 507200),
+(16, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 10:27:45', b'0', 0, '2018-05-15 17:05:00', 507200),
+(17, 1, 'Tô Hương Giang', 'Hà Nội', 'Hà Nội', '2018-05-15 12:36:09', b'1', 1, '2018-05-15 15:05:00', 507200),
+(18, 1, 'Tô Hương Giang', 'Hà Nội', 'Hà Nội', '2018-05-15 12:37:10', b'1', 0, NULL, 507200),
+(19, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 12:46:00', b'1', 0, NULL, 126400),
+(20, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 12:57:10', b'0', 0, NULL, 126400),
+(21, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 12:58:05', b'0', 0, NULL, 258400),
+(22, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 12:58:40', b'0', 0, NULL, 258400),
+(23, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 13:00:32', b'0', 0, NULL, 68800),
+(24, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 13:02:33', b'0', 0, NULL, 178400),
+(25, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-15 13:07:22', b'0', 0, NULL, 137600),
+(26, 1, 'Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 13:11:49', b'1', 0, NULL, 195200),
+(27, 1, 'Giang Nguyễn Hoàng', 'Hà Nội', 'Hà Nội', '2018-05-15 13:13:14', b'0', 0, NULL, 132000),
+(28, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 13:13:52', b'1', 0, NULL, 246400),
+(29, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 17:17:23', b'1', 0, NULL, 137600),
+(30, 1, 'Nguyen Hoang Giang', 'Dong Anh,Hà Nội', 'Hà Nội', '2018-05-15 18:39:18', b'1', 1, '2018-05-19 15:05:00', 654400),
+(31, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-16 21:22:35', b'0', 0, NULL, 200800);
 
 -- --------------------------------------------------------
 
@@ -499,7 +588,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT for table `users`
