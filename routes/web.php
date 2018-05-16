@@ -132,6 +132,14 @@ Route::get('/user_information',function(){
 	return view('pages.user_information');
 })->name('user_information');
 
+Route::post('/user_information/updateinfo','ViewPages@postUpdateInformation')->name('postUpdateInformation');
+
+Route::post('/user_information/changepassword','ViewPages@postChangePassword')->name('postChangePassword');
+
+Route::get('/order_history','ViewPages@listOrder')-> name('order_history');
+
+Route::get('/order_history/{id}','ViewPages@getOrderDetail')->name('getOrderDetail');
+
 Route::post('/home','RegisterController@addCustomer')->name('addCustomer');
 
 Route::get('/result-search', 'ViewPages@getResultSearch')->name('result-search');
