@@ -14,6 +14,289 @@ use Illuminate\Support\Facades\DB;
 class WebManager extends Controller
 {
 
+	public function postSetInfo(Request $req)
+	{
+		Session::put('full_name', $req->full_name);
+		Session::put('phone_number', $req->phone_number);
+		Session::put('city', $req->city);
+		Session::put('address', $req->address);
+		//echo 'Set Done';
+		// echo '<pre>';
+		// var_dump($req->full_name);
+		// echo '</pre>';
+		return 1;
+
+	}
+
+	public function getUnsetInfo()
+	{
+		if(session('full_name')){
+			Session::forget('full_name');
+		}
+		if(session('phone_number')){
+			Session::forget('phone_number');
+		}
+		if(session('city')){
+			Session::forget('city');
+		}
+		if(session('address')){
+			Session::forget('address');
+		}
+		return 1;
+	}
+
+	public function getThongBao()
+	{
+		return view('pages.thongbao');
+	}
+
+	public function getComingSoon()
+	{
+		
+		return view('pages.admin.coming_soon');
+	}
+
+	public function getStatisticalTotalCustomerBuy()
+	{
+		$list=DB::select('SELECT customer.user_id,customer.user_name,COUNT(order_details.user_id) as orderquantity,SUM(giang.quantity) as bookquantity
+			FROM customer,order_details
+			LEFT JOIN
+			(
+			SELECT ordered_book.order_id,SUM(ordered_book.quantity) as quantity
+			FROM ordered_book
+			GROUP BY ordered_book.order_id
+			) as giang
+			ON order_details.order_id=giang.order_id
+			WHERE customer.user_id=order_details.user_id
+
+			GROUP BY customer.user_id,customer.user_name');
+		return view('pages.admin.statistical.total_customer_buy',['list'=>$list]);
+	}
+
+	public function getStatisticalDoanhThu()
+	{
+		return view('pages.admin.statistical.doanhthu');
+	}
+
+	public function getStatisticalDoanhThuThang()
+	{
+		return view('pages.admin.statistical.doanhthuthang');
+	}
+
+	public function postTinhDoanhThuNam(Request $req)
+	{
+		$arr=DB::table('order_details')
+		->whereRaw('DATE_FORMAT(order_details.date_created,"%Y")='.$req->year)
+		->selectRaw('DATE_FORMAT(order_details.date_created,"%Y-%m") as month,SUM(order_details.total_money) AS total_money')
+		->groupBy(DB::raw('DATE_FORMAT(order_details.date_created,"%Y-%m")'))
+		->get();
+		$str='';
+		$total=0;
+		if(count($arr)>0){
+			foreach ($arr as $value) {
+				$str.='<tr>';
+				$str.='<td>';
+				$str.=$value->month;
+				$str.='</td>';
+				$str.='<td>';
+				$str.=$value->total_money.' '.'VND';
+				$str.='</td>';
+				$str.='</tr>';
+				$total+=$value->total_money;
+			}
+		}
+		$kq=array('str'=>$str,'total'=>$total);
+		return $kq;
+	}
+
+	public function getStatisticalCategory()
+	{
+		$list=DB::table('category')->join('book','book.category_id','=','category.category_id')
+		->selectRaw('category.category_id,category.category_name,COUNT(book.book_id) as quantity')
+		->groupBy('category.category_id','category.category_name')
+		->paginate(6);
+		return view('pages.admin.statistical.category',['list'=>$list]);
+	}
+
+	public function getStatisticalSellingBook()
+	{
+		$listBook=Book::join('category','category.category_id','=','book.category_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('ordered_book','ordered_book.book_id','=','book.book_id')
+		->selectRaw('book.book_id,book.book_name,book.picture,book.language,book.publish_year,book.publisher,
+			category.category_name,author.name,SUM(ordered_book.quantity) AS quantitysell')
+		->groupBy('book.book_id','book.book_name','book.picture','book.language','book.publish_year','book.publisher','category.category_name','author.name')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->paginate(6);
+		return view('pages.admin.statistical.selling_book',['listBook'=>$listBook]);
+	}
+
+	public function getStatisticalAuthor()
+	{
+		$list=DB::table('author')->join('book','book.author_id','=','author.author_id')
+		->selectRaw('author.author_id,author.name,COUNT(book.book_id) as quantity')
+		->groupBy('author.author_id','author.name')
+		->orderBy('author.name','ASC')
+		->paginate(6);
+		return view('pages.admin.statistical.author',['list'=>$list]);
+	}
+
+	public function getStatisticalPublisher()
+	{
+		$list=Book::selectRaw('book.publisher,COUNT(book.book_id) as quantity')
+		->groupBy('book.publisher')
+		->orderBy('book.publisher','ASC')->paginate(6);
+		return view('pages.admin.statistical.publisher',['list'=>$list]);
+	}
+
+	public function getStatisticalLanguage()
+	{
+		$list=Book::selectRaw('book.language,COUNT(book.book_id) as quantity')
+		->groupBy('book.language')->orderBy('book.language','ASC')->paginate(12);
+		return view('pages.admin.statistical.language',['list'=>$list]);
+	}
+
+	public function getLookScreen($id)
+	{
+		$admin=Admin::find($id);
+		if(session('adminlogin')){
+			Session::forget('adminlogin');
+		}
+		return view('pages.admin.lock_screen',['admin'=>$admin]);
+	}
+
+	public function postProfileEdit(Request $req)
+	{
+		echo $req->phone;
+		$admin=Admin::find($req->admin_id);
+		$this->validate($req,
+			[
+				'first_name'=>'required',
+				'last_name'=>'required'
+			],
+			[
+				'first_name.required'=>'Bạn chưa nhập tên',
+				'last_name.required'=>'Bạn chưa nhập họ',
+			]);
+		$admin->first_name=$req->first_name;
+		session('adminlogin')->first_name=$req->first_name;
+		$admin->last_name=$req->last_name;
+		session('adminlogin')->last_name=$req->last_name;
+		$admin->address=$req->address;
+		session('adminlogin')->address=$req->address;
+		$admin->city=$req->city;
+		session('adminlogin')->city=$req->city;
+		$admin->email=$req->email;
+		session('adminlogin')->email=$req->email;
+		$admin->phone=$req->phone;
+		session('adminlogin')->phone=$req->phone;
+		$admin->permission=$req->permission;
+		session('adminlogin')->permission=$req->permission;
+		$admin->save();
+		return redirect('profile-edit/'.$req->admin_id)->with('thongbao','Sửa thông tin thành công');
+
+	}
+
+	public function postPasswordEdit(Request $req)
+	{
+		$admin=Admin::find($req->admin_id);
+		if($admin->password==$req->pass_old){
+			$admin->password=$req->pass_new;
+			$admin->save();
+			return redirect('profile-edit/'.$req->admin_id)->with('thongbaothaydoithanhcong','Thay đổi mật khẩu thành công');
+		}
+		else{
+			return redirect('profile-edit/'.$req->admin_id)->with('thongbaothaydoiloi','Sai mật khẩu');
+		}
+	}
+
+	public function getContentProEdit($id)
+	{
+		$admin=Admin::find($id);
+		return view('pages.admin.profile-edit',['admin'=>$admin]);
+	}
+
+
+	public function getProfile($id)
+	{
+		$admin=Admin::find($id);
+		return view('pages.admin.profile',['admin'=>$admin]);
+	}
+
+	public function get404()
+	{
+		return view('pages.admin.404');
+	}
+
+	public function getEditOrderDetail($id)
+	{
+		$item=DB::table('order_details')->where('order_id',$id)->get();
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('category','category.category_id','=','book.category_id')
+		->where('order_id',$id)
+		->selectRaw('ordered_book.*,author.name,category.category_name,book.book_name,book.language,book.publish_year,book.picture,book.publisher')
+		->paginate(12);
+		return view('pages.admin.edit-order-detail',['item'=>$item,'listBook'=>$listBook]);
+	}
+
+	public function postEditOrderDetail(Request $req)
+	{
+		$order_detail=DB::table('order_details')->where('order_id',$req->order_id)->update(['status'=>$req->status,'date_received'=>date('Y-m-d H:m:s',strtotime($req->date_received))]);
+		return redirect('edit-order-detail/'.$req->order_id)->with('thongbao','Cập nhật thành công');
+	}
+
+	public function getDeleteOrder($id)
+	{
+		DB::table('ordered_book')->where('order_id',$id)->delete();
+		DB::table('order_details')->where('order_id',$id)->delete();
+		return redirect('list-order-detail')->with('thongbao','Xóa thành công');
+	}
+
+
+	public function getListOrderDetail()
+	{
+		$list=DB::table('order_details')->join('customer','customer.user_id','=','order_details.user_id')
+		->selectRaw('order_details.*,customer.user_name,customer.last_name,customer.first_name')
+		->orderBy('order_details.order_id','ASC')
+		->get();
+		return view('pages.admin.list-order-book',['list'=>$list]);
+	}
+
+	public function getAdminLogin()
+	{
+		return view('pages.admin.admin-login');
+	}
+
+	public function postAdminLogin(Request $req)
+	{
+		$user_name=$req->user_name;
+		$password=$req->password;
+		$check=Admin::where('user_name',$user_name)->where('password',$password)->get();
+		if(count($check)>0){
+			Session::put('adminlogin',$check[0]);
+			return redirect('admin');
+		}
+		else{
+			return redirect('admin-login')->with('thongbao','Sai user_name hoặc password');
+		}
+	}
+
+	public function postAdminLoginFromLockScreen(Request $req)
+	{
+		$user_name=$req->user_name;
+		$password=$req->password;
+		$check=Admin::where('user_name',$user_name)->where('password',$password)->get();
+		if(count($check)>0){
+			Session::put('adminlogin',$check[0]);
+			return redirect('admin');
+		}
+		else{
+			Session::forget('adminlogin');
+			return redirect('look-screen/'.$req->admin_id)->with('thongbao','Sai mật khẩu');
+		}
+	}
 
 	public function getCheckUserName($id)
 	{
@@ -63,8 +346,7 @@ class WebManager extends Controller
       // edit
 
 			$review_info1=DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$req->book_id)->get();
-			$temp=DB::table('book_review')->where('book_id',$req->book_id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review) AS 
-				percent')->groupby('book_review.rating')->get();
+			$temp=DB::table('book_review')->where('book_id',$req->book_id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review WHERE book_review.book_id='.$req->book_id.') AS percent')->groupby('book_review.rating')->get();
 			$review_info2=array();
 
 			foreach ($temp as $value) {
@@ -140,8 +422,7 @@ class WebManager extends Controller
 		->select('customer.first_name','customer.last_name','book_review.*')
 		->get()->toArray();
 		$review_info1=DB::table('book_review')->selectRaw('COUNT(book_review.user_id) AS quantity,AVG(book_review.rating) As medium')->where('book_id',$id)->get();
-		$temp=DB::table('book_review')->where('book_id',$id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review) AS 
-			percent')->groupby('book_review.rating')->get();
+		$temp=DB::table('book_review')->where('book_id',$id)->selectRaw('book_review.rating,COUNT(book_review.user_id)*100/(SELECT COUNT(*) FROM book_review WHERE book_review.book_id='.$id.') AS percent')->groupby('book_review.rating')->get();
 		$review_info2=array();
 
 		foreach ($temp as $value) {
@@ -177,6 +458,12 @@ class WebManager extends Controller
 	{
 		Session::forget('UserLogin');
 		return redirect('/home');
+	}
+
+	public function getAdminLogout()
+	{
+		Session::forget('adminlogin');
+		return redirect('admin-login');
 	}
 
 	public function getBookByAuthor($id)
@@ -322,24 +609,91 @@ class WebManager extends Controller
 
 	public function getAdmin()
 	{
-		return view('pages.admin.frame');
+		$w=DB::select('SELECT WEEKOFYEAR(NOW()) as week');
+		$numberw=$w[0]->week;
+		$countOrder=DB::table('order_details')->selectRaw('COUNT(*) as count')->get();
+		$countBook=Book::all()->count();
+		$countCustomer=Customer::all()->count();
+		$countCategory=category::all()->count();
+		$t=DB::select(DB::raw('SELECT WEEKDAY(DATE(order_details.date_created)) AS day_of_week,DAYNAME(order_details.date_created) As Name,
+			(SUM(order_details.total_money)*100/
+			(
+			SELECT SUM(order_details.total_money) FROM order_details
+			WHERE DATE(order_details.date_created)
+			IN (
+			SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) AS day
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 1 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 2 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 3 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 4 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 5 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 6 DAY
+			)
+			AND order_details.status=1
+			)
+			) as percent FROM order_details 
+			WHERE DATE(order_details.date_created)
+			IN (
+			SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) AS day
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 1 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 2 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 3 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 4 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 5 DAY
+			UNION SELECT DATE_ADD(CURDATE(), INTERVAL - WEEKDAY(CURDATE()) DAY) + INTERVAL 6 DAY
+			)
+			AND order_details.status=1
+			GROUP BY WEEKDAY(DATE(order_details.date_created))'));
+		//var_dump($t);
+		$arr=array('Monday'=>0,'Tuesday'=>0,'Wednesday'=>0,'Thursday'=>0,'Friday'=>0,'Saturday'=>0,'Sunday'=>0);
+		foreach ($t as $value) {
+			if (array_key_exists($value->Name,$arr)) {
+				$arr[$value->Name]=$value->percent;
+			}
+		}
+		//var_dump($arr);
+
+		$dayTotal=DB::table('order_details')->selectRaw('DAYNAME(CURRENT_DATE) as Name,SUM(order_details.total_money) as total_money')
+		->whereRaw('DATE(order_details.date_created)=CURRENT_DATE and status=1')->get();
+		// $monthTotal=DB::table('order_details')->selectRaw('MONTHNAME(CURRENT_DATE) as Name,DAYOFMONTH(CURRENT_DATE) as dayofmonth,SUM(order_details.total_money) as total_money')
+		// ->whereRaw('MONTH(order_details.date_received)=MONTH(CURRENT_DATE) AND order_details.status=1')
+		// ->get();
+
+		$monthTotal=DB::select('SELECT 
+			MONTHNAME(CURRENT_DATE) as Name,
+			DAYOFMONTH(CURRENT_DATE) as dayofmonth,
+			SUM(order_details.total_money) as total_money,
+			SUM(order_details.total_money)*100/
+			(
+			SELECT SUM(order_details.total_money) FROM order_details WHERE YEAR(order_details.date_created)=YEAR(CURRENT_DATE) AND order_details.status=1
+			) as percent
+			FROM order_details WHERE MONTH(order_details.date_created)=MONTH(CURRENT_DATE) AND order_details.status=1');
+		$_10order=DB::table('order_details')->join('customer','customer.user_id','=','order_details.user_id')
+		->selectRaw('order_details.*,customer.first_name,customer.last_name')
+		->orderBy('order_details.date_created', 'desc')
+		->take(10)->get();
+		// echo '<pre>';
+		// var_dump($_10order);
+		// echo '</pre>';
+		// echo count($_10order);
+		return view('pages.admin.homeadmin',['countBook'=>$countBook,'countCategory'=>$countCategory,'countCustomer'=>$countCustomer,'t'=>$arr,'numberw'=>$numberw,'countOrder'=>$countOrder,'dayTotal'=>$dayTotal,'monthTotal'=>$monthTotal,'_10order'=>$_10order]);
 	}
 
 	public function getListCategory()
 	{
-		$list = category::all();
+		$list = category::paginate(12);
 		return view('pages.admin.listCategory',['list'=>$list]);
 	}
 
 	public function getListCustomer()
 	{
-		$list = Customer::all();
+		$list = Customer::paginate(12);
 		return view('pages.admin.listCustomer',['list'=>$list]);
 	}
 
 	public function getListAdmin()
 	{
-		$list = Admin::all();
+		$list = Admin::paginate(12);
 		return view('pages.admin.listAdmin',['list'=>$list]);
 	}
 
@@ -365,7 +719,7 @@ class WebManager extends Controller
 				'txtCateName' => 'required|unique:category,category_name'
 			], 
 			[
-				'txtCateName.requried'=>'Bạn chưa nhập thể loại',
+				'txtCateName.required'=>'Bạn chưa nhập thể loại',
 				'txtCateName.unique'=>'Thể loại đã tồn tại'
 			]);
 		$cate = new category;
@@ -405,7 +759,7 @@ class WebManager extends Controller
 
 	public function getListAuthor()
 	{
-		$list = Author::all();
+		$list = Author::paginate(12);
 		return view('pages.admin.listAuthor',['listAuthor'=>$list]);
 	}
 
@@ -443,7 +797,6 @@ class WebManager extends Controller
 		$customer->email=$req->email;
 		$customer->phone=$req->phone;
 		$customer->save();
-		
 		return redirect('/admin/add-customer')->with('thongbao','Thêm khách hàng thành công');
 
 	}
@@ -485,6 +838,13 @@ class WebManager extends Controller
 	public function postAddAuthor(Request $req)
 	{
 		$author=new Author;
+		$this->validate($req,
+			[
+				'author_name'=>'required'
+			],
+			[
+				'author_name.required'=>'Bạn chưa nhập tên tác giả'
+			]);
 		$author->name=$req->author_name;
 		if($req->author_describe==null){
 			$author->author_describe="";
@@ -679,7 +1039,7 @@ class WebManager extends Controller
 
 	public function getListBook()
 	{
-		$listBook=Book::all();
+		$listBook=Book::paginate(12);
 		return view('pages.admin.listBook',['listBook'=>$listBook]);
 	}
 
@@ -774,8 +1134,16 @@ class WebManager extends Controller
 			$book->picture="";
 		}
 		$book->save();
-
 		return redirect('/admin/add-book')->with('thongbao','Thêm sách thành công');
+	}
+
+	public function getDeleteReview($book_id,$user_id,$review_date)
+	{
+		DB::table('book_review')->where('book_id',$book_id)
+		->where('user_id',$user_id)
+		->where('review_date',$review_date)
+		->delete();
+		return redirect('/admin/edit-book/'.$book_id)->with('thongbaoxoa','Xóa bình luận thành công');
 	}
 
 	public function getEditBook($id)
@@ -783,7 +1151,13 @@ class WebManager extends Controller
 		$book=Book::find($id);
 		$listAuthor=Author::all();
 		$listCategory=category::all();
-		return view('pages.admin.editBook',['book'=>$book,'listAuthor'=>$listAuthor,'listCategory'=>$listCategory]);
+		$listReview=DB::table('book_review')
+		->join('customer','customer.user_id','=','book_review.user_id')
+		->where('book_id','=',$id)
+		->orderBy('review_date','DESC')
+		->get();
+
+		return view('pages.admin.editBook',['book'=>$book,'listAuthor'=>$listAuthor,'listCategory'=>$listCategory,'listReview'=>$listReview]);
 	}
 
 	public function postEditBook(Request $req)
@@ -866,7 +1240,6 @@ class WebManager extends Controller
 			$book->picture='images/'.$filename; 
 		}
 		$book->save();
-
 		return redirect('/admin/edit-book/'.$book->book_id)->with('thongbao','Sửa sách thành công');
 	}
 
@@ -878,28 +1251,218 @@ class WebManager extends Controller
 	}
 	public function getNext3Book($book_id)
 	{
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
-		return $listBook;
+		// $listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+		->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->skip(($book_id +1)*3 )
+		->take(3)
+		->get();
+		$arr=array('listBook'=>$listBook,'trangSachBanChay'=>$book_id+1);
+		return $arr;
 	}
 
 	public function getNextTabVanHoc($book_id)
 	{
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(4)->get();
-		return $listBook;
+		$listBook=Book::where('category_id','1')->skip(($book_id+1)*4)->take(4)->get();
+		$arr=array('listBook'=>$listBook,'trangSachVanHoc'=>$book_id+1);
+		return $arr;
 	}
 
 	public function getPrevTabVanHoc($book_id)
 	{
-		$book_id=$book_id-4;
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(4)->get();
-		return $listBook;
+		$listBook=Book::where('category_id','1')->skip(($book_id-1)*4)->take(4)->get();
+		$arr=array('listBook'=>$listBook,'trangSachVanHoc'=>$book_id-1);
+		return $arr;
 	}
 
 	public function getPrev3Book($book_id)
 	{
-		$book_id=$book_id-4;
-		$listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
-		return $listBook;
+		// $listBook=Book::where('category_id','1')->skip($book_id)->take(3)->get();
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+		->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->skip(($book_id-1)*3)
+		->take(3)
+		->get();
+		$arr=array('listBook'=>$listBook,'trangSachBanChay'=>$book_id-1);
+		return $arr;
 
+	}
+
+	public function getSachBanChay()
+	{
+		$listBook=DB::table('ordered_book')
+		->join('book','book.book_id','=','ordered_book.book_id')
+		->selectRaw('ordered_book.book_id,book.*, SUM(ordered_book.quantity) as total')
+		->groupBy('ordered_book.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(ordered_book.quantity) DESC')
+		->paginate(12);
+		return view('pages.result_search',['title'=>'SÁCH BÁN CHẠY','listBook'=>$listBook]);
+	}
+
+	public function getSachDanhGiaCao()
+	{
+		$listBook=DB::table('book_review')
+		->join('book','book.book_id','=','book_review.book_id')
+		->selectRaw('book_review.book_id,book.*,SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) as 
+			percent')
+		->groupBy('book_review.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) DESC')
+		->paginate(12);
+		return view('pages.result_search',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
+	}
+
+	public function getBXHSachRatingCao()
+	{
+		$listBook=DB::table('book_review')
+		->join('book','book.book_id','=','book_review.book_id')
+		->join('author','author.author_id','=','book.author_id')
+		->join('category','category.category_id','=','book.category_id')
+		->selectRaw('book_review.book_id,book.*,author.name,category.category_name,SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) as 
+			percent')
+		->groupBy('book_review.book_id','book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity','author.name','category.category_name')
+		->orderByRaw('SUM(book_review.rating)*5/(COUNT(book_review.rating)*5) DESC')
+		->paginate(12);
+		return view('pages.admin.statistical.bxh_sach_rating_cao',['title'=>'SÁCH ĐƯỢC YÊU THÍCH','listBook'=>$listBook]);
+	}
+
+	public function getSachBinhLuanNhieu()
+	{
+		$listBook=DB::table('book_review')->join('book','book.book_id','=','book_review.book_id')
+		->selectRaw('book.*,COUNT(book_review.reviews) as quantity')
+		->groupBy('book.book_id','book.category_id','book.author_id','book.book_name','book.ISBN','book.language','book.publish_year','book.publisher','book.abstract','book.price','book.picture','book.rating','book.quantity')
+		->orderByRaw('COUNT(book_review.reviews) DESC')
+		->paginate(12);
+		return view('pages.result_search',['title'=>'SÁCH XEM NHIỀU','listBook'=>$listBook]);
+	}
+
+	public function tinhDoanhThuTrongKhoangThoiGian(Request $req)
+	{
+		// echo $req->time1;
+		// echo $req->time2;
+		$result=DB::table('order_details')->selectRaw('DATE(order_details.date_created) as date_created ,SUM(order_details.total_money) as total_money')
+		->where('order_details.status','=','1')
+		->whereRaw('DATE(order_details.date_created) BETWEEN "'.$req->time1.'" AND "'.$req->time2.'"')
+		->groupBy(DB::raw('DATE(order_details.date_created)'))->get();
+		$str='';
+		$total=0;
+		if(count($result)>0){
+			foreach ($result as $value) {
+				$str.='<tr>';
+				$str.='<td>';
+				$str.=$value->date_created;
+				$str.='</td>';
+				$str.='<td>';
+				$str.=$value->total_money.' '.'VND';
+				$str.='</td>';
+				$str.='</tr>';
+				$total+=$value->total_money;
+			}
+		}
+		$kq=array('str'=>$str,'total'=>$total);
+		return $kq;
+	}
+
+	public function postDatHang(Request $req)
+	{
+		
+		$customer=Session::get('UserLogin');
+		$full_name=$customer->first_name.' '.$customer->last_name;
+		if(session('full_name')){
+			$full_name=Session::get('full_name');
+		}
+		$phone_number=$customer->phone_number;
+		if(session('phone_number')){
+			$phone_number=Session::get('phone_number');
+		}
+		$city=$customer->city;
+		if(session('city')){
+			$city=Session::get('city');
+		}
+		$address=$customer->address;
+		if(session('address')){
+			$address=Session::get('address');
+		}
+
+		$cart=Session::get('cart');
+
+		if ($req->is_pay_by_money=='false') {
+
+			DB::table('credit_card')->insert(
+				[
+					'credit_card_number'=>$req->card_number,
+					'credit_cart_name'=>$req->bill_to_name,
+					'expire_date'=>$req->card_expiry_date,
+					'card_type'=>$req->card_type,
+					'user_id'=>(Session::get('UserLogin'))->user_id,
+				]
+			);
+
+			DB::table('order_details')->insert(
+				[
+					'user_id'=>(Session::get('UserLogin'))->user_id,
+					'receiver_name'=>$full_name,
+					'address'=>$address,
+					'city'=>$city,
+					'date_created'=>date(NOW()),
+					'method_payment'=>1,
+					'status'=>0,
+					'total_money'=>$cart->totalPrice
+				]
+			);
+		} else {
+			DB::table('order_details')->insert(
+				[
+					'user_id'=>(Session::get('UserLogin'))->user_id,
+					'receiver_name'=>$full_name,
+					'address'=>$address,
+					'city'=>$city,
+					'date_created'=>date(NOW()),
+					'method_payment'=>0,
+					'status'=>0,
+					'total_money'=>$cart->totalPrice
+				]
+			);
+
+		}
+
+		$listBook=$cart->items;
+
+		$last_order_details=DB::table('order_details')->select('order_id')->orderBy('order_id','DESC')
+		->first();
+
+		foreach ($listBook as $book) {
+			DB::table('ordered_book')->insert(
+				[
+					'order_id'=>$last_order_details->order_id,
+					'book_id'=>$book['item']->book_id,
+					'quantity'=>$book['qty'],
+					'price'=>$book['price'],
+				]
+			);
+		}
+
+		$this->getUnsetInfo();
+		Session::put('cart', null);
+
+		Session::flash('dat_hang_thanh_cong','Bạn đã yêu cầu đặt hàng. Đơn hàng của bạn đang được duyệt.Xem chi tiết trong thông tin tài khoản.Cám ơn bạn đã đặt hàng.');
+		return 'Done';
+		
+	}
+
+	public function get_check_exist_credit_card($credit_card_number)
+	{
+		$credit_card=DB::table('credit_card')->where('credit_card_number',$credit_card_number)->get();
+		if(count($credit_card)>0){
+			return 1;
+		}
+		else{
+			return 0;
+		}
 	}
 }

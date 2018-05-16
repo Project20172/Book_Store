@@ -5,10 +5,11 @@
 <br>
 <br>
 <div class="recommended_items bk">
-	<h2 class="title text-center">Sách Văn Học</h2>
+	<h2 class="title text-center">Sách Bán Chạy</h2>
 	<div class="row" id="vanhoc">
 		<div id="hoanggiang">
-			<div id="nhieusach" hoanggiangnext="{{ $listBook[2]->book_id }}" hoanggiangprev="{{ $listBook[0]->book_id }}">
+			<div id="nhieusach" hoanggiangnext="0" hoanggiangprev="0">
+				@if (count($listBook)>0)
 				@foreach ($listBook as $book)
 				<div class="col-sm-4">
 					<div class="product-image-wrapper">
@@ -16,7 +17,7 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" class="img-fluid" alt="" width="120" height="150">
-									<h2>${{ $book->price }}</h2>
+									<h2>{{ $book->price }}VND</h2>
 									<p>{{ $book->book_name }}</p>
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 								</div>
@@ -25,14 +26,15 @@
 					</div>
 				</div>
 				@endforeach
+				@endif
 			</div>
 		</div>
 	</div>
 	<div>
-		<button class="left recommended-item-control" id="left" value="{{ $listBook[0]->book_id }}">
+		<button class="left recommended-item-control" id="left" value="">
 			<i class="fa fa-angle-left"></i>
 		</button>
-		<button class="right recommended-item-control" id="right" value="{{ $listBook[2]->book_id }}">
+		<button class="right recommended-item-control" id="right" value="">
 			<i class="fa fa-angle-right"></i>
 		</button>
 	</div>
@@ -255,7 +257,8 @@
 	</div>
 	<div class="tab-content">
 		<div class="tab-pane fade active in" id="tshirt">
-			<div class="row" id="tabVanHoc" vanhocdau="{{ $listVanHoc[0]->book_id }}" vanhoccuoi="{{ $listVanHoc[3]->book_id }}">
+			@if (count($listVanHoc)>0)
+			<div class="row" id="tabVanHoc" vanhocdau="0" vanhoccuoi="0">
 				@foreach ($listVanHoc as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper">
@@ -263,7 +266,7 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>${{ $book->price }}</h2>
+									<h2>{{ $book->price }}VND</h2>
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -274,7 +277,7 @@
 										}
 										@endphp
 									</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 								</div>
 							</a>
 						</div>
@@ -282,6 +285,7 @@
 				</div>
 				@endforeach
 			</div>
+			@endif
 			<div >
 				
 				<button id="vanhocright" class="btn btn-primary pull-right"><i class="fa fa-angle-right"></i></button>
@@ -295,7 +299,7 @@
 
 		<div class="tab-pane fade" id="blazers">
 			@if (count($listGiaoDuc)>0)
-			<div class="row" id="tabGiaoDuc" giaoducdau="{{ $listGiaoDuc[0]->book_id }}" giaoduccuoi="{{ $listGiaoDuc[3]->book_id }}">
+			<div class="row" id="tabGiaoDuc" giaoducdau="0" giaoduccuoi="0">
 				@foreach ($listGiaoDuc as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper">
@@ -303,8 +307,8 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>${{ $book->price }}</h2>
-<<<<<<< HEAD
+									<h2>{{ $book->price }}VND</h2>
+
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -315,11 +319,10 @@
 										}
 										@endphp
 									</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-=======
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
 									<p>{{ $book->book_name }}</p>
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
->>>>>>> d600b6c87e93691cb725d10901f8b2c69cc109fe
 								</div>
 							</a>
 						</div>
@@ -338,7 +341,7 @@
 		</div>
 		<div class="tab-pane fade" id="sunglass">
 			@if (count($listThieuNhi)>0)
-			<div class="row" id="tabThieuNhi" thieunhidau="{{ $listGiaoDuc[0]->book_id }}" thieunhicuoi="{{ $listThieuNhi[3]->book_id }}">
+			<div class="row" id="tabThieuNhi" thieunhidau="0" thieunhicuoi="0">
 				@foreach ($listThieuNhi as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper ">
@@ -346,8 +349,8 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>${{ $book->price }}</h2>
-<<<<<<< HEAD
+									<h2>{{ $book->price }}VND</h2>
+
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -358,11 +361,11 @@
 										}
 										@endphp
 									</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-=======
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+
 									<p>{{ $book->book_name }}</p>
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
->>>>>>> d600b6c87e93691cb725d10901f8b2c69cc109fe
+
 								</div>
 							</a>
 						</div>
@@ -381,7 +384,7 @@
 
 		<div class="tab-pane fade" id="kids">
 			@if (count($listTeen)>0)
-			<div class="row" id="tabTeen" teendau="{{ $listTeen[0]->book_id }}" teencuoi="{{ $listTeen[3]->book_id }}">
+			<div class="row" id="tabTeen" teendau="0" teencuoi="0">
 				@foreach ($listTeen as $book)
 				<div class="col-sm-3">
 					<div class="product-image-wrapper">
@@ -389,8 +392,8 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>${{ $book->price }}</h2>
-<<<<<<< HEAD
+									<h2>{{ $book->price }}VND</h2>
+
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -401,11 +404,8 @@
 										}
 										@endphp
 									</p>
-									<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-=======
-									<p>{{ $book->book_name }}</p>
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
->>>>>>> d600b6c87e93691cb725d10901f8b2c69cc109fe
+
 								</div>
 							</a>
 						</div>
@@ -437,33 +437,34 @@
 				},
 				success: function(result){
 					var str="";
-					for(var i=0;i<result.length;i++)
+					for(var i=0;i<result['listBook'].length;i++)
 					{
 						str+='<div class="col-sm-4">';
 						str+='<div class="product-image-wrapper">';
 						str+='<div class="single-products book_choose">';
-						str+='<a href="book_detail/'+result[i]["book_id"]+'">';
+						str+='<a href="book_detail/'+result['listBook'][i]["book_id"]+'">';
 						str+='<div class="productinfo text-center">';
-						str+='<img src="{{ url('') }}'+'/'+result[i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
-						str+='<h2>$'+result[i]['price']+'</h2>'	;			
-						if(result[i]["book_name"].length>27){
-							var t=result[i]["book_name"];
+						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
+						str+='<h2>'+result['listBook'][i]['price']+'VND</h2>'	;			
+						if(result['listBook'][i]["book_name"].length>27){
+							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,24);
 							t+="...";
 							str+='<p>'+t+'</p>';
 						}else{
-							str+='<p>'+result[i]["book_name"]+'</p>';
+							str+='<p>'+result['listBook'][i]["book_name"]+'</p>';
 						}				
-						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
 						str+="</div>"	;
 						str+="</div>";
 					}
-					document.getElementById("nhieusach").setAttribute("hoanggiangnext",result[2]["book_id"]);
-					document.getElementById("nhieusach").setAttribute("hoanggiangprev",result[0]["book_id"]);
+					document.getElementById("nhieusach").setAttribute("hoanggiangnext",result['trangSachBanChay']);
+					document.getElementById("nhieusach").setAttribute("hoanggiangprev",result['trangSachBanChay']);
 					document.getElementById("nhieusach").innerHTML=str;
+					console.log(result);
 				}});
 		});
 
@@ -476,36 +477,33 @@
 					book_id: $('#nhieusach').attr('hoanggiangprev')
 				},
 				success: function(result){
-					console.log(result[0]["book_id"]);
 					var str="";
-					for(var i=0;i<result.length;i++)
+					for(var i=0;i<result['listBook'].length;i++)
 					{
-						console.log(result[i]['book_name']);
 						str+='<div class="col-sm-4">';
 						str+='<div class="product-image-wrapper">';
 						str+='<div class="single-products book_choose">';
-						str+='<a href="book_detail/'+result[i]["book_id"]+'">';
+						str+='<a href="book_detail/'+result['listBook'][i]["book_id"]+'">';
 						str+='<div class="productinfo text-center">';
-						str+='<img src="{{ url('') }}'+'/'+result[i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
-						str+='<h2>$'+result[i]['price']+'</h2>'	;			
-						if(result[i]["book_name"].length>27){
-							var t=result[i]["book_name"];
+						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
+						str+='<h2>'+result['listBook'][i]['price']+'VND</h2>'	;			
+						if(result['listBook'][i]["book_name"].length>27){
+							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,24);
 							t+="...";
 							str+='<p>'+t+'</p>';
 						}else{
-							str+='<p>'+result[i]["book_name"]+'</p>';
+							str+='<p>'+result['listBook'][i]["book_name"]+'</p>';
 						}					
-						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
 						str+="</div>"	;
 						str+="</div>";
 					}
-					console.log(str);
-					document.getElementById("nhieusach").setAttribute("hoanggiangprev",result[0]["book_id"]);
-					document.getElementById("nhieusach").setAttribute("hoanggiangprev",result[0]["book_id"]);
+					document.getElementById("nhieusach").setAttribute("hoanggiangnext",result['trangSachBanChay']);
+					document.getElementById("nhieusach").setAttribute("hoanggiangprev",result['trangSachBanChay']);
 					document.getElementById("nhieusach").innerHTML=str;
 					console.log(result);
 				}});
@@ -521,32 +519,33 @@
 				},
 				success: function(result){
 					var str="";
-					for(var i=0;i<result.length;i++)
+					for(var i=0;i<result['listBook'].length;i++)
 					{
 						str+='<div class="col-sm-3">';
 						str+='<div class="product-image-wrapper">';
 						str+='<div class="single-products book_choose">';
 						str+='<div class="productinfo text-center">';
-						str+='<img src="{{ url('') }}'+'/'+result[i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
-						str+='<h2>$'+result[i]["price"]+'</h2>';
-						if(result[i]["book_name"].length>27){
-							var t=result[i]["book_name"];
+						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
+						str+='<h2>'+result['listBook'][i]["price"]+'VND</h2>';
+						if(result['listBook'][i]["book_name"].length>27){
+							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,23);
 							t+="...";
 							str+='<p>'+t+'</p>';
 						}else{
-							str+='<p>'+result[i]["book_name"]+'</p>';
+							str+='<p>'+result['listBook'][i]["book_name"]+'</p>';
 						}
 						
-						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
 						str+='</div>';
 						str+='</div>';
 					}
-					document.getElementById("tabVanHoc").setAttribute("vanhoccuoi",result[3]["book_id"]);
-					document.getElementById("tabVanHoc").setAttribute("vanhocdau",result[0]["book_id"]);
+					document.getElementById("tabVanHoc").setAttribute("vanhoccuoi",result['trangSachVanHoc']);
+					document.getElementById("tabVanHoc").setAttribute("vanhocdau",result['trangSachVanHoc']);
 					document.getElementById("tabVanHoc").innerHTML=str;
+					console.log(result);
 				}});
 		});
 
@@ -561,31 +560,32 @@
 				},
 				success: function(result){
 					var str="";
-					for(var i=0;i<result.length;i++)
+					for(var i=0;i<result['listBook'].length;i++)
 					{
 						str+='<div class="col-sm-3">';
 						str+='<div class="product-image-wrapper">';
 						str+='<div class="single-products book_choose">';
 						str+='<div class="productinfo text-center">';
-						str+='<img src="{{ url('') }}'+'/'+result[i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
-						str+='<h2>$'+result[i]["price"]+'</h2>';
-						if(result[i]["book_name"].length>27){
-							var t=result[i]["book_name"];
+						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
+						str+='<h2>'+result['listBook'][i]["price"]+'VND</h2>';
+						if(result['listBook'][i]["book_name"].length>27){
+							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,23);
 							t+="...";
 							str+='<p>'+t+'</p>';
 						}else{
-							str+='<p>'+result[i]["book_name"]+'</p>';
+							str+='<p>'+result['listBook'][i]["book_name"]+'</p>';
 						}
-						str+='<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
+						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';
 						str+='</div>'
 						str+='</div>';
 						str+='</div>';
 						str+='</div>';
 					}
-					document.getElementById("tabVanHoc").setAttribute("vanhoccuoi",result[3]["book_id"]);
-					document.getElementById("tabVanHoc").setAttribute("vanhocdau",result[0]["book_id"]);
+					document.getElementById("tabVanHoc").setAttribute("vanhoccuoi",result['trangSachVanHoc']);
+					document.getElementById("tabVanHoc").setAttribute("vanhocdau",result['trangSachVanHoc']);
 					document.getElementById("tabVanHoc").innerHTML=str;
+					console.log(result);
 				}});
 		});
 

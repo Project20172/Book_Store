@@ -55,6 +55,8 @@
 								$('.close{{$loop->index + 1}}').on('click', function(c){
 									$('.rem{{$loop->index + 1}}').fadeOut('slow', function(c){
 										var id = document.getElementById('book_id').innerHTML;
+										var id = $(this).parent().parent().parent().find("#book_id").text();
+										console.log("id book remove : " + id);
 										removeBook(id);
 										$('.rem{{$loop->index + 1}}').remove();
 									});
@@ -75,7 +77,9 @@
 						$('.value-plus').on('click', function(){
 							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)+1;
 							divUpd.text(newVal);
-							var id = document.getElementById('book_id').innerHTML;
+							// var id = document.getElementById('book_id').innerHTML;
+							var id = $(this).parent().parent().parent().parent().find('#book_id').text();
+							console.log('id book: ' + id);
 							increaseQty(id);
 						});
 
@@ -83,7 +87,9 @@
 							var divUpd = $(this).parent().find('.value'), newVal = parseInt(divUpd.text(), 10)-1;
 							if(newVal>=1){
 								divUpd.text(newVal);
-								var id = document.getElementById('book_id').innerHTML;
+								// var id = document.getElementById('book_id').innerHTML;
+								var id = $(this).parent().parent().parent().parent().find('#book_id').text();
+								console.log('id book: ' + id);
 								decreaseQty(id);
 							}
 						});
@@ -119,7 +125,7 @@
 					<a href="{{route('home')}}" class="btn btn-primary">Chọn thêm</a>
 					<a href="{{route('removeAllCart')}}" class="btn btn-primary ">Xóa toàn bộ</a>
 					<a href="{{route('cart')}}" class="btn btn-primary">Cập nhật</a>
-					<a href="#" class="btn btn-primary">Thanh toán</a>
+					<a href="{{ route('getBuyBook') }}" class="btn btn-primary">Thanh toán</a>
 				</div>
 				<div class="clearfix"> </div>
 			</div>
