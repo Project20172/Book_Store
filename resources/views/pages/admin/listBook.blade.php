@@ -70,7 +70,7 @@
             <td>{{ $book->language }}</td>
             <td>{{ $book->publish_year }}</td>
             <td>{{ $book->publisher }}</td>
-            <td>{{ $book->price }}</td>
+            <td>{{number_format($book->price, 0, ',', '.')}} đ</td>
             <td>{{ $book->quantity }}</td>
             <td>
              <button class="btn btn-primary btn-xs"><a class="agiang" href="{{ route('getEditBook',$book->book_id) }}"><i class="fa fa-pencil"></i></a></button>

@@ -37,7 +37,7 @@
             <tr class="odd gradeX">
               <td>{{ $subdetail->book_name}}</td>
               <td>{{ $subdetail->quantity}}</td>
-              <td>{{ $subdetail->price}}</td>
+              <td>{{number_format($subdetail->price, 0, ',', '.')}} đ</td>
             </tr>
           @endforeach
           

@@ -19,7 +19,7 @@
 						<div class="productinfo text-center">
 							<br>
 							<img class="img-fluid" src="{{ asset($book->picture) }}" alt="" width="100" height="145">
-							<h2>{{ $book->price }}VND</h2>
+							<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 							<p>
 								@php
 									if (strlen($book->book_name)>27) {
@@ -30,7 +30,7 @@
 									}
 								@endphp
 							</p>
-							<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 						</div>
 					</a>
 				</div>

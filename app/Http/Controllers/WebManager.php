@@ -20,10 +20,6 @@ class WebManager extends Controller
 		Session::put('phone_number', $req->phone_number);
 		Session::put('city', $req->city);
 		Session::put('address', $req->address);
-		//echo 'Set Done';
-		// echo '<pre>';
-		// var_dump($req->full_name);
-		// echo '</pre>';
 		return 1;
 
 	}
@@ -99,7 +95,7 @@ class WebManager extends Controller
 				$str.=$value->month;
 				$str.='</td>';
 				$str.='<td>';
-				$str.=$value->total_money.' '.'VND';
+				$str.=number_format($value->total_money, 0, ',', '.').' đ';
 				$str.='</td>';
 				$str.='</tr>';
 				$total+=$value->total_money;
@@ -358,7 +354,7 @@ class WebManager extends Controller
 					if(array_key_exists($i,$review_info2)){
 						$str1.='<div id="'.$i.'-star">';
 						$str1.='        <div class="col-sm-2">';
-						$str1.='          <span>'.$i.' </span><span class="fa fa-star checked"></span>';
+						$str1.='          <span>'.$i.' </span><span class="fa fa-star checked" style="color: orange;"></span>';
 						$str1.='        </div>';
 						$str1.='        <div class="col-sm-10">';
 						$str1.='          <div class="progress">';
@@ -373,7 +369,7 @@ class WebManager extends Controller
 					}else{
 						$str1.='<div id="'.$i.'-star">';
 						$str1.='        <div class="col-sm-2">';
-						$str1.='          <span>'.$i.' </span><span class="fa fa-star checked"></span>';
+						$str1.='          <span>'.$i.' </span><span class="fa fa-star checked" style="color: orange;"></span>';
 						$str1.='        </div>';
 						$str1.='        <div class="col-sm-10">';
 						$str1.='          <div class="progress">';
@@ -1359,7 +1355,7 @@ class WebManager extends Controller
 				$str.=$value->date_created;
 				$str.='</td>';
 				$str.='<td>';
-				$str.=$value->total_money.' '.'VND';
+				$str.=number_format($value->total_money, 0, ',', '.').' đ';
 				$str.='</td>';
 				$str.='</tr>';
 				$total+=$value->total_money;

@@ -39,7 +39,7 @@
             <tr class="odd gradeX">
               <td><a href="{{ route('getOrderDetail',$order->order_id) }}">{{ $order->order_id}}</a></td>
               <td>{{ $order->date_created}}</td>
-              <td>{{ $order->total_money}}</td>
+              <td>{{number_format($order->total_money, 0, ',', '.')}} đ</td>
 
               @if($order->method_payment==0)
               <td>Tiền mặt</td>

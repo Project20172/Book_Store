@@ -114,7 +114,7 @@
                     <label for="exampleInputEmail1">Mô Tả Sách</label>
                     <textarea class="form-control" rows="3" name="abstract" >{{ $book->abstract }}</textarea>
                   </div>
-                  <button type="submit" class="btn btn-success">Thêm Sách</button>
+                  <button type="submit" class="btn btn-success">Sửa Sách</button>
                   <button type="reset" class="btn btn-danger">Nhập Lại</button>
                 </div>
               </form>

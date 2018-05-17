@@ -18,7 +18,7 @@
 			<div class="span_2_of_a1 simpleCart_shelfItem">
 				<h3 id="book_name" book_id="{{ $book->book_id }}">{{ $book->book_name }}</h3>
 				<div class="price_single">
-					<span class="reducedfrom item_price">${{ $book->price }}</span>
+					<span class="reducedfrom item_price">{{number_format($book->price, 0, ',', '.')}} đ</span>
 					<a href="#">click for offer</a>
 					<div class="clearfix">
 					</div>
@@ -45,7 +45,7 @@
 						});
 					</script>
 					<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}
-						" class="add-to item_add hvr-skew-backward">Add to cart</a>
+						" class="add-to item_add hvr-skew-backward">Thêm vào giỏ</a>
 					<div class="clearfix"></div>
 
 				</div>
@@ -119,7 +119,7 @@
 							<div class="col-sm-6" id="str1">
 								<div id="1-star">
 									<div class="col-sm-2">
-										<span>1 </span><span class="fa fa-star checked"></span>
+										<span>1 </span><span class="fa fa-star checked" style="color: orange;"></span>
 									</div>
 									<div class="col-sm-10">
 										<div class="progress">
@@ -141,7 +141,7 @@
 								</div>
 								<div id="2-star">
 									<div class="col-sm-2">
-										<span>2 </span><span class="fa fa-star" ></span>
+										<span>2 </span><span class="fa fa-star" style="color: orange;"></span>
 									</div>
 									<div class="col-sm-10">
 										<div class="progress">
@@ -163,7 +163,7 @@
 								</div>
 								<div id="3-star">
 									<div class="col-sm-2">
-										<span>3 </span><span class="fa fa-star"></span>
+										<span>3 </span><span class="fa fa-star" style="color: orange;"></span>
 									</div>
 									<div class="col-sm-10">
 										<div class="progress">
@@ -185,7 +185,7 @@
 								</div>
 								<div id="4-star">
 									<div class="col-sm-2">
-										<span>4 </span><span class="fa fa-star"></span>
+										<span>4 </span><span class="fa fa-star" style="color: orange;"></span>
 									</div>
 									<div class="col-sm-10">
 										<div class="progress">
@@ -207,7 +207,7 @@
 								</div>
 								<div id="5-star">
 									<div class="col-sm-2">
-										<span>5 </span><span class="fa fa-star"></span>
+										<span>5 </span><span class="fa fa-star" style="color: orange;"></span>
 									</div>
 									<div class="col-sm-10">
 										<div class="progress">
