@@ -14,7 +14,7 @@
 	<link href="{{ asset('css/main.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/style1.css') }}" rel="stylesheet" type="text/css" media="all" />
 
-	<link href="{{ asset('css/animate.min.css') }}" rel="stylesheet"> 
+	{{-- <link href="{{ asset('css/animate.min.css') }}" rel="stylesheet">  --}}
 	<script src="{{ asset('js/wow.min.js') }}"></script>
 	<script type="text/javascript" src="{{ asset('js/cart.js') }}"></script>
 	<script>

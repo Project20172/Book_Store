@@ -96,24 +96,11 @@
                   <label for="exampleInputEmail1">Đánh Giá</label>
                   <input class="form-control" name="rating" id="exampleInputEmail1" placeholder="Đánh giá sách">
                 </div>
-                {{-- <div class="form-group">
+                <div class="form-group">
                   <label for="exampleInputEmail1">Mô Tả Sách</label>
                   <textarea class="form-control" rows="3" name="abstract" id="exampleInputEmail1" placeholder="Giới thiệu qua về sách"></textarea>
-                </div> --}}
-                
-                <div class="row">
-                  <div class="col-md-12">
-                    <section class="panel">
-                      <header class="panel-heading head-border">
-                        Summernote Editor
-                      </header>
-                      <div class="panel-body">
-                        <div class="summernote">Hello Summernote</div>
-                      </div>
-                    </section>
-                  </div>
                 </div>
-
+                
                 <button type="submit" class="btn btn-success">Thêm Sách</button>
                 <button type="reset" class="btn btn-danger">Nhập Lại</button>
               </div>

@@ -173,7 +173,7 @@
                 <td>{{ $book->language }}</td>
                 <td>{{ $book->publish_year }}</td>
                 <td>{{ $book->publisher }}</td>
-                <td>{{ $book->price }}</td>
+                <td>{{number_format($book->price, 0, ',', '.')}} đ</td>
                 <td>{{ $book->quantity }}</td>
               </tr>
               @endforeach

@@ -117,10 +117,10 @@
 							@foreach ($dayTotal as $element)
 							<span>{{ $arrThu[$element->Name] }}</span>
 							<strong>@if ($element->total_money!='')
-								{{ $element->total_money }}
+								{{number_format($element->total_money, 0, ',', '.')}}
 							@else
 								0
-							@endif VND | {{ $t[$element->Name] }}%</strong>
+							@endif đ | {{ $t[$element->Name] }}%</strong>
 							@endforeach
 						</div>
 						<div class="sparkline" data-type="line" data-resize="true" data-height="75" data-width="90%" data-line-width="1" data-line-color="#fff" data-spot-color="#fff" data-fill-color="" data-highlight-line-color="#fff" data-spot-radius="4" data-data="[200,135,667,333,526,996,564,123,890,564,455]"></div>
@@ -153,7 +153,7 @@
 				<div class="chart-tittle">
 					<span class="title">Tổng Doanh Thu</span>
 					@foreach ($monthTotal as $element)
-					<span class="value">{{ $element->total_money }} VND</span>
+					<span class="value">{{number_format($element->total_money, 0, ',', '.')}} đ</span>
 					@endforeach
 				</div>
 			</div>

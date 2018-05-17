@@ -257,7 +257,7 @@ button#right:hover {
   font-weight: 700;
   margin: 0 auto 30px;
   text-align: center;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   position: relative;
   z-index:3;
 }

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2018 at 04:32 PM
+-- Generation Time: May 17, 2018 at 09:07 AM
 -- Server version: 10.1.30-MariaDB
 -- PHP Version: 7.2.2
 
@@ -46,9 +46,10 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `user_name`, `password`, `first_name`, `last_name`, `address`, `city`, `email`, `phone`, `permission`) VALUES
-(1, 'ruanjiang', 'hot10000%', 'Giang', 'Nguyễn', 'Đông Anh, Hà Nội', 'Hà Nội', 'nh.giang261197@gmail.com', '01658215007', 'Admin'),
+(1, 'ruanjiang', 'hot10000%', 'Hoàng Giang', 'Nguyễn', 'Đông Anh, Hà Nội', 'Hà Nội', 'nh.giang@gmail.com', '01658215007', 'Admin'),
 (2, 'hoanggiang', '123456', 'Giang', 'Nguyễn', '', '', '', '', NULL),
-(3, 'giang97', '123456', 'Giang', 'Nguyễn', 'Hà Nội', '', '', '', NULL);
+(3, 'giang97', '123456', 'Giang', 'Nguyễn', 'Hà Nội', '', '', '', NULL),
+(4, 'thien', '123456', 'Thien', 'Nguyen Tien', 'Ha Noi', 'Ha Noi', 'thienhd@gmail.com', '099999999999', NULL);
 
 -- --------------------------------------------------------
 
@@ -79,7 +80,8 @@ INSERT INTO `author` (`author_id`, `name`, `author_image`, `author_describe`) VA
 (9, 'Windy', '', ''),
 (10, 'Jeffery Deaver', '', ''),
 (11, 'KBS', '', ''),
-(12, 'Võ Anh Thơ', '', '');
+(12, 'Võ Anh Thơ', '', ''),
+(13, 'Hồ Biểu Chánh', '', '');
 
 -- --------------------------------------------------------
 
@@ -96,7 +98,7 @@ CREATE TABLE `book` (
   `language` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `publish_year` int(11) NOT NULL,
   `publisher` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `abstract` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abstract` text COLLATE utf8mb4_unicode_ci,
   `price` int(11) NOT NULL,
   `picture` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `rating` float NOT NULL,
@@ -125,7 +127,8 @@ INSERT INTO `book` (`book_id`, `category_id`, `author_id`, `book_name`, `ISBN`, 
 (16, 6, 11, 'School 2015 - Who Are You (Sách ảnh) (Tặng postcard)', '', 'Tiếng Việt', 2018, 'NXB Thanh Niên, AZ Việt Nam', 'School 2015 - Who Are You (Sách ảnh) (Tặng postcard)\r\n\r\n18 tuổi.\r\n\r\nVẫn còn quá sớm để đạt được ước mơ, nhưng lại là độ tuổi tuyệt nhất để bắt đầu ước mơ ấy.\r\n\r\nCó thể rất đau khi vấp ngã, nhưng lại là thời điểm thích hợp nhất để học cách đứng dậy hàng trăm lần.\r\n\r\nHãy nhớ rằng, khi cuộc đời khiến bạn cảm thấy chán ghét và chẳng có ai kề bên bạn vẫn không hề đơn độc, bởi sẽ có ai đó chìa tay về phía bạn.', 143200, 'images/1525677493-school-2015-who-are-you.450x652.w.b.jpg', 0, 100),
 (17, 6, 12, 'Mang Thai Tuổi 17', '', 'Tiếng Việt', 2014, 'NXB Văn Học, Alphabooks', 'Mang Thai Tuổi 17 như một bản tình ca dài, với đầy đủ các cung bậc, từ vui vẻ ngây thơ đặc trưng của lứa tuổi học trò, tất chua xót mất mát của những vấp ngã đầu đời. Người đọc, qua bản tình ca ấy, cảm nhận trọn vẹn tâm trạng của các nhân vật, trọn vẹn những tình tiết chân thực của cuộc sống hiện đại, một vấn đề nóng của xã hội, không chỉ đang thưởng thức câu chuyện, mà đang sống cùng câu chuyện thú vị này.\r\n\r\n \r\n\r\nĐiều gì bạn muốn trở thành kỉ niệm khi bạn mười bảy tuổi: Những buổi trốn học đi chơi cùng bạn bè, những trò nghịch ngợm miên man, ánh mắt của cậu bạn trong lớp học thêm, một nụ cười bất chợt trong ánh nắng mùa thu dịu nhẹ, hay cái nắm tay đầu tiên, lời hẹn hò đầu tiên?\r\n\r\n \r\n\r\nThế nhưng, với Min Min, và một vài cô bạn xung quanh, kỷ niệm ấy chẳng là gì, vì họ đang mang trong người một đứa trẻ. Đứa trẻ ấy hình thành bởi một chén rượu cay trong tình huống oái oăm không đáng có, hình thành nên bởi một tình yêu vụng dại…\r\n\r\n \r\n\r\nTuổi trẻ như một cơn mưa rào, lạnh, bất ngờ và đẫm ướt, đứa trẻ xuất hiện như một cơn bão lớn, dường như sẽ cuốn phăng tất cả: Bạn bè, thầy cô, gia đình, tình cảm, cả sự bình yên? Những người mẹ trẻ mới mười bảy tuổi sẽ đối mặt với chuyện ấy như thế nào, “tác giả” của những đứa trẻ sẽ đón nhận tin này ra sao, và gia đình – chỗ dựa tinh thần tưởng chừng như vô cùng vững chắc đứng trước nguy cơ đổ sụp bất cứ lúc nào.\r\n\r\n \r\n\r\nAi cũng có thể là người thông minh, nhưng không phải ai cũng có thể xư xử sáng suốt, các cô gái mười bảy không thể một mình mang thai, nhưng nhiều người đã phải một mình chịu đựng tất cả. Min Min rơi vào cảnh làm dâu khi mười bảy với biết bao tình huống oái oăm, thế nhưng cô vẫn còn may mắn vì được bạn bè, gia đình, bạn trai cạnh bên giúp đỡ. Cô bạn cùng trường kém Min Min một tuổi, đã phải hứng chịu biết bao miệt thị, lạnh lùng, vô tâm từ chính người yêu và người thân của mình, dẫn đến hành động vô phương cứu chữa…', 103200, 'images/1525677651-mang_thai_tuoi_17.520x672.w.b.jpg', 0, 100),
 (18, 6, 9, '\"Thả Thính\" Là Phải Dính ! - 54 Cách Giúp Bạn Tán Đổ \"Crush\"', '', 'Tiếng Việt', 2018, 'NXB Thanh Niên, Đinh Tị', '\"Thả Thính\" Là Phải Dính ! - 54 Cách Giúp Bạn Tán Đổ \"Crush\"\r\n\r\n\"Ta nên hết lòng yêu,\r\n\r\nHay giữ lại đúng lúc?\r\n\r\nYêu thì rất đơn giản,\r\n\r\nKhó khăn ở phía sau…\r\n\r\n54 câu hỏi, 54 \"\"tuyệt kế\"\" - Cuốn sách này sẽ giúp bạn trở thành cao thủ thả thính.\"', 92500, 'images/1525677634-tha-thinh-la-phai-dinh.450x652.w.b.jpg', 0, 100),
-(19, 6, 12, 'Người Mẹ Được Gửi Đến Từ Thiên Đường', '', 'Tiếng Việt', 2017, 'NXB Thế Giới, Hương Giang Books', 'Người Mẹ Được Gửi Đến Từ Thiên Đường\r\n\r\nNgười Mẹ Được Gửi Đến Từ Thiên Đường của Võ Anh Thơ là một truyện dài viết dưới dạng nhật ký. Ghi lại tình cảm của hai đứa trẻ: Hào, Miu và Mây, một người phụ nữ trẻ 27 tuổi. Họ gặp và sống nhau ở một thị trấn nhỏ bình yên ở miền Tây. Mây và Phong (người cha của hai đứa trẻ) sẽ nên duyên chồng vợ nhưng Phong đã mất và Mây tự nguyện chăm sóc cho hai đứa trẻ côi cút... Vì với họ \"Chỉ cần yêu thương thôi là đủ\".\r\n\r\n“Ba Phong mất vào một ngày nắng dịu dàng. Và rồi trong mảnh vườn buồn bã đó, con đã thấy cô ấy xuất hiện, mang theo những sắc nắng lung linh, giống hệt lúc ba Phong về trời. Cô không xinh đẹp, vụng về đến nỗi bước đi mà cũng vô ý trượt ngã. Cô đến bên con và bé Miu, mỉm cười hỏi: “Hai con có muốn sống cùng mẹ không? Chúng ta hãy sống cùng nhau, nhé!”. Bỗng dưng trước mắt, thế giới sáng bừng rực rỡ. Để rồi con biết rằng, chính ba Phong ở trên Thiên đường đã gửi đến chúng con một thiên thần mang tên là “Mẹ”\r\n\r\nChúng con muốn sống cùng người phụ nữ mà ba yêu...”.', 68800, 'images/1525678005-nguoi-me-duoc-gui-den-tu-thien-duong.450x652.w.b.jpg', 0, 150);
+(19, 6, 12, 'Người Mẹ Được Gửi Đến Từ Thiên Đường', '', 'Tiếng Việt', 2017, 'NXB Thế Giới, Hương Giang Books', 'Người Mẹ Được Gửi Đến Từ Thiên Đường\r\n\r\nNgười Mẹ Được Gửi Đến Từ Thiên Đường của Võ Anh Thơ là một truyện dài viết dưới dạng nhật ký. Ghi lại tình cảm của hai đứa trẻ: Hào, Miu và Mây, một người phụ nữ trẻ 27 tuổi. Họ gặp và sống nhau ở một thị trấn nhỏ bình yên ở miền Tây. Mây và Phong (người cha của hai đứa trẻ) sẽ nên duyên chồng vợ nhưng Phong đã mất và Mây tự nguyện chăm sóc cho hai đứa trẻ côi cút... Vì với họ \"Chỉ cần yêu thương thôi là đủ\".\r\n\r\n“Ba Phong mất vào một ngày nắng dịu dàng. Và rồi trong mảnh vườn buồn bã đó, con đã thấy cô ấy xuất hiện, mang theo những sắc nắng lung linh, giống hệt lúc ba Phong về trời. Cô không xinh đẹp, vụng về đến nỗi bước đi mà cũng vô ý trượt ngã. Cô đến bên con và bé Miu, mỉm cười hỏi: “Hai con có muốn sống cùng mẹ không? Chúng ta hãy sống cùng nhau, nhé!”. Bỗng dưng trước mắt, thế giới sáng bừng rực rỡ. Để rồi con biết rằng, chính ba Phong ở trên Thiên đường đã gửi đến chúng con một thiên thần mang tên là “Mẹ”\r\n\r\nChúng con muốn sống cùng người phụ nữ mà ba yêu...”.', 68800, 'images/1525678005-nguoi-me-duoc-gui-den-tu-thien-duong.450x652.w.b.jpg', 0, 150),
+(20, 1, 13, 'Cay Đắn Mùi Đời', '', 'Tiếng Việt', 2018, 'NXB Văn Học, Đinh Tị', '\"Thầy Ðàng dắt thằng Ðược ra tới đường quan lộ rồi mới buông nó ra, biểu nó đi trước, còn thầy với con nhỏ thì đi theo sau. Thằng Ðược chơn đi mà mắt ngó lại nhà hoài, nước mắt chảy ròng ròng không dứt, trong bụng thầm nghĩ mình bước tới một bước thì càng xa mẹ, xa nhà thêm một khúc đường; hồi nãy nghe ông già nói đi qua Cần Ðước mà Cần Ðước ở đâu? Ông già nầy là ai?', 55200, 'images/1526540358-cay-dang-mui-doi.450x652.w.b.jpg', 0, 50);
 
 -- --------------------------------------------------------
 
@@ -136,7 +139,7 @@ INSERT INTO `book` (`book_id`, `category_id`, `author_id`, `book_name`, `ISBN`, 
 CREATE TABLE `book_review` (
   `book_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `reviews` text COLLATE utf8mb4_unicode_ci NOT NULL COMMENT 'Review on the book',
+  `reviews` text COLLATE utf8mb4_unicode_ci COMMENT 'Review on the book',
   `rating` int(11) NOT NULL COMMENT 'Rating given to the book in a scale of 5',
   `review_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -150,12 +153,20 @@ INSERT INTO `book_review` (`book_id`, `user_id`, `reviews`, `rating`, `review_da
 (1, 1, 'Hay', 5, '2018-05-08 23:30:08'),
 (2, 1, 'Quá hay', 5, '2018-05-07 22:55:24'),
 (2, 1, 'Rất hay', 5, '2018-05-07 23:05:09'),
+(2, 1, 'Hay', 4, '2018-05-17 13:50:47'),
 (2, 3, 'Bình Thường', 3, '2018-05-13 22:33:43'),
 (5, 1, 'Không hay', 1, '2018-05-07 22:51:49'),
 (6, 1, 'Hay', 5, '2018-05-08 21:58:42'),
 (9, 3, 'Hay', 5, '2018-05-13 22:35:56'),
 (9, 3, 'Không Hay Lắm', 2, '2018-05-13 22:41:45'),
 (9, 3, 'Bình Thường', 3, '2018-05-13 22:48:53'),
+(12, 1, 'Hay', 5, '2018-05-17 09:28:39'),
+(12, 1, 'Bình Thường', 4, '2018-05-17 09:29:07'),
+(12, 1, 'Không hay', 1, '2018-05-17 09:31:58'),
+(12, 1, 'Không', 1, '2018-05-17 09:33:40'),
+(12, 1, 'k', 1, '2018-05-17 09:34:10'),
+(12, 1, 'Hay', 5, '2018-05-17 09:34:53'),
+(12, 1, 'Hay', 5, '2018-05-17 09:35:28'),
 (19, 3, 'Cũng Hay Đó', 4, '2018-05-13 22:32:46');
 
 -- --------------------------------------------------------
@@ -210,9 +221,11 @@ INSERT INTO `credit_card` (`credit_card_number`, `credit_cart_name`, `expire_dat
 ('01658215007', 'Nguyễn Hoàng Giang', '2018-05-15', 'VIP', 1),
 ('01658215008', 'Nguyễn Hoàng Giang', '2018-05-18', 'VIP', 1),
 ('01658215009', 'Nguyen Giang', '2018-05-12', 'So 1', 1),
+('09888888', 'Nguyễn', '2018-05-25', 'Thường', 1),
 ('12', 'Nguyễn Hoàng Giang', '2018-05-27', 'VIP', 1),
 ('1234', 'Tô Hương Giang', '2018-05-18', 'VIP', 1),
 ('123456', 'Nguyễn hoàng Giang', '1997-11-26', 'Việt Nam', 1),
+('19922998989', 'Nguyễn Văn A', '2018-05-17', 'VIP', 1),
 ('26111997', 'Ruan Jiang', '2020-11-26', 'VIP', 1),
 ('9876', 'Ngô Vân Anh', '2018-05-13', 'VIP', 1),
 ('9999', 'Nguyễn Hoàng Giang', '2018-05-25', 'Thường', 1);
@@ -240,7 +253,7 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`user_id`, `user_name`, `password`, `first_name`, `last_name`, `address`, `city`, `email`, `phone`) VALUES
-(1, 'giangnh', 'hot10000%', 'Giang', 'Nguyễn', 'Hà Nội', 'Hà Nội', 'giang.nh@gmail.com', '01658215007'),
+(1, 'giangnh', '123456', 'Giang', 'Nguyễn', 'Hà Nội', 'Hà Nội', 'giang.nh261197@gmail.com', '01658215007'),
 (2, 'anhnv', '123456', 'Anh', 'Ngô', 'Hà Nội', '', 'anhnv@gmail.com', ''),
 (3, 'giangth', '123456', 'Giang', 'Tô', '', '', 'giangth@gmail.com', '');
 
@@ -352,7 +365,16 @@ INSERT INTO `ordered_book` (`order_id`, `book_id`, `quantity`, `price`) VALUES
 (30, 3, 1, 52800),
 (30, 14, 2, 601600),
 (31, 2, 1, 63200),
-(31, 19, 2, 137600);
+(31, 19, 2, 137600),
+(32, 19, 1, 68800),
+(33, 1, 1, 62400),
+(33, 2, 1, 63200),
+(33, 14, 1, 300800),
+(33, 19, 1, 68800),
+(34, 9, 1, 63200),
+(34, 19, 1, 68800),
+(35, 2, 1, 63200),
+(35, 19, 1, 68800);
 
 -- --------------------------------------------------------
 
@@ -408,7 +430,11 @@ INSERT INTO `order_details` (`order_id`, `user_id`, `receiver_name`, `address`, 
 (28, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 13:13:52', b'1', 0, NULL, 246400),
 (29, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-15 17:17:23', b'1', 0, NULL, 137600),
 (30, 1, 'Nguyen Hoang Giang', 'Dong Anh,Hà Nội', 'Hà Nội', '2018-05-15 18:39:18', b'1', 1, '2018-05-19 15:05:00', 654400),
-(31, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-16 21:22:35', b'0', 0, NULL, 200800);
+(31, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-16 21:22:35', b'0', 0, NULL, 200800),
+(32, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-17 07:28:04', b'1', 0, NULL, 68800),
+(33, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-17 09:22:01', b'0', 1, '2018-05-18 02:05:00', 495200),
+(34, 1, 'Nguyễn Hoàng Giang', 'Đông Anh,Hà Nội', 'Hà Nội', '2018-05-17 13:52:40', b'0', 0, NULL, 132000),
+(35, 1, 'Giang Nguyễn', 'Hà Nội', 'Hà Nội', '2018-05-17 13:53:16', b'1', 1, '2018-05-26 02:05:00', 132000);
 
 -- --------------------------------------------------------
 
@@ -552,19 +578,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `author`
 --
 ALTER TABLE `author`
-  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `author_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `book`
 --
 ALTER TABLE `book`
-  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `book_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -588,7 +614,7 @@ ALTER TABLE `migrations`
 -- AUTO_INCREMENT for table `order_details`
 --
 ALTER TABLE `order_details`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `users`
