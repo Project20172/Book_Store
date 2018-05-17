@@ -45,8 +45,8 @@
 								</div>
 							</div>
 						</td>
-						<td class="invert">5,000 đ</td>
-						<td class="invert">{{number_format($book['price'], 0, '.', ',')}} đ</td>
+						<td class="invert">5.000 đ</td>
+						<td class="invert">{{number_format($book['price'], 0, ',', '.')}} đ</td>
 						<td class="invert">
 							<div class="rem">
 								<div class="close{{$loop->index + 1}}"> </div>

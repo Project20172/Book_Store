@@ -52,7 +52,7 @@
           </div>
           <div class="col-sm-6 text-center">
             <h1>Tổng Doanh Thu</h1>
-            <p style="color: red; font-size: 40px;" id="tongdoanhthu">0VND</p>
+            <p style="color: red; font-size: 40px;" id="tongdoanhthu">0 đ</p>
           </div>
         </div>
         

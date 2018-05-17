@@ -65,7 +65,7 @@
             @foreach ($cart->items as $book)
             <tr>
               <td><span id="number1">{{ $book['qty'] }} x </span>{{ $book['item']->book_name }}</td>
-              <td style="text-align: right;"><span id="price">{{ $book['price'] }}đ</span></td>
+              <td style="text-align: right;"><span id="price">{{number_format($book['price'], 0, ',', '.')}} đ</span></td>
 
             </tr>
             @endforeach

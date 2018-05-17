@@ -19,7 +19,7 @@
 						<div class="productinfo text-center">
 							<br>
 							<img class="img-fluid" src="{{ asset($book->picture) }}" alt="" width="100" height="145">
-							<h2>{{ $book->price }}VND</h2>
+							<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 							<p>
 								@php
 									if (strlen($book->book_name)>27) {
@@ -30,7 +30,7 @@
 									}
 								@endphp
 							</p>
-							<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+							<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 						</div>
 					</a>
 				</div>
@@ -48,27 +48,7 @@
 </div>
 	<div >
 		<div class="row text-center">
-		{{-- <nav aria-label="Page navigation example" class="text-center">
-		  <ul class="pagination">
-		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Previous">
-		        <span aria-hidden="true">&laquo;</span>
-		        <span class="sr-only">Previous</span>
-		      </a>
-		    </li>
-		    <li class="page-item"><a class="page-link" href="#">1</a></li>
-		    <li class="page-item"><a class="page-link" href="#">2</a></li>
-		    <li class="page-item"><a class="page-link" href="#">3</a></li>
-		    <li class="page-item"><a class="page-link" href="#">...</a></li>
-		    <li class="page-item"><a class="page-link" href="#">10</a></li>
-		    <li class="page-item">
-		      <a class="page-link" href="#" aria-label="Next">
-		        <span aria-hidden="true">&raquo;</span>
-		        <span class="sr-only">Next</span>
-		      </a>
-		    </li>
-		  </ul>
-		</nav> --}}
+		
 		{{ $listBook->links() }}
 		</div>
 	</div>

@@ -17,9 +17,9 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" class="img-fluid" alt="" width="120" height="150">
-									<h2>{{ $book->price }}VND</h2>
+									<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 									<p>{{ $book->book_name }}</p>
-									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 								</div>
 							</a>
 						</div>
@@ -39,212 +39,6 @@
 		</button>
 	</div>
 </div>
-
-{{-- <div class="recommended_items left-sidebar"><!--recommended_items-->
-	<h2 class="title text-center">Sách bán chạy</h2>
-	<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner">
-			<div class="item active">	
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="{{ route('book_detail') }}">
-							<div class="productinfo text-center">
-								<img src="images/home/bia-1-minh-la-ca.u5505.d20170803.t083606.108681.jpg" class="img-fluid" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="{{ route('book_detail') }}">
-							<div class="productinfo text-center">
-								<img src="images/home/bia-1-minh-la-ca.u5505.d20170803.t083606.108681.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="{{ route('book_detail') }}">
-							<div class="productinfo text-center">
-								<img src="images/home/bia-1-minh-la-ca.u5505.d20170803.t083606.108681.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="item">	
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="{{ route('book_detail') }}">
-							<div class="productinfo text-center">
-								<img src="images/home/bia-1-minh-la-ca.u5505.d20170803.t083606.108681.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="{{ route('book_detail') }}">
-							<div class="productinfo text-center">
-								<img src="images/home/bia-1-minh-la-ca.u5505.d20170803.t083606.108681.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="{{ route('book_detail') }}">
-							<div class="productinfo text-center">
-								<img src="images/home/bia-1-minh-la-ca.u5505.d20170803.t083606.108681.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-			<i class="fa fa-angle-left"></i>
-		</a>
-		<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-			<i class="fa fa-angle-right"></i>
-		</a>			
-	</div>
-</div>
-
-<div class="recommended_items left-sidebar"><!--recommended_items-->
-	<h2 class="title text-center">Sách mới</h2>
-	<div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-		<div class="carousel-inner">
-			<div class="item active">	
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="#">
-							<div class="productinfo text-center">
-								<img src="images/home/kheo-an-noi-se-co-duoc-thien-ha.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="#">
-							<div class="productinfo text-center">
-								<img src="images/home/kheo-an-noi-se-co-duoc-thien-ha.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="#">
-							<div class="productinfo text-center">
-								<img src="images/home/kheo-an-noi-se-co-duoc-thien-ha.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div class="item">	
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="#">
-							<div class="productinfo text-center">
-								<img src="images/home/kheo-an-noi-se-co-duoc-thien-ha.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="#">
-							<div class="productinfo text-center">
-								<img src="images/home/kheo-an-noi-se-co-duoc-thien-ha.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-				<div class="col-sm-4">
-					<div class="product-image-wrapper">
-						<div class="single-products">
-							<a href="#">
-							<div class="productinfo text-center">
-								<img src="images/home/kheo-an-noi-se-co-duoc-thien-ha.jpg" alt="">
-								<h2>$56</h2>
-								<p>Easy Polo Black Edition</p>
-								<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-							</div>
-							</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-		<a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-			<i class="fa fa-angle-left"></i>
-		</a>
-		<a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-			<i class="fa fa-angle-right"></i>
-		</a>			
-	</div>
-</div> --}}
-
-
 
 <div class="category-tab"><!--category-tab-->
 	<div class="col-sm-12">
@@ -266,7 +60,7 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>{{ $book->price }}VND</h2>
+									<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 									<p>
 										@php
 										if (strlen($book->book_name)>27) {
@@ -307,7 +101,7 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>{{ $book->price }}VND</h2>
+									<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 
 									<p>
 										@php
@@ -322,7 +116,7 @@
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 
 									<p>{{ $book->book_name }}</p>
-									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 								</div>
 							</a>
 						</div>
@@ -349,7 +143,7 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>{{ $book->price }}VND</h2>
+									<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 
 									<p>
 										@php
@@ -364,7 +158,7 @@
 									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
 
 									<p>{{ $book->book_name }}</p>
-									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 
 								</div>
 							</a>
@@ -392,7 +186,7 @@
 							<a href="{{ route("getBookDetail",["id"=>$book->book_id]) }}">
 								<div class="productinfo text-center">
 									<img src="{{ asset($book->picture) }}" alt="" class="img-fluid" width="100" height="145">
-									<h2>{{ $book->price }}VND</h2>
+									<h2>{{number_format($book->price, 0, ',', '.')}} đ</h2>
 
 									<p>
 										@php
@@ -404,7 +198,7 @@
 										}
 										@endphp
 									</p>
-									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+									<a href="{{ route('book.addToCart', ['id'=>$book->book_id])}}" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>
 
 								</div>
 							</a>
@@ -445,7 +239,7 @@
 						str+='<a href="book_detail/'+result['listBook'][i]["book_id"]+'">';
 						str+='<div class="productinfo text-center">';
 						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
-						str+='<h2>'+result['listBook'][i]['price']+'VND</h2>'	;			
+						str+='<h2>'+result['listBook'][i]['price'].toLocaleString()+' đ</h2>'	;			
 						if(result['listBook'][i]["book_name"].length>27){
 							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,24);
@@ -454,7 +248,7 @@
 						}else{
 							str+='<p>'+result['listBook'][i]["book_name"]+'</p>';
 						}				
-						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
@@ -486,7 +280,7 @@
 						str+='<a href="book_detail/'+result['listBook'][i]["book_id"]+'">';
 						str+='<div class="productinfo text-center">';
 						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]['picture']+'" class="img-fluid" alt="" width="120" height="150">';
-						str+='<h2>'+result['listBook'][i]['price']+'VND</h2>'	;			
+						str+='<h2>'+result['listBook'][i]['price'].toLocaleString()+' đ</h2>'	;			
 						if(result['listBook'][i]["book_name"].length>27){
 							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,24);
@@ -495,7 +289,7 @@
 						}else{
 							str+='<p>'+result['listBook'][i]["book_name"]+'</p>';
 						}					
-						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>';			
+						str+='<a href="{{ url('add-to-cart') }}'+'/'+result['listBook'][i]["book_id"]+'" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Thêm vào giỏ</a>';			
 						str+="</div>"	;		
 						str+="</a>"		;
 						str+="</div>"	;	
@@ -526,7 +320,7 @@
 						str+='<div class="single-products book_choose">';
 						str+='<div class="productinfo text-center">';
 						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
-						str+='<h2>'+result['listBook'][i]["price"]+'VND</h2>';
+						str+='<h2>'+result['listBook'][i]["price"].toLocaleString()+' đ</h2>';
 						if(result['listBook'][i]["book_name"].length>27){
 							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,23);
@@ -567,7 +361,7 @@
 						str+='<div class="single-products book_choose">';
 						str+='<div class="productinfo text-center">';
 						str+='<img src="{{ url('') }}'+'/'+result['listBook'][i]["picture"]+'" alt="" class="img-fluid" width="100" height="145" >';
-						str+='<h2>'+result['listBook'][i]["price"]+'VND</h2>';
+						str+='<h2>'+result['listBook'][i]["price"].toLocaleString()+' đ</h2>';
 						if(result['listBook'][i]["book_name"].length>27){
 							var t=result['listBook'][i]["book_name"];
 							t=t.substr(0,23);

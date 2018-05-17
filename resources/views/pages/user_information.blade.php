@@ -3,7 +3,6 @@
 <html>
 <head>
 	<title>Book Store</title>
-	<link rel="stylesheet" type="text/css" href="{{ asset('css/style_user_information.css') }}">
 	<script href="{{ asset('js/jquery.min.js') }}"></script>
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
